@@ -37,7 +37,7 @@ export function LatestNewsletter({
     href = "/newsletter",
 }: NewsletterProps) {
     return (
-        <section className="min-w-0">
+        <section className="min-w-0 ">
             {/* Centered heading */}
             <div className="mb-5 text-center">
 
@@ -66,33 +66,7 @@ export function LatestNewsletter({
                 />
             </div>
 
-            {/* View all at bottom */}
-            {/* <div className="mt-6 flex justify-center">
-                <Link
-                    href={href}
-                    className="
-                        inline-flex
-                        items-center
-                        gap-2
-                        rounded-lg
-                        border
-                        border-border
-                        px-4
-                        py-2
-                        text-sm
-                        font-semibold
-                        text-primary-600
-                        transition
-                        hover:border-primary-300
-                        hover:bg-primary-50
-                        dark:hover:border-primary-700
-                        dark:hover:bg-primary-950
-                    "
-                >
-                    View all newsletters
-                    <ArrowRight className="size-4" />
-                </Link> */}
-            {/* </div> */}
+
         </section>
     );
 }

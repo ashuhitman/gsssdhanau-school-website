@@ -2,32 +2,47 @@
 import AcademicsQuickLinks from "@/components/academics/AcademicQuickLinks";
 import ClassesStreams from "@/components/academics/ClassesStreams";
 import FacultyPreview from "@/components/academics/FacultyPreview";
+import PageHero from "@/components/common/PageHero";
 import { PublicHero } from "@/components/public/PublicHero";
-import { ArrowBigDown, ArrowBigDownDash } from "lucide-react";
+import { ArrowBigDown, ArrowBigDownDash, GraduationCap, Trophy, Users } from "lucide-react";
 
 
 
 export default function AcademicsPage() {
     return (
         <>
-            <PublicHero
-                eyebrow=""
-                title="Academics"
-                description="Empowering students with knowledge, skills and values for a brighter tommorrow."
-                image="/images/school-building.jpg"
-                imageAlt="PM SHRI Government Senior Secondary School Dhanau"
-                bottomLeftIcon={<ArrowBigDown />}
-                breadcrumbs={[
-                    {
-                        label: "Home",
-                        href: "/",
-                    },
+            <PageHero
+                breadcrumb={[
                     {
                         label: "Academics",
                     },
                 ]}
+                title=""
+                highlight="Academics"
+                description="A wide range of co-curricular and extra-curricular activities that nurture talent, build character and promote the holistic development of our students."
+                image="/images/activities/hero-cover.png"
+                imageAlt="PM SHRI GSSS Dhanau students participating in activities"
+                stats={[
+                    {
+                        value: "600+",
+                        label: "Students Enrolled",
+                        icon: <GraduationCap size={20} />,
+                        iconClassName: "bg-accent-soft text-accent",
+                    },
+                    {
+                        value: "15+",
+                        label: "Qualified Teachers",
+                        icon: <Users size={20} />,
+                        iconClassName: "bg-accent-soft text-accent",
+                    },
+                    {
+                        value: "90%+",
+                        label: "Board Result",
+                        icon: <Trophy size={20} />,
+                        iconClassName: "bg-accent-soft text-accent",
+                    },
+                ]}
             />
-
 
 
 

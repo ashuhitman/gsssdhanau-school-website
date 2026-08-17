@@ -2,8 +2,22 @@ import NewsCategoryFilter from "@/components/news/NewsCategoryFilter";
 import NewsList from "@/components/news/NewsList";
 import RecentAchievements from "@/components/news/RecentAchievements";
 import UpcomingEvents from "@/components/news/UpcomingEvents";
-import { PublicHero } from "@/components/public/PublicHero";
+import PageHero from "@/components/common/PageHero";
+
 import { NewsActivity, NewsCategoryOption } from "@/types/newsTypes";
+import {
+    Bell,
+    CalendarDays,
+    ClipboardList,
+    Download,
+    FileText,
+    GraduationCap,
+    Info,
+    Medal,
+    Megaphone,
+    Trophy,
+    Users,
+} from "lucide-react";
 
 
 /* ─────────────────────────────────────
@@ -18,7 +32,7 @@ const news: NewsActivity[] = [
             "Students participated in the Tiranga Rally with great enthusiasm to spread awareness about our national flag and its significance.",
         date: "12 May 2025",
         category: "Events",
-        image: "/images/news/tiranga-rally.jpg",
+        image: "/images/notice/cover1.jpg",
         href: "/news/tiranga-rally-organized-in-school",
     },
     {
@@ -28,7 +42,7 @@ const news: NewsActivity[] = [
             "The Inter-House Volleyball Tournament was a grand success. Students showcased excellent teamwork and sportsmanship.",
         date: "08 May 2025",
         category: "Sports",
-        image: "/images/news/volleyball.jpg",
+        image: "/images/notice/cover1.jpg",
         href: "/news/inter-house-volleyball-tournament",
     },
     {
@@ -38,7 +52,7 @@ const news: NewsActivity[] = [
             "Our students and teachers came together for a tree plantation drive to promote a greener and healthier environment.",
         date: "05 May 2025",
         category: "Activities",
-        image: "/images/news/tree-plantation.jpg",
+        image: "/images/notice/cover1.jpg",
         href: "/news/tree-plantation-drive",
     },
 ];
@@ -92,19 +106,15 @@ export default function NewsActivitiesPage() {
             {/* ─────────────────────────────────
                 HERO
             ───────────────────────────────── */}
-            <PublicHero
-                eyebrow="News & Activities"
-                title="News & Activities"
-                description="Stay updated with the latest news, events, and exciting activities happening in our school."
-                image="/images/news/activity.jpg"
-                imageAlt="Students participating in school activities"
-                breadcrumbs={[
+            <PageHero
+                title="News and Events"
+                description="A wide range of co-curricular and extra-curricular activities that nurture talent, build character and promote the holistic development of our students."
+                image="/images/events/event-image.png"
+                imageAlt="Students of PM SHRI GSSS Dhanau participating in activities"
+
+                breadcrumb={[
                     {
-                        label: "Home",
-                        href: "/",
-                    },
-                    {
-                        label: "Latest News & Activity",
+                        label: "News and Events",
                     },
                 ]}
             />

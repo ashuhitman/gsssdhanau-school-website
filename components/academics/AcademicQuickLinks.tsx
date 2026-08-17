@@ -4,7 +4,7 @@ import {
     UsersRound,
 } from "lucide-react";
 
-import { InfoCard } from "../ui/InfoCard";
+import { InfoCard } from "../common/InfoCard";
 
 const quickLinks = [
     {

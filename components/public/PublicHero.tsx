@@ -40,7 +40,7 @@ export function PublicHero({
                 </div>
             )}
 
-            <div className="mx-auto max-w-[1600px]">
+            <div className="mx-auto">
                 <div className="grid lg:grid-cols-[0.9fr_1.1fr]">
                     {/* =================================================
                         CONTENT
@@ -111,8 +111,8 @@ export function PublicHero({
                                                                 ) : (
                                                                     <span
                                                                         className={`whitespace-nowrap ${isLast
-                                                                                ? "font-semibold text-primary-700 dark:text-primary-300"
-                                                                                : "text-muted-foreground"
+                                                                            ? "font-semibold text-primary-700 dark:text-primary-300"
+                                                                            : "text-muted-foreground"
                                                                             }`}
                                                                     >
                                                                         {
@@ -197,13 +197,13 @@ export function PublicHero({
                     {/* =================================================
                         SCHOOL IMAGE
                     ================================================= */}
-                    <div className="relative h-[190px] sm:h-[220px] lg:h-[270px] xl:h-[290px]">
+                    <div className="relative aspect-video">
                         <Image
                             src={image}
                             alt={imageAlt}
                             fill
                             priority
-                            sizes="(max-width: 1024px) 100vw, 55vw"
+                            sizes="width: 100%"
                             className="object-cover object-center"
                         />
 

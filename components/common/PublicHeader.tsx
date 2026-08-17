@@ -13,8 +13,9 @@ import { usePathname } from "next/navigation";
 import { useState } from "react";
 
 import { ThemeToggle } from "@/components/theme/ThemeToggle";
-import { LanguageSelector } from "./LanguageSelector";
-import { MobileMenu } from "./MobileMenu";
+import { LanguageSelector } from "../public/LanguageSelector";
+import { MobileMenu } from "../public/MobileMenu";
+import Image from "next/image";
 
 const navigation = [
     {
@@ -26,16 +27,17 @@ const navigation = [
         href: "/academics",
     },
     {
-        label: "News & Activities",
-        href: "/news",
+        label: "Activities",
+        href: "/activities",
     },
     {
         label: "Facilities",
         href: "/facilities",
     },
+
     {
-        label: "Articles",
-        href: "/articles",
+        label: "News & Events",
+        href: "/events",
     },
     {
         label: "Notices",
@@ -56,8 +58,8 @@ export function PublicHeader() {
             {/* =================================================
                 TOP UTILITY BAR
             ================================================= */}
-            <div className="bg-primary-600 text-white">
-                <div className="mx-auto flex min-h-10 max-w-[1350px] items-center justify-between gap-4 px-4 text-xs sm:px-6 lg:px-8">
+            <div className="bg-primary-600 text-white " >
+                <div className="mx-auto flex items-center justify-between gap-4 px-4 text-xs sm:px-6 lg:px-8 z-100">
                     <div className="hidden items-center gap-5 lg:flex">
                         <div className="flex items-center gap-2">
                             <MapPin className="size-3.5 shrink-0" />
@@ -133,7 +135,7 @@ export function PublicHeader() {
                 MAIN HEADER
             ================================================= */}
             <header className="sticky top-0 z-50 border-b border-border bg-background/95 shadow-sm backdrop-blur-xl">
-                <div className="mx-auto flex h-[76px] max-w-[1350px] items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
+                <div className="mx-auto flex items-center justify-between gap-4 px-4 sm:px-6 lg:px-8 py-2">
                     {/* School Identity */}
                     <Link
                         href="/"
@@ -141,7 +143,12 @@ export function PublicHeader() {
                         className="flex min-w-0 items-center gap-3"
                     >
                         <div className="flex size-12 shrink-0 items-center justify-center rounded-full border-2 border-primary-200 bg-primary-50 text-lg font-black text-primary-700 dark:border-primary-800 dark:bg-primary-950 dark:text-primary-200 sm:size-14">
-                            G
+                            <Image
+                                src="/logo-new.png"
+                                alt="Logo"
+                                width={40}
+                                height={40}
+                            />
                         </div>
 
                         <div className="min-w-0">

@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, CalendarDays } from "lucide-react";
+import SectionHeading from "../common/SectionHeading";
 
 export interface FeaturedStoryItem {
     id: string;
@@ -37,34 +38,15 @@ export function FeaturedStory({
     return (
         <section className="min-w-0">
             {/* Section heading */}
-            <div className="mb-5">
-                <p
-                    className="
-                        mb-1
-                        text-[clamp(0.625rem,0.7vw,0.75rem)]
-                        font-semibold
-                        uppercase
-                        tracking-[0.12em]
-                        text-primary-600
-                    "
-                >
-                    From Our School
-                </p>
-
-                <h2
-                    className="
-                        text-[clamp(1.35rem,2vw,1.75rem)]
-                        font-bold
-                        tracking-tight
-                        text-foreground
-                    "
-                >
-                    {title}
-                </h2>
-            </div>
+            <SectionHeading
+                align="left"
+                eyebrow="From Our School"
+                title="Featured Story"
+            />
 
             <article
                 className="
+                mt-3
                     group
                     grid
                     grid-cols-1
@@ -95,7 +77,7 @@ export function FeaturedStory({
                         src={story.image}
                         alt={story.title}
                         fill
-                        sizes="(max-width: 64rem) 100vw, 50vw"
+                        sizes="width:100%"
                         className="
                             object-cover
                             transition

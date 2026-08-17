@@ -7,13 +7,15 @@ import {
     Microscope,
     Monitor,
     MonitorSmartphone,
+    Presentation,
     Projector
 } from "lucide-react";
 
-import { InfoCard } from "@/components/ui/InfoCard";
+import { InfoCard } from "@/components/common/InfoCard";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { PublicHero } from "@/components/public/PublicHero";
 import { FacilityCard } from "@/components/Facilities/FacilityCard";
+import PageHero from "@/components/common/PageHero";
 
 
 const facilities = [
@@ -94,19 +96,37 @@ export default function FacilitiesPage() {
             {/* =========================================================
                 HERO
             ========================================================= */}
-            <PublicHero
-                eyebrow="School Facilities"
-                title="Our Facilities"
-                description="Well-equipped learning spaces and resources that support academic growth, practical learning, digital education, and the overall development of our students."
-                image="/images/facilities/cover2.jpg"
-                imageAlt="PM SHRI GSSS Dhanau school building"
-                breadcrumbs={[
-                    {
-                        label: "Home",
-                        href: "/",
-                    },
+            <PageHero
+                breadcrumb={[
                     {
                         label: "Facilities",
+                    },
+                ]}
+                subheading="School Facilities"
+                title="Our Facilities"
+                highlight=""
+                description="Well-equipped learning spaces and resources that support academic growth, practical learning, digital education, and the overall development of our students."
+                image="/images/facilities/hero.png"
+                imageAlt="our facilities"
+                stats={[
+                    {
+                        value: "2",
+                        label: "Smart Class",
+                        icon: <Presentation size={20} />,
+                    },
+                    {
+                        value: "1",
+                        label: "Digital Library",
+                        icon: <LibraryBig size={20} />,
+                        iconClassName:
+                            "bg-accent-soft text-accent",
+                    },
+                    {
+                        value: "10+`",
+                        label: "Computers",
+                        icon: <Monitor size={20} />,
+                        iconClassName:
+                            "bg-success-soft text-success",
                     },
                 ]}
             />

@@ -5,7 +5,7 @@ import {
     Users,
 } from "lucide-react";
 
-import { InfoCard } from "@/components/ui/InfoCard";
+import { InfoCard } from "@/components/common/InfoCard";
 
 const features = [
     {

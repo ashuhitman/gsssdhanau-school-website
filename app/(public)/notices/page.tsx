@@ -6,14 +6,20 @@ import {
     FileText,
     GraduationCap,
     Info,
+    Medal,
     Megaphone,
     Trophy,
+    Users,
 } from "lucide-react";
 
 
-import { InfoCard } from "@/components/ui/InfoCard";
-import { PublicHero } from "@/components/public/PublicHero";
+import { InfoCard } from "@/components/common/InfoCard";
+
 import { NoticeList } from "@/components/Notice/NoticeList";
+import { PublicHero } from "@/components/public/PublicHero";
+import PageHero from "@/components/common/PageHero";
+
+
 
 const notices = [
     {
@@ -155,22 +161,28 @@ export default function NoticesPage() {
             {/* =========================================================
                 HERO
             ========================================================= */}
-            <PublicHero
-                eyebrow="School Notices"
-                title="Notices"
-                description="Stay updated with the latest announcements, circulars and important information from PM SHRI GSSS Dhanau."
-                image="/images/notice/cover1.jpg"
-                imageAlt="PM SHRI GSSS Dhanau school building"
-                breadcrumbs={[
-                    {
-                        label: "Home",
-                        href: "/",
-                    },
+
+            <PageHero
+                breadcrumb={[
                     {
                         label: "Notices",
                     },
                 ]}
+                subheading="SCHOOL NOTICES"
+                title=""
+                highlight="Notices"
+                description="Stay updated with the latest announcements, circulars and important information from PM SHRI GSSS Dhanau."
+                image="/images/activities/hero-cover.png"
+                imageAlt="PM SHRI GSSS Dhanau students participating in activities"
+                stats={[
+
+                ]}
             />
+
+
+
+
+
 
             {/* =========================================================
                 MAIN CONTENT

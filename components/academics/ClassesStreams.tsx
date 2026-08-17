@@ -1,6 +1,6 @@
 import { FlaskConical, GraduationCap, Leaf } from "lucide-react";
 
-import { InfoCard } from "../ui/InfoCard";
+import { InfoCard } from "../common/InfoCard";
 import { SectionHeading } from "../ui/SectionHeading";
 
 interface AcademicStream {

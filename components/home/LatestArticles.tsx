@@ -18,7 +18,7 @@ const sampleArticles: ArticleItem[] = [
             "A small step towards a greener tomorrow and a healthier environment.",
         author: "Rahul Verma",
         date: "09 Aug 2026",
-        image: "/images/articles/planting-trees.jpg",
+        image: "/images/notice/cover1.jpg",
         href: "/articles/the-joy-of-planting-trees",
     },
     {
@@ -28,7 +28,7 @@ const sampleArticles: ArticleItem[] = [
             "Learning the power of collaboration, responsibility and working together.",
         author: "Priya Singh",
         date: "08 Aug 2026",
-        image: "/images/articles/teamwork.jpg",
+        image: "/images/notice/cover1.jpg",
         href: "/articles/teamwork-makes-dreamwork",
     },
     {
@@ -38,7 +38,7 @@ const sampleArticles: ArticleItem[] = [
             "Exploring the wonders of science through experiments and curiosity.",
         author: "Karan Patel",
         date: "07 Aug 2026",
-        image: "/images/articles/science.jpg",
+        image: "/images/notice/cover1.jpg",
         href: "/articles/why-science-excites-me",
     },
 ];
@@ -49,9 +49,9 @@ export function LatestArticles({
     href = "/articles",
 }: LatestArticlesProps) {
     return (
-        <section className="flex h-full min-w-0 flex-col">
+        <section className="flex h-full min-w-0 flex-col ">
             {/* Heading */}
-            <div className="mb-5 text-center">
+            <div className="mb-5 text-center ">
                 <h2
                     className="
                         text-[clamp(1.35rem,2vw,1.75rem)]
@@ -67,6 +67,7 @@ export function LatestArticles({
             {/* Articles */}
             <div
                 className="
+              
                     grid
                     grid-cols-1
                     gap-4
@@ -83,8 +84,8 @@ export function LatestArticles({
             </div>
 
             {/* View all */}
-            <div className="mt-auto pt-6">
-                <div className="flex justify-center">
+            <div className="flex-1 flex items-center justify-center">
+                <div className="flex justify-center ">
                     <Link
                         href={href}
                         className="
@@ -104,6 +105,7 @@ export function LatestArticles({
                             hover:bg-primary-50
                             dark:hover:border-primary-700
                             dark:hover:bg-primary-950
+                            my-auto
                         "
                     >
                         View all articles

@@ -2,93 +2,367 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
+
+/* ============================================================
+   PM SHRI GSSS DHANAU
+   GLOBAL DESIGN SYSTEM
+   PURPLE + ORANGE + MULTI-COLOR ICON SYSTEM
+   ============================================================ */
+
 @theme {
-  /* Brand */
-  --color-primary-50: #effaf8;
-  --color-primary-100: #d9f2ed;
-  --color-primary-200: #b5e5dc;
-  --color-primary-300: #86d3c7;
-  --color-primary-400: #56bfb0;
-  --color-primary-500: #2da492;
-  --color-primary-600: #258d7f;
-  --color-primary-700: #207267;
-  --color-primary-800: #1d5c54;
-  --color-primary-900: #194c46;
-  --color-primary-950: #0c2c29;
 
-  /* Semantic colors */
-  --color-background: #ffffff;
-  --color-foreground: #17211f;
+  /* ==========================================================
+     PRIMARY — PURPLE
+     ========================================================== */
 
-  --color-surface: #f7faf9;
-  --color-surface-hover: #eef6f4;
+  --color-primary-50: #faf5ff;
+  --color-primary-100: #f3e8ff;
+  --color-primary-200: #e9d5ff;
+  --color-primary-300: #d8b4fe;
+  --color-primary-400: #c084fc;
+  --color-primary-500: #a855f7;
+  --color-primary-600: #9333ea;
+  --color-primary-700: #7e22ce;
+  --color-primary-800: #6b21a8;
+  --color-primary-900: #581c87;
+  --color-primary-950: #3b0764;
 
-  --color-card: #ffffff;
-  --color-card-foreground: #17211f;
 
-  --color-muted: #eef3f2;
-  --color-muted-foreground: #647572;
+  /* ==========================================================
+     ACCENT — ORANGE
+     ========================================================== */
 
-  --color-border: #dce7e4;
+  --color-accent-50: #fff7ed;
+  --color-accent-100: #ffedd5;
+  --color-accent-200: #fed7aa;
+  --color-accent-300: #fdba74;
+  --color-accent-400: #fb923c;
+  --color-accent-500: #f97316;
+  --color-accent-600: #ea580c;
+  --color-accent-700: #c2410c;
+  --color-accent-800: #9a3412;
+  --color-accent-900: #7c2d12;
+  --color-accent-950: #431407;
 
-  --color-success: #218739;
-  --color-warning: #c98716;
-  --color-danger: #c83b3b;
+
+  /* ==========================================================
+     SEMANTIC COLORS
+     ========================================================== */
+
+  --color-background: var(--school-background);
+  --color-foreground: var(--school-foreground);
+
+  --color-heading: var(--school-heading);
+  --color-body: var(--school-text);
+  --color-muted: var(--school-muted);
+
+  --color-surface: var(--school-surface);
+  --color-surface-hover: var(--school-surface-hover);
+
+  --color-card: var(--school-card);
+  --color-card-foreground: var(--school-card-foreground);
+
+  --color-border: var(--school-border);
+
+
+  /* ==========================================================
+     BRAND
+     ========================================================== */
+
+  --color-primary: var(--school-primary);
+  --color-primary-hover: var(--school-primary-hover);
+  --color-primary-soft: var(--school-primary-soft);
+
+  --color-accent: var(--school-accent);
+  --color-accent-hover: var(--school-accent-hover);
+  --color-accent-soft: var(--school-accent-soft);
+
+
+  /* ==========================================================
+     STATUS
+     ========================================================== */
+
+  --color-success: var(--school-success);
+  --color-warning: var(--school-warning);
+  --color-danger: var(--school-danger);
+  --color-info: var(--school-info);
+
+
+  /* ==========================================================
+     ICON COLORS
+     ========================================================== */
+
+  --color-icon-primary: var(--school-icon-primary);
+  --color-icon-accent: var(--school-icon-accent);
+  --color-icon-success: var(--school-icon-success);
+  --color-icon-warning: var(--school-icon-warning);
+  --color-icon-danger: var(--school-icon-danger);
+  --color-icon-info: var(--school-icon-info);
+  --color-icon-teal: var(--school-icon-teal);
+  --color-icon-rose: var(--school-icon-rose);
+
+
+  /* ==========================================================
+     ICON BACKGROUNDS
+     ========================================================== */
+
+  --color-icon-bg-primary: var(--school-icon-bg-primary);
+  --color-icon-bg-accent: var(--school-icon-bg-accent);
+  --color-icon-bg-success: var(--school-icon-bg-success);
+  --color-icon-bg-warning: var(--school-icon-bg-warning);
+  --color-icon-bg-danger: var(--school-icon-bg-danger);
+  --color-icon-bg-info: var(--school-icon-bg-info);
+  --color-icon-bg-teal: var(--school-icon-bg-teal);
+  --color-icon-bg-rose: var(--school-icon-bg-rose);
+
+
+  /* ==========================================================
+     SHADOWS
+     ========================================================== */
+
+  --shadow-card: var(--school-shadow-card);
+  --shadow-card-hover: var(--school-shadow-card-hover);
+  --shadow-button: var(--school-shadow-button);
 }
+
+
+/* ============================================================
+   LIGHT MODE
+   ============================================================ */
 
 :root {
+
   color-scheme: light;
 
-  --color-background: #ffffff;
-  --color-foreground: #17211f;
+  /* ==========================================================
+     BACKGROUND
+     ========================================================== */
 
-  --color-surface: #f7faf9;
-  --color-surface-hover: #eef6f4;
+  --school-background: #ffffff;
+  --school-surface: #faf9fc;
+  --school-surface-hover: #f5f1f9;
+  --school-card: #ffffff;
 
-  --color-card: #ffffff;
-  --color-card-foreground: #17211f;
 
-  --color-muted: #eef3f2;
-  --color-muted-foreground: #647572;
+  /* ==========================================================
+     TEXT
+     ========================================================== */
 
-  --color-border: #dce7e4;
+  --school-heading: #3b176d;
+  --school-foreground: #334155;
+  --school-text: #334155;
+  --school-card-foreground: #334155;
+  --school-muted: #64748b;
+
+
+  /* ==========================================================
+     BORDER
+     ========================================================== */
+
+  --school-border: #e7e0ec;
+
+
+  /* ==========================================================
+     PRIMARY — PURPLE
+     ========================================================== */
+
+  --school-primary: #6b21a8;
+  --school-primary-hover: #581c87;
+  --school-primary-soft: #f3e8ff;
+
+
+  /* ==========================================================
+     ACCENT — ORANGE
+     ========================================================== */
+
+  --school-accent: #f97316;
+  --school-accent-hover: #ea580c;
+  --school-accent-soft: #fff7ed;
+
+
+  /* ==========================================================
+     STATUS
+     ========================================================== */
+
+  --school-success: #16a34a;
+  --school-warning: #d97706;
+  --school-danger: #dc2626;
+  --school-info: #2563eb;
+
+
+  /* ==========================================================
+     ICON COLORS
+     ========================================================== */
+
+  --school-icon-primary: #7e22ce;
+  --school-icon-accent: #ea580c;
+  --school-icon-success: #15803d;
+  --school-icon-warning: #b45309;
+  --school-icon-danger: #dc2626;
+  --school-icon-info: #2563eb;
+  --school-icon-teal: #0f766e;
+  --school-icon-rose: #be123c;
+
+
+  /* ==========================================================
+     ICON SOFT BACKGROUNDS
+     ========================================================== */
+
+  --school-icon-bg-primary: #f3e8ff;
+  --school-icon-bg-accent: #ffedd5;
+  --school-icon-bg-success: #dcfce7;
+  --school-icon-bg-warning: #fef3c7;
+  --school-icon-bg-danger: #fee2e2;
+  --school-icon-bg-info: #dbeafe;
+  --school-icon-bg-teal: #ccfbf1;
+  --school-icon-bg-rose: #ffe4e6;
+
+
+  /* ==========================================================
+     SHADOWS
+     ========================================================== */
+
+  --school-shadow-card:
+    0 0.4rem 1.5rem rgba(59, 23, 109, 0.09);
+
+  --school-shadow-card-hover:
+    0 0.7rem 2rem rgba(59, 23, 109, 0.14);
+
+  --school-shadow-button:
+    0 0.5rem 1.25rem rgba(107, 33, 168, 0.2);
 }
+
+
+/* ============================================================
+   DARK MODE
+   ============================================================ */
 
 .dark {
+
   color-scheme: dark;
 
-  --color-background: #0c1715;
-  --color-foreground: #edf7f5;
+  /* ==========================================================
+     BACKGROUND
+     ========================================================== */
 
-  --color-surface: #12211e;
-  --color-surface-hover: #192b27;
+  --school-background: #100b16;
+  --school-surface: #18111f;
+  --school-surface-hover: #22182c;
+  --school-card: #1d1525;
 
-  --color-card: #162622;
-  --color-card-foreground: #edf7f5;
 
-  --color-muted: #20342f;
-  --color-muted-foreground: #9bb0ab;
+  /* ==========================================================
+     TEXT
+     ========================================================== */
 
-  --color-border: #29433e;
+  --school-heading: #faf5ff;
+  --school-foreground: #e5e7eb;
+  --school-text: #e2e8f0;
+  --school-card-foreground: #e5e7eb;
+  --school-muted: #a8a29e;
+
+
+  /* ==========================================================
+     BORDER
+     ========================================================== */
+
+  --school-border: #382b42;
+
+
+  /* ==========================================================
+     PRIMARY — PURPLE
+     ========================================================== */
+
+  --school-primary: #c084fc;
+  --school-primary-hover: #d8b4fe;
+  --school-primary-soft: #321a48;
+
+
+  /* ==========================================================
+     ACCENT — ORANGE
+     ========================================================== */
+
+  --school-accent: #fb923c;
+  --school-accent-hover: #fdba74;
+  --school-accent-soft: #3b2113;
+
+
+  /* ==========================================================
+     STATUS
+     ========================================================== */
+
+  --school-success: #4ade80;
+  --school-warning: #fbbf24;
+  --school-danger: #f87171;
+  --school-info: #60a5fa;
+
+
+  /* ==========================================================
+     ICON COLORS
+     ========================================================== */
+
+  --school-icon-primary: #c084fc;
+  --school-icon-accent: #fb923c;
+  --school-icon-success: #4ade80;
+  --school-icon-warning: #fbbf24;
+  --school-icon-danger: #f87171;
+  --school-icon-info: #60a5fa;
+  --school-icon-teal: #5eead4;
+  --school-icon-rose: #fb7185;
+
+
+  /* ==========================================================
+     ICON SOFT BACKGROUNDS
+     ========================================================== */
+
+  --school-icon-bg-primary: #321a48;
+  --school-icon-bg-accent: #3b2113;
+  --school-icon-bg-success: #143522;
+  --school-icon-bg-warning: #3a2b0b;
+  --school-icon-bg-danger: #3b181b;
+  --school-icon-bg-info: #172d4a;
+  --school-icon-bg-teal: #123532;
+  --school-icon-bg-rose: #3b1722;
+
+
+  /* ==========================================================
+     SHADOWS
+     ========================================================== */
+
+  --school-shadow-card:
+    0 0.4rem 1.5rem rgba(0, 0, 0, 0.28);
+
+  --school-shadow-card-hover:
+    0 0.7rem 2rem rgba(0, 0, 0, 0.38);
+
+  --school-shadow-button:
+    0 0.5rem 1.25rem rgba(0, 0, 0, 0.3);
 }
+
+
+/* ============================================================
+   BASE
+   ============================================================ */
 
 @layer base {
 
   *,
-  ::before,
-  ::after {
+  *::before,
+  *::after {
     box-sizing: border-box;
   }
 
   html {
     scroll-behavior: smooth;
+    background: var(--school-background);
   }
 
   body {
     min-height: 100vh;
     margin: 0;
-    background: var(--color-background);
-    color: var(--color-foreground);
+    background: var(--school-background);
+    color: var(--school-foreground);
+    font-family: Arial, Helvetica, sans-serif;
   }
 
   button,
@@ -108,18 +382,30 @@
   }
 
   ::selection {
-    background: var(--color-primary-500);
-    color: white;
+    background: var(--school-primary);
+    color: #ffffff;
   }
 }
 
+
+/* ============================================================
+   REUSABLE COMPONENTS
+   ============================================================ */
+
 @layer components {
+
   .card-horizontal {
-    @apply flex items-center gap-4 rounded-xl border bg-white p-5 shadow-sm;
+    @apply flex items-center gap-4 rounded-xl border bg-card p-5 shadow-sm;
+
+    border-color: var(--school-border);
+    color: var(--school-card-foreground);
   }
 
   .card-vertical {
-    @apply flex flex-col items-center gap-4 rounded-xl border bg-white p-5 text-center shadow-sm;
+    @apply flex flex-col items-center gap-4 rounded-xl border bg-card p-5 text-center shadow-sm;
+
+    border-color: var(--school-border);
+    color: var(--school-card-foreground);
   }
 
   .card-media {
@@ -127,11 +413,15 @@
   }
 
   .card-media-circle {
-    @apply rounded-full bg-gray-100;
+    @apply rounded-full;
+    background-color: var(--school-icon-bg-primary);
+    color: var(--school-icon-primary);
   }
 
   .card-media-box {
-    @apply rounded-xl bg-gray-100;
+    @apply rounded-xl;
+    background-color: var(--school-icon-bg-primary);
+    color: var(--school-icon-primary);
   }
 
   .card-media-none {
@@ -143,14 +433,191 @@
   }
 
   .card-category {
-    @apply text-xs font-semibold uppercase tracking-wider text-blue-600;
+    @apply text-xs font-semibold uppercase tracking-wider;
+
+    color: var(--school-primary);
   }
 
   .card-title {
     @apply mt-1 text-lg font-semibold;
+
+    color: var(--school-heading);
   }
 
   .card-description {
-    @apply mt-1 text-sm leading-6 text-gray-600;
+    @apply mt-1 text-sm leading-6;
+
+    color: var(--school-muted);
+  }
+}
+
+
+/* ============================================================
+   SEMANTIC UTILITIES
+   ============================================================ */
+
+@layer utilities {
+
+  /* ==========================================================
+     TEXT
+     ========================================================== */
+
+  .text-heading {
+    color: var(--school-heading);
+  }
+
+  .text-body {
+    color: var(--school-text);
+  }
+
+  .text-muted {
+    color: var(--school-muted);
+  }
+
+
+  /* ==========================================================
+     BACKGROUNDS
+     ========================================================== */
+
+  .bg-page {
+    background-color: var(--school-background);
+  }
+
+  .bg-surface {
+    background-color: var(--school-surface);
+  }
+
+  .bg-card {
+    background-color: var(--school-card);
+  }
+
+
+  /* ==========================================================
+     BORDERS
+     ========================================================== */
+
+  .border-default {
+    border-color: var(--school-border);
+  }
+
+
+  /* ==========================================================
+     SHADOWS
+     ========================================================== */
+
+  .shadow-school-card {
+    box-shadow: var(--school-shadow-card);
+  }
+
+  .shadow-school-card-hover {
+    box-shadow: var(--school-shadow-card-hover);
+  }
+
+  .shadow-school-button {
+    box-shadow: var(--school-shadow-button);
+  }
+
+
+  /* ==========================================================
+     ICON — PRIMARY
+     ========================================================== */
+
+  .icon-primary {
+    color: var(--school-icon-primary);
+  }
+
+  .icon-bg-primary {
+    background-color: var(--school-icon-bg-primary);
+  }
+
+
+  /* ==========================================================
+     ICON — ACCENT
+     ========================================================== */
+
+  .icon-accent {
+    color: var(--school-icon-accent);
+  }
+
+  .icon-bg-accent {
+    background-color: var(--school-icon-bg-accent);
+  }
+
+
+  /* ==========================================================
+     ICON — SUCCESS
+     ========================================================== */
+
+  .icon-success {
+    color: var(--school-icon-success);
+  }
+
+  .icon-bg-success {
+    background-color: var(--school-icon-bg-success);
+  }
+
+
+  /* ==========================================================
+     ICON — WARNING
+     ========================================================== */
+
+  .icon-warning {
+    color: var(--school-icon-warning);
+  }
+
+  .icon-bg-warning {
+    background-color: var(--school-icon-bg-warning);
+  }
+
+
+  /* ==========================================================
+     ICON — DANGER
+     ========================================================== */
+
+  .icon-danger {
+    color: var(--school-icon-danger);
+  }
+
+  .icon-bg-danger {
+    background-color: var(--school-icon-bg-danger);
+  }
+
+
+  /* ==========================================================
+     ICON — INFO / BLUE
+     ========================================================== */
+
+  .icon-info {
+    color: var(--school-icon-info);
+  }
+
+  .icon-bg-info {
+    background-color: var(--school-icon-bg-info);
+  }
+
+
+  /* ==========================================================
+     ICON — TEAL
+     ========================================================== */
+
+  .icon-teal {
+    color: var(--school-icon-teal);
+  }
+
+  .icon-bg-teal {
+    background-color: var(--school-icon-bg-teal);
+  }
+
+
+  /* ==========================================================
+     ICON — ROSE
+     ========================================================== */
+
+  .icon-rose {
+    color: var(--school-icon-rose);
+  }
+
+  .icon-bg-rose {
+    background-color: var(--school-icon-bg-rose);
   }
 }

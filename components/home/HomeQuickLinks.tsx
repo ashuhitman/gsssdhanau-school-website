@@ -7,7 +7,7 @@ import {
     Newspaper,
 } from "lucide-react";
 
-import { InfoCard } from "@/components/ui/InfoCard";
+import { InfoCard } from "@/components/common/InfoCard";
 
 interface QuickLink {
     title: string;
@@ -59,18 +59,18 @@ export function HomeQuickLinks() {
     return (
         <section
             className="
-                relative
+               
                 z-20
                 hidden
 
-                sm:-mt-8
+            
                 sm:block
                 sm:px-6
 
-                lg:-mt-12
+              
                 lg:px-8
 
-                2xl:-mt-14
+               
             "
         >
             <div className="mx-auto w-full max-w-[90rem]">

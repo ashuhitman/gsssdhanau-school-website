@@ -12,6 +12,12 @@ interface NewsletterCardProps {
     issue: string;
     date: string;
     href?: string;
+
+    /**
+     * Show the information below the newsletter cover.
+     * Default: true
+     */
+    showInfo?: boolean;
 }
 
 export function NewsletterCard({
@@ -20,8 +26,9 @@ export function NewsletterCard({
     issue,
     date,
     href,
+    showInfo = true,
 }: NewsletterCardProps) {
-    const content = (
+    const card = (
         <article
             className="
                 group
@@ -36,17 +43,19 @@ export function NewsletterCard({
         >
             {/* =====================================================
                 MAGAZINE
-            ===================================================== */}
+            ====================================================== */}
+
             <div
                 className="
                     relative
                     mx-auto
                     w-full
-                    max-w-[240px]
-                    [perspective:1600px]
+                    max-w-[15rem]
+                    [perspective:100rem]
                 "
             >
                 {/* Ground shadow */}
+
                 <div
                     className="
                         absolute
@@ -66,6 +75,7 @@ export function NewsletterCard({
                 />
 
                 {/* Magazine */}
+
                 <div
                     className="
                         relative
@@ -75,7 +85,8 @@ export function NewsletterCard({
                 >
                     {/* =================================================
                         INNER PAGES
-                    ================================================= */}
+                    ================================================== */}
+
                     <div
                         className="
                             absolute
@@ -86,30 +97,29 @@ export function NewsletterCard({
                             rounded-r-md
                             rounded-l-[2px]
                             border
-                            border-gray-200
-                            bg-[#faf9f5]
-                            shadow-[3px_4px_10px_rgba(0,0,0,0.15)]
+                            border-default
+                            bg-card
+                            shadow-[0.2rem_0.25rem_0.625rem_rgba(0,0,0,0.15)]
                         "
                     >
-                        {/* Page edge */}
                         <div
                             className="
                                 absolute
                                 bottom-2
                                 right-1
                                 top-2
-                                w-[3px]
+                                w-[0.2rem]
                                 rounded-r
                                 bg-gradient-to-r
-                                from-gray-300
-                                via-white
-                                to-gray-300
+                                from-muted
+                                via-card
+                                to-muted
                             "
                         />
 
-                        {/* Inner page */}
                         <div className="absolute inset-0 p-4">
                             {/* Header */}
+
                             <div
                                 className="
                                     flex
@@ -125,55 +135,78 @@ export function NewsletterCard({
                                         max-w-[75%]
                                         whitespace-normal
                                         break-normal
-                                        text-[7px]
+                                        text-[0.4375rem]
                                         font-bold
                                         uppercase
                                         leading-3
                                         tracking-[0.15em]
-                                        text-primary-600
+                                        text-primary
                                     "
                                 >
                                     {issue}
                                 </span>
 
-                                <span className="shrink-0 whitespace-nowrap text-[7px] text-gray-400">
+                                <span
+                                    className="
+                                        shrink-0
+                                        whitespace-nowrap
+                                        text-[0.4375rem]
+                                        text-muted
+                                    "
+                                >
                                     01
                                 </span>
                             </div>
 
-                            <div className="mt-2.5 h-px bg-gray-200" />
+                            <div
+                                className="
+                                    mt-2.5
+                                    h-px
+                                    bg-border
+                                "
+                            />
 
                             {/* Article heading */}
+
                             <div className="mt-5">
-                                <div className="h-1.5 w-20 rounded bg-gray-300" />
+                                <div
+                                    className="
+                                        h-1.5
+                                        w-20
+                                        rounded
+                                        bg-muted
+                                    "
+                                />
 
                                 <div className="mt-3 space-y-1.5">
-                                    <div className="h-1 w-full rounded bg-gray-200" />
-                                    <div className="h-1 w-[92%] rounded bg-gray-200" />
-                                    <div className="h-1 w-[80%] rounded bg-gray-200" />
+                                    <div className="h-1 w-full rounded bg-muted" />
+                                    <div className="h-1 w-[92%] rounded bg-muted" />
+                                    <div className="h-1 w-[80%] rounded bg-muted" />
                                 </div>
                             </div>
 
-                            {/* Image placeholder */}
+                            {/* Image */}
+
                             <div
                                 className="
                                     mt-5
                                     h-14
                                     rounded-md
-                                    bg-primary-50
-                                    dark:bg-primary-950/30
+                                    bg-primary-soft
                                 "
                             />
 
-                            {/* Article text */}
+                            {/* Text */}
+
                             <div className="mt-4 space-y-1.5">
-                                <div className="h-1 w-full rounded bg-gray-200" />
-                                <div className="h-1 w-[95%] rounded bg-gray-200" />
-                                <div className="h-1 w-[82%] rounded bg-gray-200" />
-                                <div className="h-1 w-[90%] rounded bg-gray-200" />
+                                <div className="h-1 w-full rounded bg-muted" />
+                                <div className="h-1 w-[95%] rounded bg-muted" />
+                                <div className="h-1 w-[82%] rounded bg-muted" />
+                                <div className="h-1 w-[90%] rounded bg-muted" />
                             </div>
 
                             {/* Footer */}
+
                             <div
                                 className="
                                     absolute
@@ -193,15 +226,22 @@ export function NewsletterCard({
                                         max-w-[80%]
                                         whitespace-normal
                                         break-normal
-                                        text-[7px]
+                                        text-[0.4375rem]
                                         leading-3
-                                        text-gray-400
+                                        text-muted
                                     "
                                 >
                                     PM SHRI GSSS Dhanau
                                 </span>
 
-                                <span className="shrink-0 whitespace-nowrap text-[7px] text-gray-400">
+                                <span
+                                    className="
+                                        shrink-0
+                                        whitespace-nowrap
+                                        text-[0.4375rem]
+                                        text-muted
+                                    "
+                                >
                                     01
                                 </span>
                             </div>
@@ -210,17 +250,18 @@ export function NewsletterCard({
 
                     {/* =================================================
                         PAGE LAYERS
-                    ================================================= */}
+                    ================================================== */}
+
                     <div
                         className="
                             absolute
-                            bottom-[3px]
-                            right-[-4px]
-                            top-[3px]
+                            bottom-[0.1875rem]
+                            right-[-0.25rem]
+                            top-[0.1875rem]
                             z-10
-                            w-[4px]
+                            w-1
                             rounded-r-sm
-                            bg-white
+                            bg-card
                             shadow-sm
                         "
                     />
@@ -228,19 +269,20 @@ export function NewsletterCard({
                     <div
                         className="
                             absolute
-                            bottom-[5px]
-                            right-[-6px]
-                            top-[5px]
+                            bottom-[0.3125rem]
+                            right-[-0.375rem]
+                            top-[0.3125rem]
                             z-10
-                            w-[2px]
+                            w-0.5
                             rounded-r-sm
-                            bg-gray-200
+                            bg-muted
                         "
                     />
 
                     {/* =================================================
                         FRONT COVER
-                    ================================================= */}
+                    ================================================== */}
+
                     <div
                         className="
                             absolute
@@ -249,14 +291,14 @@ export function NewsletterCard({
                             origin-left
                             overflow-hidden
                             rounded-r-md
-                            rounded-l-[3px]
+                            rounded-l-[0.1875rem]
                             border
                             border-white/10
                             bg-gradient-to-br
                             from-primary-700
                             via-primary-600
                             to-primary-900
-                            shadow-[4px_5px_12px_rgba(0,0,0,0.22)]
+                            shadow-[0.25rem_0.3125rem_0.75rem_rgba(0,0,0,0.22)]
                             transition-transform
                             duration-700
                             ease-[cubic-bezier(0.4,0,0.2,1)]
@@ -264,9 +306,8 @@ export function NewsletterCard({
                             group-hover:[transform:rotateY(-72deg)]
                         "
                     >
-                        {/* =================================================
-                            SPINE
-                        ================================================= */}
+                        {/* Spine */}
+
                         <div
                             className="
                                 absolute
@@ -274,15 +315,14 @@ export function NewsletterCard({
                                 left-0
                                 top-0
                                 z-30
-                                w-[5px]
+                                w-[0.3125rem]
                                 bg-black/25
-                                shadow-[2px_0_4px_rgba(0,0,0,0.25)]
+                                shadow-[0.125rem_0_0.25rem_rgba(0,0,0,0.25)]
                             "
                         />
 
-                        {/* =================================================
-                            DECORATIVE CIRCLES
-                        ================================================= */}
+                        {/* Decorative circles */}
+
                         <div
                             aria-hidden="true"
                             className="
@@ -311,9 +351,8 @@ export function NewsletterCard({
                             "
                         />
 
-                        {/* =================================================
-                            TOP HEADER
-                        ================================================= */}
+                        {/* Top header */}
+
                         <div
                             className="
                                 absolute
@@ -335,10 +374,10 @@ export function NewsletterCard({
                                 <span
                                     className="
                                         min-w-0
-                                        max-w-[calc(100%-22px)]
+                                        max-w-[calc(100%-1.375rem)]
                                         whitespace-normal
                                         break-normal
-                                        text-[7px]
+                                        text-[0.4375rem]
                                         font-bold
                                         uppercase
                                         leading-3
@@ -358,12 +397,17 @@ export function NewsletterCard({
                                 />
                             </div>
 
-                            <div className="mt-2.5 h-px bg-white/20" />
+                            <div
+                                className="
+                                    mt-2.5
+                                    h-px
+                                    bg-white/20
+                                "
+                            />
                         </div>
 
-                        {/* =================================================
-                            MAGAZINE TITLE
-                        ================================================= */}
+                        {/* Magazine title */}
+
                         <div
                             className="
                                 absolute
@@ -375,11 +419,10 @@ export function NewsletterCard({
                                 text-center
                             "
                         >
-                            {/* SCHOOL */}
                             <p
                                 className="
                                     whitespace-nowrap
-                                    text-[7px]
+                                    text-[0.4375rem]
                                     font-semibold
                                     uppercase
                                     leading-3
@@ -390,7 +433,6 @@ export function NewsletterCard({
                                 SCHOOL
                             </p>
 
-                            {/* Newsletter */}
                             <h2
                                 className="
                                     mt-1.5
@@ -419,14 +461,13 @@ export function NewsletterCard({
                                 "
                             />
 
-                            {/* Subtitle */}
                             <p
                                 className="
                                     mx-auto
                                     mt-2.5
                                     max-w-full
                                     whitespace-nowrap
-                                    text-[6px]
+                                    text-[0.375rem]
                                     font-medium
                                     leading-3
                                     tracking-[0.04em]
@@ -437,9 +478,8 @@ export function NewsletterCard({
                             </p>
                         </div>
 
-                        {/* =================================================
-                            ISSUE + DATE
-                        ================================================= */}
+                        {/* Issue + date */}
+
                         <div
                             className="
                                 absolute
@@ -453,12 +493,11 @@ export function NewsletterCard({
                                 gap-3
                             "
                         >
-                            {/* Issue */}
                             <div className="min-w-0 max-w-[48%]">
                                 <p
                                     className="
                                         whitespace-nowrap
-                                        text-[6px]
+                                        text-[0.375rem]
                                         uppercase
                                         tracking-[0.18em]
                                         text-white/60
@@ -481,14 +520,13 @@ export function NewsletterCard({
                                 </p>
                             </div>
 
-                            {/* Date */}
                             <p
                                 className="
                                     min-w-0
                                     max-w-[48%]
                                     whitespace-nowrap
                                     text-right
-                                    text-[7px]
+                                    text-[0.4375rem]
                                     font-medium
                                     leading-3
                                     text-white/75
@@ -499,6 +537,7 @@ export function NewsletterCard({
                         </div>
 
                         {/* Bottom strip */}
+
                         <div
                             className="
                                 absolute
@@ -514,136 +553,149 @@ export function NewsletterCard({
             </div>
 
             {/* =====================================================
-                INFORMATION BELOW MAGAZINE
-            ===================================================== */}
-            <div className="mx-auto mt-4 max-w-[240px] px-1">
-                {/* Date */}
+                INFORMATION BELOW BOOK
+            ====================================================== */}
+
+            {showInfo && (
                 <div
                     className="
-                        flex
-                        min-w-0
-                        items-center
-                        gap-1.5
-                        text-[9px]
-                        font-medium
-                        text-muted-foreground
-                        sm:text-[10px]
+                        mx-auto
+                        mt-4
+                        max-w-[15rem]
+                        px-1
                     "
                 >
-                    <CalendarDays className="size-3 shrink-0" />
+                    {/* Date */}
 
-                    <span className="min-w-0 whitespace-normal break-normal">
-                        {date}
-                    </span>
-                </div>
-
-                {/* Title */}
-                <h3
-                    className="
-                        mt-1.5
-                        whitespace-normal
-                        break-normal
-                        text-xs
-                        font-bold
-                        leading-5
-                        text-primary-800
-                        dark:text-primary-200
-                        sm:text-sm
-                    "
-                >
-                    {title}
-                </h3>
-
-                {/* Accent */}
-                <div
-                    className="
-                        mt-1.5
-                        h-0.5
-                        w-7
-                        bg-primary-500
-                        transition-all
-                        duration-300
-                        group-hover:w-11
-                    "
-                />
-
-                {/* Description */}
-                <p
-                    className="
-                        mt-2
-                        line-clamp-2
-                        whitespace-normal
-                        break-normal
-                        text-[10px]
-                        leading-4
-                        text-muted-foreground
-                        sm:text-xs
-                    "
-                >
-                    {description}
-                </p>
-
-                {/* =================================================
-                    ACTIONS
-                ================================================= */}
-                {href && (
                     <div
                         className="
-                            mt-3
                             flex
                             min-w-0
                             items-center
-                            gap-3
+                            gap-1.5
+                            text-[0.5625rem]
+                            font-medium
+                            text-muted
+
+                            sm:text-[0.625rem]
                         "
                     >
-                        <span
-                            className="
-                                inline-flex
-                                min-w-0
-                                items-center
-                                gap-1
-                                text-[10px]
-                                font-semibold
-                                text-primary-600
-                                dark:text-primary-400
-                                sm:text-xs
-                            "
-                        >
-                            <span className="whitespace-nowrap">
-                                Read Newsletter
-                            </span>
+                        <CalendarDays className="size-3 shrink-0" />
 
-                            <ArrowRight
-                                className="
-                                    size-3
-                                    shrink-0
-                                    transition-transform
-                                    duration-200
-                                    group-hover:translate-x-1
-                                "
-                            />
-                        </span>
-
-                        <span
-                            className="
-                                ml-auto
-                                flex
-                                size-7
-                                shrink-0
-                                items-center
-                                justify-center
-                                rounded-lg
-                                bg-primary-50
-                                text-primary-600
-                                dark:bg-primary-950
-                                dark:text-primary-400
-                            "
-                        >
-                            <Download className="size-3.5" />
+                        <span className="min-w-0 whitespace-normal break-normal">
+                            {date}
                         </span>
                     </div>
-                )}
-            </div>
+
+                    {/* Title */}
+
+                    <h3
+                        className="
+                            mt-1.5
+                            whitespace-normal
+                            break-normal
+                            text-xs
+                            font-bold
+                            leading-5
+                            text-heading
+
+                            sm:text-sm
+                        "
+                    >
+                        {title}
+                    </h3>
+
+                    {/* Accent */}
+
+                    <div
+                        className="
+                            mt-1.5
+                            h-0.5
+                            w-7
+                            bg-accent
+                            transition-all
+                            duration-300
+                            group-hover:w-11
+                        "
+                    />
+
+                    {/* Description */}
+
+                    <p
+                        className="
+                            mt-2
+                            line-clamp-2
+                            whitespace-normal
+                            break-normal
+                            text-[0.625rem]
+                            leading-4
+                            text-muted
+
+                            sm:text-xs
+                        "
+                    >
+                        {description}
+                    </p>
+
+                    {/* Actions */}
+
+                    {href && (
+                        <div
+                            className="
+                                mt-3
+                                flex
+                                min-w-0
+                                items-center
+                                gap-3
+                            "
+                        >
+                            <span
+                                className="
+                                    inline-flex
+                                    min-w-0
+                                    items-center
+                                    gap-1
+                                    text-[0.625rem]
+                                    font-semibold
+                                    text-primary
+
+                                    sm:text-xs
+                                "
+                            >
+                                <span className="whitespace-nowrap">
+                                    Read Newsletter
+                                </span>
+
+                                <ArrowRight
+                                    className="
+                                        size-3
+                                        shrink-0
+                                        transition-transform
+                                        duration-200
+                                        group-hover:translate-x-1
+                                    "
+                                />
+                            </span>
+
+                            <span
+                                className="
+                                    ml-auto
+                                    flex
+                                    size-7
+                                    shrink-0
+                                    items-center
+                                    justify-center
+                                    rounded-lg
+                                    bg-accent-soft
+                                    text-accent
+                                "
+                            >
+                                <Download className="size-3.5" />
+                            </span>
+                        </div>
+                    )}
+                </div>
+            )}
         </article>
     );
 
@@ -651,12 +703,16 @@ export function NewsletterCard({
         return (
             <Link
                 href={href}
-                className="block h-full"
+                className="
+                    block
+                    h-full
+                    min-w-0
+                "
             >
-                {content}
+                {card}
             </Link>
         );
     }
 
-    return content;
+    return card;
 }

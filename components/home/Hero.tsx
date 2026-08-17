@@ -37,15 +37,15 @@ export function Hero({
 }: HeroProps) {
     return (
         <section className="w-full">
-            <div className="relative w-full overflow-hidden bg-primary-950">
+            <div className="relative w-full  overflow-hidden bg-primary-950">
                 <div
                     className="
                         grid
-                        min-h-[20rem]
+                   
                         grid-cols-1
-                        lg:min-h-[23rem]
+                       
                         lg:grid-cols-[0.9fr_1.1fr]
-                        2xl:min-h-[24rem]
+                      
                     "
                 >
                     {/* Left content */}
@@ -217,9 +217,9 @@ export function Hero({
                     <div
                         className="
                             relative
-                            min-h-[12rem]
+                          aspect-video
                             overflow-hidden
-                            sm:min-h-[14rem]
+                           
                             lg:min-h-0
                         "
                     >
