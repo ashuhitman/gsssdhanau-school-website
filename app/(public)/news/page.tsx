@@ -96,7 +96,7 @@ export default function NewsActivitiesPage() {
                 eyebrow="News & Activities"
                 title="News & Activities"
                 description="Stay updated with the latest news, events, and exciting activities happening in our school."
-                image="/images/activity.png"
+                image="/images/news/activity.jpg"
                 imageAlt="Students participating in school activities"
                 breadcrumbs={[
                     {
