@@ -2,7 +2,6 @@ import { CalendarDays, ChevronRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
-import Card from "./Card/Card";
 
 export interface NewsCardProps {
     title: string;
