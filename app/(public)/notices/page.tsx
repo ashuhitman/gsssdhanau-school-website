@@ -172,7 +172,7 @@ export default function NoticesPage() {
                 title=""
                 highlight="Notices"
                 description="Stay updated with the latest announcements, circulars and important information from PM SHRI GSSS Dhanau."
-                image="/images/activities/hero-cover.png"
+                image="/images/notice/hero.jpg"
                 imageAlt="PM SHRI GSSS Dhanau students participating in activities"
                 stats={[
 

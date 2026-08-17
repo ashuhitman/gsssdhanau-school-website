@@ -87,7 +87,7 @@ export default function ActivitiesPage() {
                 title="Our"
                 highlight="Activities"
                 description="A wide range of co-curricular and extra-curricular activities that nurture talent, build character and promote the holistic development of our students."
-                image="/images/activities/hero-cover.png"
+                image="/images/activities/hero.jpg"
                 imageAlt="PM SHRI GSSS Dhanau students participating in activities"
                 stats={[
                     {

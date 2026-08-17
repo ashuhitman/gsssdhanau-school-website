@@ -106,7 +106,7 @@ export default function FacilitiesPage() {
                 title="Our Facilities"
                 highlight=""
                 description="Well-equipped learning spaces and resources that support academic growth, practical learning, digital education, and the overall development of our students."
-                image="/images/facilities/hero.png"
+                image="/images/facilities/hero.jpg"
                 imageAlt="our facilities"
                 stats={[
                     {

@@ -109,7 +109,7 @@ export default function NewsActivitiesPage() {
             <PageHero
                 title="News and Events"
                 description="A wide range of co-curricular and extra-curricular activities that nurture talent, build character and promote the holistic development of our students."
-                image="/images/events/event-image.png"
+                image="/images/events/hero.jpg"
                 imageAlt="Students of PM SHRI GSSS Dhanau participating in activities"
 
                 breadcrumb={[
