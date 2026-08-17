@@ -16,49 +16,59 @@ interface ThemeContextValue {
     setTheme: (theme: Theme) => void;
 }
 
-const ThemeContext =
-    createContext<ThemeContextValue | null>(null);
+const ThemeContext = createContext<ThemeContextValue | null>(null);
 
 const STORAGE_KEY = "school-theme";
-
-function getCurrentTheme(): Theme {
-    if (typeof document === "undefined") {
-        return "light";
-    }
-
-    return document.documentElement.classList.contains("dark")
-        ? "dark"
-        : "light";
-}
 
 export function ThemeProvider({
     children,
 }: {
     children: ReactNode;
 }) {
-    const [theme, setThemeState] =
-        useState<Theme>(getCurrentTheme);
+    const [theme, setThemeState] = useState<Theme>("light");
+
+    useEffect(() => {
+        const storedTheme = localStorage.getItem(STORAGE_KEY);
+
+        if (storedTheme === "light" || storedTheme === "dark") {
+            setThemeState(storedTheme);
+
+            document.documentElement.classList.toggle(
+                "dark",
+                storedTheme === "dark",
+            );
+
+            return;
+        }
+
+        const prefersDark = window.matchMedia(
+            "(prefers-color-scheme: dark)",
+        ).matches;
+
+        const initialTheme: Theme = prefersDark ? "dark" : "light";
+
+        setThemeState(initialTheme);
+
+        document.documentElement.classList.toggle(
+            "dark",
+            initialTheme === "dark",
+        );
+    }, []);
 
     function setTheme(nextTheme: Theme) {
         setThemeState(nextTheme);
+
+        localStorage.setItem(STORAGE_KEY, nextTheme);
 
         document.documentElement.classList.toggle(
             "dark",
             nextTheme === "dark",
         );
-
-        localStorage.setItem(STORAGE_KEY, nextTheme);
     }
 
     function toggleTheme() {
-        setTheme(theme === "dark" ? "light" : "dark");
+        setTheme(theme === "light" ? "dark" : "light");
     }
-
-    useEffect(() => {
-        const currentTheme = getCurrentTheme();
-
-        setThemeState(currentTheme);
-    }, []);
 
     return (
         <ThemeContext.Provider

@@ -15,8 +15,9 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
+import { ThemeToggle } from "../theme/ThemeToggle";
 
-import { ThemeToggle } from "@/components/theme/ThemeToggle";
+
 
 const navigation = [
     {
@@ -83,8 +84,8 @@ export function DashboardShell({
             {/* Sidebar */}
             <aside
                 className={`fixed inset-y-0 left-0 z-50 flex w-72 flex-col border-r border-border bg-card transition-transform duration-300 lg:translate-x-0 ${mobileOpen
-                        ? "translate-x-0"
-                        : "-translate-x-full"
+                    ? "translate-x-0"
+                    : "-translate-x-full"
                     }`}
             >
                 {/* Logo */}

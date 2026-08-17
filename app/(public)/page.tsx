@@ -1,19 +1,25 @@
+import { Hero } from "@/components/home/Hero";
+import { HomeQuickLinks } from "@/components/home/HomeQuickLinks";
+import { HomeContent } from "@/components/home/HomeContent";
+
 export default function HomePage() {
   return (
-    <section className="flex min-h-[70vh] items-center justify-center px-4">
-      <div className="text-center">
-        <p className="text-sm font-bold uppercase tracking-[0.2em] text-primary-600">
-          PM SHRI GSSS Dhanau
-        </p>
+    <main>
+      <Hero
+        image="/images/home/hero.jpg"
+        imageAlt="PM SHRI GSSS Dhanau school campus"
+        eyebrow="Welcome to"
+        title="PM SHRI GSSS Dhanau"
+        description="Empowering students through quality education, practical learning, strong values, and opportunities to grow."
+        primaryText="Discover Our School"
+        primaryHref="/about"
+        secondaryText="Explore Academics"
+        secondaryHref="/academics"
+      />
 
-        <h1 className="mt-3 text-4xl font-black tracking-tight sm:text-5xl">
-          School Website
-        </h1>
+      <HomeQuickLinks />
 
-        <p className="mx-auto mt-4 max-w-lg text-muted-foreground">
-          Building the future of our school website.
-        </p>
-      </div>
-    </section>
+      <HomeContent />
+    </main>
   );
 }

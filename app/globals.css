@@ -112,3 +112,45 @@
     color: white;
   }
 }
+
+@layer components {
+  .card-horizontal {
+    @apply flex items-center gap-4 rounded-xl border bg-white p-5 shadow-sm;
+  }
+
+  .card-vertical {
+    @apply flex flex-col items-center gap-4 rounded-xl border bg-white p-5 text-center shadow-sm;
+  }
+
+  .card-media {
+    @apply flex size-16 shrink-0 items-center justify-center overflow-hidden;
+  }
+
+  .card-media-circle {
+    @apply rounded-full bg-gray-100;
+  }
+
+  .card-media-box {
+    @apply rounded-xl bg-gray-100;
+  }
+
+  .card-media-none {
+    @apply rounded-none bg-transparent;
+  }
+
+  .card-content {
+    @apply flex-1;
+  }
+
+  .card-category {
+    @apply text-xs font-semibold uppercase tracking-wider text-blue-600;
+  }
+
+  .card-title {
+    @apply mt-1 text-lg font-semibold;
+  }
+
+  .card-description {
+    @apply mt-1 text-sm leading-6 text-gray-600;
+  }
+}
