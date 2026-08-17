@@ -24,7 +24,7 @@ const sampleStory: FeaturedStoryItem = {
     excerpt:
         "A look at how our students learn through practical experiences, projects, activities and meaningful participation beyond the classroom.",
     date: "12 Aug 2026",
-    image: "/images/facilities/chem.jpg",
+    image: "/images/news/activity.png",
     href: "/articles/learning-beyond-the-classroom",
     author: "School Editorial Team",
     category: "Academic",
