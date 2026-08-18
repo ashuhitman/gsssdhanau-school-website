@@ -70,7 +70,7 @@ export function LatestArticles({
               
                     grid
                     grid-cols-1
-                    gap-4
+                    gap-8
                     sm:grid-cols-2
                     xl:grid-cols-3
                 "
@@ -106,6 +106,7 @@ export function LatestArticles({
                             dark:hover:border-primary-700
                             dark:hover:bg-primary-950
                             my-auto
+                            mt-5
                         "
                     >
                         View all articles

@@ -3,7 +3,7 @@
 export function PublicFooter() {
     return (
         <footer className="border-t bg-slate-50 dark:bg-slate-900 mt-auto">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 bg-fuchsia-400">
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
                     <div>
                         <h3 className="font-bold mb-4">About</h3>

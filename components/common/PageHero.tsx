@@ -62,6 +62,7 @@ export default function PageHero({
                 relative
                 overflow-hidden
                 bg-background
+               
                 ${className}
             `}
         >
@@ -70,7 +71,7 @@ export default function PageHero({
                     relative
                     mx-auto
                     w-full
-                    max-w-[96rem]
+                    
                 "
             >
                 {/* =====================================================
@@ -83,6 +84,7 @@ export default function PageHero({
                         grid
                         grid-cols-1
                         lg:grid-cols-[40%_60%]
+                       
                     "
                 >
                     {/* =================================================
@@ -98,19 +100,19 @@ export default function PageHero({
                             flex-col
                             justify-center
 
-                            px-5
+                          
                             py-8
 
                             sm:px-8
                             sm:py-9
 
-                            md:px-10
+                          
                             md:py-10
 
-                            lg:px-10
+                     
                             lg:py-8
 
-                            xl:px-12
+                           
                         "
                     >
                         {/* =================================================
@@ -542,7 +544,8 @@ export default function PageHero({
                             sm:min-h-[22rem]
                             md:min-h-[24rem]
                             lg:min-h-[40svh]
-                            xl:min-h-[40svh]
+                            xl:min-h-[50svh]
+                            
                         "
                     >
                         <Image

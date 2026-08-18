@@ -14,7 +14,7 @@ export default function SectionHeading({
     return (
         <div
             className={`
-                max-w-[52rem]
+               
                 ${align === "center"
                     ? "mx-auto text-center"
                     : "text-left"

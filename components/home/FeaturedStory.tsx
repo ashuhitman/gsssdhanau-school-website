@@ -36,7 +36,7 @@ export function FeaturedStory({
     title = "Featured Story",
 }: FeaturedStoryProps) {
     return (
-        <section className="min-w-0">
+        <section className="min-w-0 ">
             {/* Section heading */}
             <SectionHeading
                 align="left"

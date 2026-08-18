@@ -59,8 +59,8 @@ export function PublicHeader() {
                 TOP UTILITY BAR
             ================================================= */}
             <div className="bg-primary-600 text-white " >
-                <div className="mx-auto flex items-center justify-between gap-4 px-4 text-xs sm:px-6 lg:px-8 z-100">
-                    <div className="hidden items-center gap-5 lg:flex">
+                <div className="mx-auto flex items-center justify-between gap-4 px-4 text-xs sm:px-6 lg:px-8 z-100 bg">
+                    <div className="hidden items-center gap-5 lg:flex bg-red">
                         <div className="flex items-center gap-2">
                             <MapPin className="size-3.5 shrink-0" />
                             <span>

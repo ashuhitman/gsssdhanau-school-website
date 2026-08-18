@@ -153,8 +153,8 @@ const quickLinks = [
 
 export function QuickLinks() {
     return (
-        <section className="px-4 py-5 sm:px-6 lg:py-6 2xl:px-8">
-            <div className="mx-auto max-w-[90rem]">
+        <section className="px-4 py-5 sm:px-6 lg:py-6 2xl:px-8 ">
+            <div className="mx-auto">
                 <div
                     className="
                         overflow-hidden

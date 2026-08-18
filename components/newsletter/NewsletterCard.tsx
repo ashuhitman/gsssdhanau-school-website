@@ -39,6 +39,7 @@ export function NewsletterCard({
                 transition-[z-index]
                 duration-0
                 hover:z-50
+            
             "
         >
             {/* =====================================================

@@ -37,7 +37,7 @@ export function LatestNewsletter({
     href = "/newsletter",
 }: NewsletterProps) {
     return (
-        <section className="min-w-0 ">
+        <section className="min-w-0">
             {/* Centered heading */}
             <div className="mb-5 text-center">
 
