@@ -18,6 +18,7 @@ import {
     Trophy,
     Users,
 } from "lucide-react";
+import { PageLayout } from "@/components/layout/PageLayout";
 
 
 /* ─────────────────────────────────────
@@ -102,27 +103,25 @@ const categories: NewsCategoryOption[] = [
 
 export default function NewsActivitiesPage() {
     return (
-        <main>
-            {/* ─────────────────────────────────
-                HERO
-            ───────────────────────────────── */}
-            <PageHero
-                title="News and Events"
-                description="A wide range of co-curricular and extra-curricular activities that nurture talent, build character and promote the holistic development of our students."
-                image="/images/events/hero.jpg"
-                imageAlt="Students of PM SHRI GSSS Dhanau participating in activities"
 
-                breadcrumb={[
-                    {
-                        label: "News and Events",
-                    },
-                ]}
-            />
+        <PageLayout hero={<PageHero
+            title="News and Events"
+            description="A wide range of co-curricular and extra-curricular activities that nurture talent, build character and promote the holistic development of our students."
+            image="/images/events/hero.jpg"
+            imageAlt="Students of PM SHRI GSSS Dhanau participating in activities"
+
+            breadcrumb={[
+                {
+                    label: "News and Events",
+                },
+            ]}
+        />}>
+
 
             {/* ─────────────────────────────────
                 CONTENT
             ───────────────────────────────── */}
-            <section className="mx-auto max-w-[1350px] px-4 py-8 sm:px-6 lg:px-8">
+            <section className="mx-auto  py-8 ">
                 <div className="grid items-start gap-8 lg:grid-cols-[minmax(0,1fr)_320px]">
                     {/* =================================================
                         LEFT COLUMN
@@ -149,6 +148,10 @@ export default function NewsActivitiesPage() {
                     </aside>
                 </div>
             </section>
-        </main>
+
+        </PageLayout>
+
+
+
     );
 }

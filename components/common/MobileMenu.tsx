@@ -3,37 +3,7 @@
 import { ChevronRight, X } from "lucide-react";
 import Link from "next/link";
 
-const navigation = [
-    {
-        label: "Home",
-        href: "/",
-    },
-    {
-        label: "Academics",
-        href: "/academics",
-    },
-    {
-        label: "News & Activities",
-        href: "/news",
-    },
-    {
-        label: "Achievements",
-        href: "/achievements",
-    },
-    {
-        label: "Gallery",
-        href: "/gallery",
-    },
-    {
-        label: "Notices",
-        href: "/notices",
-    },
-
-    {
-        label: "Newsletter",
-        href: "/newsletter",
-    },
-];
+import { navigation } from './PublicHeader';
 
 interface MobileMenuProps {
     open: boolean;

@@ -12,6 +12,7 @@ import PageHero from "@/components/common/PageHero";
 import SectionHeading from "@/components/common/SectionHeading";
 import NewsletterSubscribe from "@/components/newsletter/NewsletterSubscribe";
 import NewsletterLatestIssue from "@/components/newsletter/NewsletterLatestIssue";
+import { PageLayout } from "@/components/layout/PageLayout";
 
 export default function NewsletterPage() {
     /* ================================================================
@@ -85,8 +86,7 @@ export default function NewsletterPage() {
             {/* =========================================================
                 HERO
             ========================================================== */}
-
-            <PageHero
+            <PageLayout hero={<PageHero
                 breadcrumb={[
                     {
                         label: "Newsletter",
@@ -118,50 +118,44 @@ export default function NewsletterPage() {
                     },
                 ]}
             />
+            }>
 
-            {/* =========================================================
+                {/* =========================================================
                 CONTENT
             ========================================================== */}
 
-            <div
-                className="
+                <div
+                    className="
                     mx-auto
                     w-full
-                    max-w-[96rem]
-                    px-4
+                   
 
-                    sm:px-6
-
-                    md:px-8
-
-                    lg:px-10
-
-                    xl:px-12
+                  
                 "
-            >
-                {/* =====================================================
+                >
+                    {/* =====================================================
                     SUBSCRIBE
                 ====================================================== */}
 
-                <section
-                    className="
+                    <section
+                        className="
                         py-10
 
                         sm:py-12
 
                         lg:py-16
                     "
-                >
-                    <NewsletterSubscribe />
-                </section>
+                    >
+                        <NewsletterSubscribe />
+                    </section>
 
-                {/* =====================================================
+                    {/* =====================================================
                     LATEST NEWSLETTER
                 ====================================================== */}
 
-                <section
-                    id="latest-newsletter"
-                    className="
+                    <section
+                        id="latest-newsletter"
+                        className="
                         border-t
                         border-default
                         py-10
@@ -170,41 +164,41 @@ export default function NewsletterPage() {
 
                         lg:py-16
                     "
-                >
-                    <SectionHeading
-                        align="center"
-                        eyebrow="Featured"
-                        title="Latest Newsletter"
-                        description="Take a look at our most recent school newsletter and discover what has been happening at PM SHRI GSSS Dhanau."
-                    />
+                    >
+                        <SectionHeading
+                            align="center"
+                            eyebrow="Featured"
+                            title="Latest Newsletter"
+                            description="Take a look at our most recent school newsletter and discover what has been happening at PM SHRI GSSS Dhanau."
+                        />
 
-                    <div
-                        className="
+                        <div
+                            className="
                             mt-8
 
                             sm:mt-10
                         "
-                    >
-                        <NewsletterLatestIssue
-                            title="Newsletter – May 2025"
-                            description="Read about our recent activities, student achievements, important announcements and upcoming events."
-                            issue="May 2025"
-                            date="May 20, 2025"
-                            pages="12 Pages"
-                            size="2.4 MB"
-                            href="/newsletter/may-2025"
-                            downloadHref="/documents/newsletters/may-2025.pdf"
-                        />
-                    </div>
-                </section>
+                        >
+                            <NewsletterLatestIssue
+                                title="Newsletter – May 2025"
+                                description="Read about our recent activities, student achievements, important announcements and upcoming events."
+                                issue="May 2025"
+                                date="May 20, 2025"
+                                pages="12 Pages"
+                                size="2.4 MB"
+                                href="/newsletter/may-2025"
+                                downloadHref="/documents/newsletters/may-2025.pdf"
+                            />
+                        </div>
+                    </section>
 
-                {/* =====================================================
+                    {/* =====================================================
                     NEWSLETTER ARCHIVE
                 ====================================================== */}
 
-                <section
-                    id="newsletter-archive"
-                    className="
+                    <section
+                        id="newsletter-archive"
+                        className="
                         border-t
                         border-default
                         py-10
@@ -213,33 +207,33 @@ export default function NewsletterPage() {
 
                         lg:py-16
                     "
-                >
-                    <SectionHeading
-                        align="center"
-                        eyebrow="Explore"
-                        title="Newsletter Archive"
-                        description="Browse previous editions and stay connected with the journey, achievements and activities of our school."
-                    />
+                    >
+                        <SectionHeading
+                            align="center"
+                            eyebrow="Explore"
+                            title="Newsletter Archive"
+                            description="Browse previous editions and stay connected with the journey, achievements and activities of our school."
+                        />
 
-                    <div
-                        className="
+                        <div
+                            className="
                             mt-8
 
                             sm:mt-10
                         "
-                    >
-                        <NewsletterArchiveGrid
-                            newsletters={newsletters}
-                        />
-                    </div>
-                </section>
+                        >
+                            <NewsletterArchiveGrid
+                                newsletters={newsletters}
+                            />
+                        </div>
+                    </section>
 
-                {/* =====================================================
+                    {/* =====================================================
                     CLOSING MESSAGE
                 ====================================================== */}
 
-                <section
-                    className="
+                    <section
+                        className="
                         border-t
                         border-default
                         py-10
@@ -248,16 +242,16 @@ export default function NewsletterPage() {
 
                         lg:py-16
                     "
-                >
-                    <div
-                        className="
+                    >
+                        <div
+                            className="
                             mx-auto
                             max-w-[48rem]
                             text-center
                         "
-                    >
-                        <div
-                            className="
+                        >
+                            <div
+                                className="
                                 mx-auto
                                 flex
                                 h-12
@@ -268,23 +262,23 @@ export default function NewsletterPage() {
                                 icon-bg-accent
                                 icon-accent
                             "
-                        >
-                            <Newspaper size={22} />
-                        </div>
+                            >
+                                <Newspaper size={22} />
+                            </div>
 
-                        <h2
-                            className="
+                            <h2
+                                className="
                                 mt-4
                                 text-[clamp(1.3rem,2.5vw,1.8rem)]
                                 font-bold
                                 text-heading
                             "
-                        >
-                            Keeping our school community connected
-                        </h2>
+                            >
+                                Keeping our school community connected
+                            </h2>
 
-                        <p
-                            className="
+                            <p
+                                className="
                                 mx-auto
                                 mt-3
                                 max-w-[42rem]
@@ -294,19 +288,23 @@ export default function NewsletterPage() {
 
                                 sm:text-base
                             "
-                        >
-                            Our newsletter brings together important
-                            announcements, student achievements, school
-                            activities and memorable moments from across
-                            the academic year.
-                        </p>
-                    </div>
-                </section>
+                            >
+                                Our newsletter brings together important
+                                announcements, student achievements, school
+                                activities and memorable moments from across
+                                the academic year.
+                            </p>
+                        </div>
+                    </section>
 
-                {/* Bottom spacing */}
+                    {/* Bottom spacing */}
 
-                <div className="h-4 sm:h-6 lg:h-8" />
-            </div>
+                    <div className="h-4 sm:h-6 lg:h-8" />
+                </div>
+
+            </PageLayout>
+
+
         </>
     );
 }

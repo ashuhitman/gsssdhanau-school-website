@@ -84,6 +84,7 @@ export default function PageHero({
                         grid
                         grid-cols-1
                         lg:grid-cols-[40%_60%]
+                        
                        
                     "
                 >
@@ -91,29 +92,21 @@ export default function PageHero({
                         LEFT CONTENT
                     ================================================== */}
 
-                    <div
-                        className="
-                            relative
-                            z-20
-                            flex
-                            min-h-[40svh]
-                            flex-col
-                            justify-center
-
-                          
-                            py-8
-
-                            sm:px-8
-                            sm:py-9
-
-                          
-                            md:py-10
-
-                     
-                            lg:py-8
-
-                           
-                        "
+                    <div className="
+        relative
+        z-20
+        flex
+        min-h-[40svh]
+        flex-col
+        justify-center
+        px-4
+        py-8
+        sm:px-6
+        sm:py-9
+        md:py-10
+        lg:px-8
+        lg:py-8
+    "
                     >
                         {/* =================================================
                             DECORATIVE BACKGROUND
@@ -517,12 +510,14 @@ export default function PageHero({
                                 <div
                                     aria-hidden="true"
                                     className="
+                                    hidden
                                         invisible
-                                        grid
-                                        grid-cols-1
-                                        gap-4
+                                        sm:grid
+                                        sm:grid-cols-1
+                                       sm:gap-4
                                         sm:grid-cols-3
                                         sm:gap-3
+
                                     "
                                 >
                                     <div className="h-10" />

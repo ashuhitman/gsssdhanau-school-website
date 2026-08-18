@@ -3,6 +3,7 @@ import AcademicsQuickLinks from "@/components/academics/AcademicQuickLinks";
 import ClassesStreams from "@/components/academics/ClassesStreams";
 import FacultyPreview from "@/components/academics/FacultyPreview";
 import PageHero from "@/components/common/PageHero";
+import { PageLayout } from "@/components/layout/PageLayout";
 import { PublicHero } from "@/components/public/PublicHero";
 import { ArrowBigDown, ArrowBigDownDash, GraduationCap, Trophy, Users } from "lucide-react";
 
@@ -11,7 +12,7 @@ import { ArrowBigDown, ArrowBigDownDash, GraduationCap, Trophy, Users } from "lu
 export default function AcademicsPage() {
     return (
         <>
-            <PageHero
+            <PageLayout hero={<PageHero
                 breadcrumb={[
                     {
                         label: "Academics",
@@ -42,19 +43,21 @@ export default function AcademicsPage() {
                         iconClassName: "bg-accent-soft text-accent",
                     },
                 ]}
-            />
-
-
-
-
-            <main className="mx-auto w-full max-w-[1280px] px-5 sm:px-8 lg:px-10">
+            />}>
 
                 <AcademicsQuickLinks />
 
                 <ClassesStreams />
 
                 <FacultyPreview />
-            </main>
+
+            </PageLayout>
+
+
+
+
+
+
         </>
     );
 }

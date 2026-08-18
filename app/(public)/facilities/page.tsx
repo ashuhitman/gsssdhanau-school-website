@@ -16,6 +16,7 @@ import { SectionHeading } from "@/components/ui/SectionHeading";
 import { PublicHero } from "@/components/public/PublicHero";
 import { FacilityCard } from "@/components/Facilities/FacilityCard";
 import PageHero from "@/components/common/PageHero";
+import { PageLayout } from "@/components/layout/PageLayout";
 
 
 const facilities = [
@@ -93,10 +94,7 @@ const facilityHighlights = [
 export default function FacilitiesPage() {
     return (
         <>
-            {/* =========================================================
-                HERO
-            ========================================================= */}
-            <PageHero
+            <PageLayout hero={<PageHero
                 breadcrumb={[
                     {
                         label: "Facilities",
@@ -130,14 +128,14 @@ export default function FacilitiesPage() {
                     },
                 ]}
             />
-
-            {/* =========================================================
+            }>
+                {/* =========================================================
                 FACILITY INTRODUCTION
             ========================================================= */}
-            <section className="px-4 py-4 sm:px-6 lg:py-5 2xl:px-8">
-                <div className="mx-auto max-w-[90rem]">
-                    <div
-                        className="
+                <section className="py-4 lg:py-5 ">
+                    <div className="mx-auto ">
+                        <div
+                            className="
                             rounded-xl
                             border
                             border-border
@@ -148,22 +146,22 @@ export default function FacilitiesPage() {
                             sm:px-5
                             sm:py-3.5
                         "
-                    >
-                        <div
-                            className="
+                        >
+                            <div
+                                className="
                                 grid
                                 items-center
                                 gap-4
                                 lg:grid-cols-[1.15fr_1.85fr]
                                 lg:gap-5
                             "
-                        >
-                            {/* Introduction */}
-                            <div className="min-w-0">
-                                <div className="flex items-center gap-3">
-                                    {/* Facility icon */}
-                                    <div
-                                        className="
+                            >
+                                {/* Introduction */}
+                                <div className="min-w-0">
+                                    <div className="flex items-center gap-3">
+                                        {/* Facility icon */}
+                                        <div
+                                            className="
                                             flex
                                             size-10
                                             shrink-0
@@ -174,33 +172,33 @@ export default function FacilitiesPage() {
                                             text-white
                                             shadow-sm
                                         "
-                                    >
-                                        <Building2
-                                            className="size-5"
-                                            strokeWidth={1.7}
-                                        />
-                                    </div>
+                                        >
+                                            <Building2
+                                                className="size-5"
+                                                strokeWidth={1.7}
+                                            />
+                                        </div>
 
-                                    <div className="min-w-0">
-                                        <h2 className="text-xs font-bold leading-4 text-primary-700 dark:text-primary-300 sm:text-sm">
-                                            Our Learning Facilities
-                                        </h2>
+                                        <div className="min-w-0">
+                                            <h2 className="text-xs font-bold leading-4 text-primary-700 dark:text-primary-300 sm:text-sm">
+                                                Our Learning Facilities
+                                            </h2>
 
-                                        <p className="mt-0.5 text-[10px] leading-4 text-muted-foreground sm:text-xs sm:leading-4">
-                                            At PM SHRI GSSS Dhanau, we
-                                            provide well-equipped
-                                            facilities that support
-                                            academics, practical learning,
-                                            and the overall growth of our
-                                            students.
-                                        </p>
+                                            <p className="mt-0.5 text-[10px] leading-4 text-muted-foreground sm:text-xs sm:leading-4">
+                                                At PM SHRI GSSS Dhanau, we
+                                                provide well-equipped
+                                                facilities that support
+                                                academics, practical learning,
+                                                and the overall growth of our
+                                                students.
+                                            </p>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
 
-                            {/* Highlights */}
-                            <div
-                                className="
+                                {/* Highlights */}
+                                <div
+                                    className="
                                     grid
                                     grid-cols-1
                                     divide-y
@@ -210,65 +208,65 @@ export default function FacilitiesPage() {
                                     sm:divide-y-0
                                     dark:divide-primary-800
                                 "
-                            >
-                                {facilityHighlights.map((item) => (
-                                    <InfoCard
-                                        key={item.title}
-                                        icon={item.icon}
-                                        title={item.title}
-                                        description={item.description}
-                                        variant="circleIcon"
-                                        circleColor="white"
-                                        className="
+                                >
+                                    {facilityHighlights.map((item) => (
+                                        <InfoCard
+                                            key={item.title}
+                                            icon={item.icon}
+                                            title={item.title}
+                                            description={item.description}
+                                            variant="circleIcon"
+                                            circleColor="white"
+                                            className="
                                             gap-2
                                             px-2
                                             py-2
                                             sm:px-3
                                             sm:py-1
                                         "
-                                    />
-                                ))}
+                                        />
+                                    ))}
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </section>
+                </section>
 
-            {/* =========================================================
+                {/* =========================================================
                 FACILITIES
             ========================================================= */}
-            <section className="px-4 pb-8 sm:px-6 lg:pb-10 2xl:px-8">
-                <div className="mx-auto max-w-[90rem]">
-                    <SectionHeading
-                        eyebrow="Our Infrastructure"
-                        title="Facilities for Better Learning"
-                        description="Explore the facilities available at PM SHRI GSSS Dhanau."
-                    />
+                <section className=" pb-8 lg:pb-10">
+                    <div className="mx-auto ">
+                        <SectionHeading
+                            eyebrow="Our Infrastructure"
+                            title="Facilities for Better Learning"
+                            description="Explore the facilities available at PM SHRI GSSS Dhanau."
+                        />
 
-                    <div className="mt-6 grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
-                        {facilities.map((facility) => (
-                            <FacilityCard
-                                key={facility.title}
-                                number={facility.number}
-                                title={facility.title}
-                                description={facility.description}
-                                image={facility.image}
-                                imageAlt={`${facility.title} at PM SHRI GSSS Dhanau`}
-                                icon={facility.icon}
-                            />
-                        ))}
+                        <div className="mt-6 grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
+                            {facilities.map((facility) => (
+                                <FacilityCard
+                                    key={facility.title}
+                                    number={facility.number}
+                                    title={facility.title}
+                                    description={facility.description}
+                                    image={facility.image}
+                                    imageAlt={`${facility.title} at PM SHRI GSSS Dhanau`}
+                                    icon={facility.icon}
+                                />
+                            ))}
+                        </div>
                     </div>
-                </div>
-            </section>
+                </section>
 
-            {/* =========================================================
+                {/* =========================================================
                 WHY OUR FACILITIES MATTER
             ========================================================= */}
-            <section className="px-4 pb-8 sm:px-6 lg:pb-10 2xl:px-8">
-                <div
-                    className="
+                <section className="pb-8  lg:pb-10">
+                    <div
+                        className="
                         mx-auto
-                        max-w-[90rem]
+                     
                         overflow-hidden
                         rounded-xl
                         bg-primary-50
@@ -279,16 +277,16 @@ export default function FacilitiesPage() {
                         lg:px-10
                         lg:py-7
                     "
-                >
-                    <div className="mx-auto max-w-2xl text-center">
-                        <SectionHeading
-                            title="Why Our Facilities Matter"
-                            description="Our facilities help create an environment where students can learn, experiment, explore, and develop skills for the future."
-                        />
-                    </div>
+                    >
+                        <div className="mx-auto max-w-2xl text-center">
+                            <SectionHeading
+                                title="Why Our Facilities Matter"
+                                description="Our facilities help create an environment where students can learn, experiment, explore, and develop skills for the future."
+                            />
+                        </div>
 
-                    <div
-                        className="
+                        <div
+                            className="
                             mt-6
                             grid
                             grid-cols-1
@@ -299,36 +297,40 @@ export default function FacilitiesPage() {
                             sm:divide-y-0
                             dark:divide-primary-800
                         "
-                    >
-                        <InfoCard
-                            icon={BookOpen}
-                            title="Better Learning"
-                            description="Resources that make learning more engaging and meaningful."
-                            variant="circleIcon"
-                            circleColor="white"
-                            className="px-4 py-4 sm:px-5"
-                        />
+                        >
+                            <InfoCard
+                                icon={BookOpen}
+                                title="Better Learning"
+                                description="Resources that make learning more engaging and meaningful."
+                                variant="circleIcon"
+                                circleColor="white"
+                                className="px-4 py-4 sm:px-5"
+                            />
 
-                        <InfoCard
-                            icon={FlaskConical}
-                            title="Practical Skills"
-                            description="Hands-on experiences that connect theory with practice."
-                            variant="circleIcon"
-                            circleColor="white"
-                            className="px-4 py-4 sm:px-5"
-                        />
+                            <InfoCard
+                                icon={FlaskConical}
+                                title="Practical Skills"
+                                description="Hands-on experiences that connect theory with practice."
+                                variant="circleIcon"
+                                circleColor="white"
+                                className="px-4 py-4 sm:px-5"
+                            />
 
-                        <InfoCard
-                            icon={MonitorSmartphone}
-                            title="Future Ready"
-                            description="Digital and academic resources that prepare students for tomorrow."
-                            variant="circleIcon"
-                            circleColor="white"
-                            className="px-4 py-4 sm:px-5"
-                        />
+                            <InfoCard
+                                icon={MonitorSmartphone}
+                                title="Future Ready"
+                                description="Digital and academic resources that prepare students for tomorrow."
+                                variant="circleIcon"
+                                circleColor="white"
+                                className="px-4 py-4 sm:px-5"
+                            />
+                        </div>
                     </div>
-                </div>
-            </section>
+                </section>
+
+            </PageLayout>
+
+
         </>
     );
 }

@@ -18,6 +18,7 @@ import { InfoCard } from "@/components/common/InfoCard";
 import { NoticeList } from "@/components/Notice/NoticeList";
 import { PublicHero } from "@/components/public/PublicHero";
 import PageHero from "@/components/common/PageHero";
+import { PageLayout } from "@/components/layout/PageLayout";
 
 
 
@@ -158,11 +159,7 @@ const categoryCards = [
 export default function NoticesPage() {
     return (
         <>
-            {/* =========================================================
-                HERO
-            ========================================================= */}
-
-            <PageHero
+            <PageLayout hero={<PageHero
                 breadcrumb={[
                     {
                         label: "Notices",
@@ -177,43 +174,37 @@ export default function NoticesPage() {
                 stats={[
 
                 ]}
-            />
-
-
-
-
-
-
-            {/* =========================================================
+            />}>
+                {/* =========================================================
                 MAIN CONTENT
             ========================================================= */}
-            <section className="px-4 py-6 sm:px-6 lg:py-8 2xl:px-8">
-                <div className="mx-auto max-w-[90rem]">
-                    <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_300px]">
-                        {/* =================================================
+                <section className="py-6 lg:py-8 ">
+                    <div className="mx-auto">
+                        <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_300px]">
+                            {/* =================================================
                             LEFT — SEARCH + NOTICES
                         ================================================= */}
-                        <NoticeList
-                            notices={notices}
-                            categories={noticeCategories}
-                        />
+                            <NoticeList
+                                notices={notices}
+                                categories={noticeCategories}
+                            />
 
-                        {/* =================================================
+                            {/* =================================================
                             RIGHT SIDEBAR
                         ================================================= */}
-                        <aside className="space-y-5">
-                            {/* Quick Links */}
-                            <div
-                                className="
+                            <aside className="space-y-5">
+                                {/* Quick Links */}
+                                <div
+                                    className="
                                     overflow-hidden
                                     rounded-xl
                                     border
                                     border-border
                                     bg-card
                                 "
-                            >
-                                <div
-                                    className="
+                                >
+                                    <div
+                                        className="
                                         flex
                                         items-center
                                         gap-3
@@ -222,9 +213,9 @@ export default function NoticesPage() {
                                         px-5
                                         py-4
                                     "
-                                >
-                                    <div
-                                        className="
+                                    >
+                                        <div
+                                            className="
                                             flex
                                             size-9
                                             items-center
@@ -235,61 +226,61 @@ export default function NoticesPage() {
                                             dark:bg-primary-950
                                             dark:text-primary-400
                                         "
-                                    >
-                                        <Megaphone className="size-4" />
-                                    </div>
+                                        >
+                                            <Megaphone className="size-4" />
+                                        </div>
 
-                                    <div>
-                                        <h2
-                                            className="
+                                        <div>
+                                            <h2
+                                                className="
                                                 text-sm
                                                 font-bold
                                                 text-primary-800
                                                 dark:text-primary-200
                                             "
-                                        >
-                                            Quick Links
-                                        </h2>
+                                            >
+                                                Quick Links
+                                            </h2>
 
-                                        <p className="mt-0.5 text-[10px] text-muted-foreground">
-                                            Frequently used resources
-                                        </p>
+                                            <p className="mt-0.5 text-[10px] text-muted-foreground">
+                                                Frequently used resources
+                                            </p>
+                                        </div>
                                     </div>
-                                </div>
 
-                                <div className="p-2">
-                                    {quickLinks.map((item) => (
-                                        <InfoCard
-                                            key={item.href}
-                                            icon={item.icon}
-                                            title={item.title}
-                                            description={item.description}
-                                            href={item.href}
-                                            variant="circleIcon"
-                                            className="
+                                    <div className="p-2">
+                                        {quickLinks.map((item) => (
+                                            <InfoCard
+                                                key={item.href}
+                                                icon={item.icon}
+                                                title={item.title}
+                                                description={item.description}
+                                                href={item.href}
+                                                variant="circleIcon"
+                                                className="
                                                 rounded-lg
                                                 px-3
                                                 py-2.5
                                                 hover:bg-primary-50
                                                 dark:hover:bg-primary-950/40
                                             "
-                                        />
-                                    ))}
+                                            />
+                                        ))}
+                                    </div>
                                 </div>
-                            </div>
 
-                            {/* Notice Categories */}
-                            <div
-                                className="
+                                {/* Notice Categories */}
+                                <div
+                                    className="
                                     overflow-hidden
                                     rounded-xl
                                     border
                                     border-border
                                     bg-card
                                 "
-                            >
-                                <div
-                                    className="
+                                >
+                                    <div
+                                        className="
                                         flex
                                         items-center
                                         gap-3
@@ -298,9 +289,9 @@ export default function NoticesPage() {
                                         px-5
                                         py-4
                                     "
-                                >
-                                    <div
-                                        className="
+                                    >
+                                        <div
+                                            className="
                                             flex
                                             size-9
                                             items-center
@@ -311,36 +302,36 @@ export default function NoticesPage() {
                                             dark:bg-primary-950
                                             dark:text-primary-400
                                         "
-                                    >
-                                        <FileText className="size-4" />
-                                    </div>
+                                        >
+                                            <FileText className="size-4" />
+                                        </div>
 
-                                    <div>
-                                        <h2
-                                            className="
+                                        <div>
+                                            <h2
+                                                className="
                                                 text-sm
                                                 font-bold
                                                 text-primary-800
                                                 dark:text-primary-200
                                             "
-                                        >
-                                            Notice Categories
-                                        </h2>
+                                            >
+                                                Notice Categories
+                                            </h2>
 
-                                        <p className="mt-0.5 text-[10px] text-muted-foreground">
-                                            Browse by type
-                                        </p>
+                                            <p className="mt-0.5 text-[10px] text-muted-foreground">
+                                                Browse by type
+                                            </p>
+                                        </div>
                                     </div>
-                                </div>
 
-                                <div className="p-3">
-                                    {categoryCards.map((category) => {
-                                        const Icon = category.icon;
+                                    <div className="p-3">
+                                        {categoryCards.map((category) => {
+                                            const Icon = category.icon;
 
-                                        return (
-                                            <div
-                                                key={category.title}
-                                                className="
+                                            return (
+                                                <div
+                                                    key={category.title}
+                                                    className="
                                                     flex
                                                     items-center
                                                     gap-3
@@ -351,30 +342,30 @@ export default function NoticesPage() {
                                                     hover:bg-primary-50
                                                     dark:hover:bg-primary-950/40
                                                 "
-                                            >
-                                                <Icon
-                                                    className="
+                                                >
+                                                    <Icon
+                                                        className="
                                                         size-4
                                                         shrink-0
                                                         text-primary-600
                                                         dark:text-primary-400
                                                     "
-                                                />
+                                                    />
 
-                                                <span
-                                                    className="
+                                                    <span
+                                                        className="
                                                         min-w-0
                                                         flex-1
                                                         text-xs
                                                         font-medium
                                                         text-foreground
                                                     "
-                                                >
-                                                    {category.title}
-                                                </span>
+                                                    >
+                                                        {category.title}
+                                                    </span>
 
-                                                <span
-                                                    className="
+                                                    <span
+                                                        className="
                                                         flex
                                                         size-6
                                                         shrink-0
@@ -388,18 +379,18 @@ export default function NoticesPage() {
                                                         dark:bg-primary-900
                                                         dark:text-primary-300
                                                     "
-                                                >
-                                                    {category.count}
-                                                </span>
-                                            </div>
-                                        );
-                                    })}
+                                                    >
+                                                        {category.count}
+                                                    </span>
+                                                </div>
+                                            );
+                                        })}
+                                    </div>
                                 </div>
-                            </div>
 
-                            {/* Important Note */}
-                            <div
-                                className="
+                                {/* Important Note */}
+                                <div
+                                    className="
                                     overflow-hidden
                                     rounded-xl
                                     border
@@ -409,10 +400,10 @@ export default function NoticesPage() {
                                     dark:border-primary-900
                                     dark:bg-primary-950/30
                                 "
-                            >
-                                <div className="flex items-center gap-3">
-                                    <div
-                                        className="
+                                >
+                                    <div className="flex items-center gap-3">
+                                        <div
+                                            className="
                                             flex
                                             size-9
                                             shrink-0
@@ -422,41 +413,51 @@ export default function NoticesPage() {
                                             bg-primary-600
                                             text-white
                                         "
-                                    >
-                                        <Info className="size-4" />
-                                    </div>
+                                        >
+                                            <Info className="size-4" />
+                                        </div>
 
-                                    <h2
-                                        className="
+                                        <h2
+                                            className="
                                             text-sm
                                             font-bold
                                             text-primary-800
                                             dark:text-primary-200
                                         "
-                                    >
-                                        Important Note
-                                    </h2>
-                                </div>
+                                        >
+                                            Important Note
+                                        </h2>
+                                    </div>
 
-                                <p
-                                    className="
+                                    <p
+                                        className="
                                         mt-3
                                         text-xs
                                         leading-5
                                         text-muted-foreground
                                     "
-                                >
-                                    Please check this page regularly
-                                    for important updates and
-                                    announcements. Students are advised
-                                    to follow the instructions mentioned
-                                    in each notice.
-                                </p>
-                            </div>
-                        </aside>
+                                    >
+                                        Please check this page regularly
+                                        for important updates and
+                                        announcements. Students are advised
+                                        to follow the instructions mentioned
+                                        in each notice.
+                                    </p>
+                                </div>
+                            </aside>
+                        </div>
                     </div>
-                </div>
-            </section>
+                </section>
+            </PageLayout>
+
+
+
+
+
+
+
+
+
         </>
     );
 }

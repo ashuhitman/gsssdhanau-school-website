@@ -14,10 +14,10 @@ import { useState } from "react";
 
 import { ThemeToggle } from "@/components/theme/ThemeToggle";
 import { LanguageSelector } from "../public/LanguageSelector";
-import { MobileMenu } from "../public/MobileMenu";
+import { MobileMenu } from "./MobileMenu";
 import Image from "next/image";
 
-const navigation = [
+export const navigation = [
     {
         label: "Home",
         href: "/",
