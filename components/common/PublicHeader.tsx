@@ -40,8 +40,8 @@ export const navigation = [
         href: "/events",
     },
     {
-        label: "Notices",
-        href: "/notices",
+        label: "Faculty",
+        href: "/faculty",
     },
     {
         label: "Newsletter",

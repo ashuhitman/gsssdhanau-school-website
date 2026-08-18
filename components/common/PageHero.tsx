@@ -39,6 +39,7 @@ interface PageHeroProps {
     actions?: HeroAction[];
 
     className?: string;
+    imageViewTransitionName?: string;
 }
 
 export default function PageHero({
@@ -52,6 +53,8 @@ export default function PageHero({
     stats = [],
     actions = [],
     className = "",
+    imageViewTransitionName
+
 }: PageHeroProps) {
     const hasStats = stats.length > 0;
     const hasActions = actions.length > 0;
@@ -543,17 +546,21 @@ export default function PageHero({
                             
                         "
                     >
-                        <Image
-                            src={image}
-                            alt={imageAlt}
-                            fill
-                            priority
-                            sizes="(max-width: 1023px) 100vw, 60vw"
-                            className="
-                                object-cover
-                                object-center
-                            "
-                        />
+                        <div
+                            style={{
+                                viewTransitionName: imageViewTransitionName,
+                            }}
+                            className="relative h-full w-full"
+                        >
+                            <Image
+                                src={image}
+                                alt={imageAlt}
+                                fill
+                                priority
+                                sizes="(max-width: 768px) 100vw, 50vw"
+                                className="object-cover"
+                            />
+                        </div>
 
                         {/* Left fade */}
 
