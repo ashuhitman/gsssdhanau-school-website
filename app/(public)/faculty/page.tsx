@@ -15,7 +15,9 @@ import { PageLayout } from "@/components/layout/PageLayout";
 import PageHero from "@/components/common/PageHero";
 import TransitionLink from "@/components/transition/TransitionLink";
 
-
+export const metadata = {
+    title: "Faculty",
+};
 const staffStats = [
     {
         label: "Lecturers",

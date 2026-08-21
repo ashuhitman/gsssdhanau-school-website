@@ -14,6 +14,10 @@ import NewsletterSubscribe from "@/components/newsletter/NewsletterSubscribe";
 import NewsletterLatestIssue from "@/components/newsletter/NewsletterLatestIssue";
 import { PageLayout } from "@/components/layout/PageLayout";
 
+export const metadata = {
+    title: "Newsletter",
+};
+
 export default function NewsletterPage() {
     /* ================================================================
        NEWSLETTER ARCHIVE

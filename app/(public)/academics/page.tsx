@@ -8,7 +8,9 @@ import { PublicHero } from "@/components/public/PublicHero";
 import { ArrowBigDown, ArrowBigDownDash, GraduationCap, Trophy, Users } from "lucide-react";
 
 
-
+export const metadata = {
+    title: "Academics",
+};
 export default function AcademicsPage() {
     return (
         <>

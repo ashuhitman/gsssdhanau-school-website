@@ -19,6 +19,10 @@ import PageHero from "@/components/common/PageHero";
 import { PageLayout } from "@/components/layout/PageLayout";
 
 
+export const metadata = {
+    title: "Facilities",
+};
+
 const facilities = [
     {
         number: "01",

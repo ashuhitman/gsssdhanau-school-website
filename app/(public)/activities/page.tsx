@@ -14,6 +14,10 @@ import {
     Users,
 } from "lucide-react";
 
+export const metadata = {
+    title: "News & Activity",
+};
+
 export default function ActivitiesPage() {
     const activities = [
         {

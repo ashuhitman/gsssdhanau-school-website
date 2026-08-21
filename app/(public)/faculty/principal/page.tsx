@@ -11,7 +11,9 @@ import {
     Users,
 } from "lucide-react";
 
-
+export const metadata = {
+    title: "Principal,"
+};
 
 const visionCards = [
     {

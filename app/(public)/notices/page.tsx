@@ -20,7 +20,9 @@ import { PublicHero } from "@/components/public/PublicHero";
 import PageHero from "@/components/common/PageHero";
 import { PageLayout } from "@/components/layout/PageLayout";
 
-
+export const metadata = {
+    title: "Notices",
+};
 
 const notices = [
     {
