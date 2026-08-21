@@ -67,7 +67,7 @@ export default async function Principal() {
                             label: principal.designation,
                         },
                     ]}
-                    title="Principal"
+                    title="Mr."
                     highlight={principal.name}
                     description={principal.description}
                     image={principal.image}

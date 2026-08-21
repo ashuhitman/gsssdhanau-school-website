@@ -1,0 +1,887 @@
+@import "tailwindcss";
+
+/* =========================================================
+   DARK MODE
+   Tailwind v4 — class based
+   ========================================================= */
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+
+/* =========================================================
+   DESIGN TOKENS
+   ========================================================= */
+
+:root {
+    /* Brand */
+    --school-navy: #0b2855;
+    --school-navy-dark: #071d40;
+    --school-navy-light: #163b72;
+
+    --school-orange: #f58a00;
+    --school-orange-dark: #d96f00;
+    --school-orange-light: #fff3df;
+
+    /* Backgrounds */
+    --school-background: #ffffff;
+    --school-surface: #f7f9fc;
+    --school-surface-warm: #fffaf2;
+    --school-card: #ffffff;
+
+    /* Text */
+    --school-text: #17233b;
+    --school-text-secondary: #526078;
+    --school-text-muted: #7b879c;
+
+    /* Borders */
+    --school-border: #e6eaf0;
+    --school-border-dark: #d5dbe5;
+
+    /* Icons */
+    --school-icon: #0b2855;
+    --school-icon-active: #f58a00;
+
+    /* Shadows */
+    --school-shadow:
+        0 0.25rem 1.5rem rgba(11, 40, 85, 0.06);
+
+    --school-shadow-hover:
+        0 0.75rem 2rem rgba(11, 40, 85, 0.11);
+}
+
+
+/* =========================================================
+   DARK MODE TOKENS
+   ========================================================= */
+
+.dark {
+    --school-navy: #9fc2ff;
+    --school-navy-dark: #7eabf5;
+    --school-navy-light: #bdd4ff;
+
+    --school-orange: #ffad3d;
+    --school-orange-dark: #ff9820;
+    --school-orange-light: #3a2a16;
+
+    --school-background: #0b1220;
+    --school-surface: #111a2b;
+    --school-surface-warm: #19150f;
+    --school-card: #141e30;
+
+    --school-text: #eef3fa;
+    --school-text-secondary: #b8c3d4;
+    --school-text-muted: #8794a9;
+
+    --school-border: #26344a;
+    --school-border-dark: #34445c;
+
+    --school-icon: #b8d1ff;
+    --school-icon-active: #ffad3d;
+
+    --school-shadow:
+        0 0.25rem 1.5rem rgba(0, 0, 0, 0.2);
+
+    --school-shadow-hover:
+        0 0.75rem 2rem rgba(0, 0, 0, 0.3);
+}
+
+
+/* =========================================================
+   TAILWIND THEME
+   ========================================================= */
+
+@theme {
+    --color-school-navy: var(--school-navy);
+    --color-school-navy-dark: var(--school-navy-dark);
+    --color-school-navy-light: var(--school-navy-light);
+
+    --color-school-orange: var(--school-orange);
+    --color-school-orange-dark: var(--school-orange-dark);
+    --color-school-orange-light: var(--school-orange-light);
+
+    --color-school-background: var(--school-background);
+    --color-school-surface: var(--school-surface);
+    --color-school-surface-warm: var(--school-surface-warm);
+    --color-school-card: var(--school-card);
+
+    --color-school-text: var(--school-text);
+    --color-school-text-secondary: var(--school-text-secondary);
+    --color-school-text-muted: var(--school-text-muted);
+
+    --color-school-border: var(--school-border);
+    --color-school-border-dark: var(--school-border-dark);
+
+    --color-school-icon: var(--school-icon);
+    --color-school-icon-active: var(--school-icon-active);
+
+    --shadow-school-card: var(--school-shadow);
+    --shadow-school-card-hover: var(--school-shadow-hover);
+
+    --radius-school: 1rem;
+    --radius-school-lg: 1.5rem;
+}
+
+
+/* =========================================================
+   BASE
+   ========================================================= */
+
+@layer base {
+
+    html {
+        scroll-behavior: smooth;
+    }
+
+    body {
+        @apply m-0 font-sans antialiased;
+
+        background-color: var(--school-background);
+        color: var(--school-text);
+
+        transition:
+            background-color 250ms ease,
+            color 250ms ease;
+    }
+
+    *,
+    *::before,
+    *::after {
+        @apply box-border;
+    }
+
+    button,
+    input,
+    textarea,
+    select {
+        font-family: inherit;
+        font-size: inherit;
+        line-height: inherit;
+    }
+
+    button {
+        @apply cursor-pointer;
+    }
+
+    img,
+    svg,
+    video {
+        @apply block max-w-full;
+    }
+
+    img {
+        @apply h-auto;
+    }
+
+    a {
+        @apply no-underline;
+    }
+
+    p {
+        color: var(--school-text-secondary);
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        @apply font-bold leading-tight;
+
+        color: var(--school-navy);
+    }
+
+    h1 {
+        @apply text-4xl sm:text-5xl lg:text-6xl;
+    }
+
+    h2 {
+        @apply text-3xl sm:text-4xl;
+    }
+
+    h3 {
+        @apply text-xl sm:text-2xl;
+    }
+
+    ::selection {
+        background-color: var(--school-orange);
+        color: white;
+    }
+
+    :focus-visible {
+        @apply outline-2 outline-offset-2;
+
+        outline-color: var(--school-orange);
+    }
+}
+
+
+/* =========================================================
+   COMPONENTS
+   ========================================================= */
+
+@layer components {
+
+    /* =======================================================
+     CONTAINER
+     ======================================================= */
+
+    .school-container {
+        @apply mx-auto w-[calc(100%-2rem)] max-w-[90rem] sm:w-[calc(100%-2.5rem)] lg:w-[calc(100%-3rem)];
+    }
+
+
+    /* =======================================================
+     SECTIONS
+     ======================================================= */
+
+    .school-section {
+        @apply py-12 sm:py-16 lg:py-20;
+    }
+
+    .school-section-sm {
+        @apply py-10 sm:py-12 lg:py-14;
+    }
+
+
+    /* =======================================================
+     SECTION HEADER
+     ======================================================= */
+
+    .section-header {
+        @apply mb-8 text-center sm:mb-10 lg:mb-12;
+    }
+
+    .section-title {
+        @apply inline-block text-2xl font-bold sm:text-3xl lg:text-4xl;
+
+        color: var(--school-navy);
+    }
+
+    .section-title::after {
+        content: "";
+
+        @apply mx-auto mt-3 block h-1 w-14 rounded-full;
+
+        background-color: var(--school-orange);
+    }
+
+    .section-description {
+        @apply mx-auto mt-4 max-w-2xl text-sm leading-7 sm:text-base;
+
+        color: var(--school-text-secondary);
+    }
+
+
+    /* =======================================================
+     CARDS
+     ======================================================= */
+
+    .school-card {
+        @apply rounded-school border transition-all duration-300 hover:-translate-y-1;
+
+        background-color: var(--school-card);
+        border-color: var(--school-border);
+        box-shadow: var(--school-shadow);
+    }
+
+    .school-card:hover {
+        box-shadow: var(--school-shadow-hover);
+    }
+
+    .school-card-static {
+        @apply rounded-school border;
+
+        background-color: var(--school-card);
+        border-color: var(--school-border);
+        box-shadow: var(--school-shadow);
+    }
+
+
+    /* =======================================================
+     ICONS
+     ======================================================= */
+
+    .school-icon {
+        @apply h-5 w-5;
+
+        color: var(--school-icon);
+    }
+
+    .school-icon-accent {
+        @apply h-5 w-5;
+
+        color: var(--school-icon-active);
+    }
+
+    .school-icon-muted {
+        @apply h-5 w-5;
+
+        color: var(--school-text-muted);
+    }
+
+
+    /* =======================================================
+     ICON BOX
+     ======================================================= */
+
+    .icon-box {
+        @apply flex h-12 w-12 shrink-0 items-center justify-center rounded-xl;
+
+        background-color: #edf3fb;
+        color: var(--school-icon);
+    }
+
+    .dark .icon-box {
+        background-color: #1b2a42;
+    }
+
+    .icon-box-orange {
+        @apply flex h-12 w-12 shrink-0 items-center justify-center rounded-xl;
+
+        background-color: var(--school-orange-light);
+        color: var(--school-orange);
+    }
+
+    .icon-box-sm {
+        @apply flex h-10 w-10 shrink-0 items-center justify-center rounded-lg;
+
+        background-color: #edf3fb;
+        color: var(--school-icon);
+    }
+
+    .dark .icon-box-sm {
+        background-color: #1b2a42;
+    }
+
+
+    /* =======================================================
+     BUTTONS
+     ======================================================= */
+
+    .school-btn {
+        @apply inline-flex min-h-11 items-center justify-center gap-2 rounded-lg px-5 py-3 text-sm font-semibold transition-all duration-200;
+    }
+
+    .school-btn-primary {
+        @apply inline-flex min-h-11 items-center justify-center gap-2 rounded-lg px-5 py-3 text-sm font-semibold transition-all duration-200;
+
+        background-color: var(--school-navy);
+        color: white;
+    }
+
+    .school-btn-primary:hover {
+        background-color: var(--school-navy-dark);
+    }
+
+    .school-btn-orange {
+        @apply inline-flex min-h-11 items-center justify-center gap-2 rounded-lg px-5 py-3 text-sm font-semibold transition-all duration-200;
+
+        background-color: var(--school-orange);
+        color: white;
+    }
+
+    .school-btn-orange:hover {
+        background-color: var(--school-orange-dark);
+    }
+
+    .school-btn-outline {
+        @apply inline-flex min-h-11 items-center justify-center gap-2 rounded-lg border px-5 py-3 text-sm font-semibold transition-all duration-200;
+
+        background-color: var(--school-card);
+        border-color: var(--school-navy);
+        color: var(--school-navy);
+    }
+
+    .school-btn-outline:hover {
+        background-color: var(--school-navy);
+        color: white;
+    }
+
+
+    /* =======================================================
+     LINKS
+     ======================================================= */
+
+    .school-link {
+        @apply font-semibold transition-colors duration-200;
+
+        color: var(--school-navy);
+    }
+
+    .school-link:hover {
+        color: var(--school-orange);
+    }
+
+
+    /* =======================================================
+     BADGES
+     ======================================================= */
+
+    .school-badge {
+        @apply inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-xs font-semibold;
+    }
+
+    .school-badge-primary {
+        @apply inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-xs font-semibold;
+
+        background-color: #edf3fb;
+        color: var(--school-navy);
+    }
+
+    .dark .school-badge-primary {
+        background-color: #1b2a42;
+    }
+
+    .school-badge-orange {
+        @apply inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-xs font-semibold;
+
+        background-color: var(--school-orange-light);
+        color: var(--school-orange-dark);
+    }
+
+
+    /* =======================================================
+     PAGE HERO
+     ======================================================= */
+
+    .page-hero {
+        @apply relative overflow-hidden;
+
+        background-color: var(--school-surface);
+    }
+
+    .page-hero-content {
+        @apply relative z-10 py-12 sm:py-16 lg:py-20;
+    }
+
+    .page-hero-title {
+        @apply text-4xl font-bold sm:text-5xl lg:text-6xl;
+
+        color: var(--school-navy);
+    }
+
+    .page-hero-description {
+        @apply mt-4 max-w-xl text-base leading-7 sm:text-lg;
+
+        color: var(--school-text-secondary);
+    }
+
+
+    /* =======================================================
+     STATS
+     ======================================================= */
+
+    .school-stat {
+        @apply flex items-center gap-3;
+    }
+
+    .school-stat-icon {
+        @apply flex h-12 w-12 shrink-0 items-center justify-center rounded-full;
+
+        background-color: #edf3fb;
+        color: var(--school-icon);
+    }
+
+    .dark .school-stat-icon {
+        background-color: #1b2a42;
+    }
+
+    .school-stat-number {
+        @apply text-2xl font-bold leading-tight;
+
+        color: var(--school-navy);
+    }
+
+    .school-stat-label {
+        @apply mt-1 text-sm;
+
+        color: var(--school-text-muted);
+    }
+
+
+    /* =======================================================
+     FILTER TABS
+     ======================================================= */
+
+    .filter-tabs {
+        @apply flex flex-wrap gap-2;
+    }
+
+    .filter-tab {
+        @apply inline-flex items-center justify-center gap-2 rounded-lg border px-4 py-2.5 text-sm font-semibold transition-all duration-200;
+
+        background-color: var(--school-card);
+        border-color: var(--school-border);
+        color: var(--school-navy);
+    }
+
+    .filter-tab:hover {
+        border-color: var(--school-navy);
+    }
+
+    .filter-tab-active {
+        @apply inline-flex items-center justify-center gap-2 rounded-lg border px-4 py-2.5 text-sm font-semibold transition-all duration-200;
+
+        background-color: var(--school-navy);
+        border-color: var(--school-navy);
+        color: white;
+    }
+
+    .filter-tab-active svg {
+        color: var(--school-orange);
+    }
+
+
+    /* =======================================================
+     NEWS CARD
+     ======================================================= */
+
+    .news-card {
+        @apply overflow-hidden rounded-school border transition-all duration-300 hover:-translate-y-1;
+
+        background-color: var(--school-card);
+        border-color: var(--school-border);
+        box-shadow: var(--school-shadow);
+    }
+
+    .news-card:hover {
+        box-shadow: var(--school-shadow-hover);
+    }
+
+    .news-card-image {
+        @apply aspect-video w-full object-cover;
+    }
+
+    .news-card-body {
+        @apply p-5 sm:p-6;
+    }
+
+    .news-card-date {
+        @apply text-xs;
+
+        color: var(--school-text-muted);
+    }
+
+    .news-card-title {
+        @apply mt-2 text-lg font-bold;
+
+        color: var(--school-navy);
+    }
+
+    .news-card-description {
+        @apply mt-2 text-sm leading-6;
+
+        color: var(--school-text-secondary);
+    }
+
+
+    /* =======================================================
+     NOTICE
+     ======================================================= */
+
+    .notice-item {
+        @apply flex items-start gap-4 border-b p-4 last:border-b-0;
+
+        border-color: var(--school-border);
+    }
+
+    .notice-icon {
+        @apply flex h-11 w-11 shrink-0 items-center justify-center rounded-xl;
+
+        background-color: var(--school-orange-light);
+        color: var(--school-icon);
+    }
+
+    .notice-title {
+        @apply font-semibold transition-colors;
+
+        color: var(--school-navy);
+    }
+
+    .notice-title:hover {
+        color: var(--school-orange);
+    }
+
+    .notice-date {
+        @apply mt-1 text-xs;
+
+        color: var(--school-text-muted);
+    }
+
+
+    /* =======================================================
+     FACULTY
+     ======================================================= */
+
+    .faculty-card {
+        @apply overflow-hidden rounded-school border p-5 text-center transition-all duration-300 hover:-translate-y-1 sm:p-6;
+
+        background-color: var(--school-card);
+        border-color: var(--school-border);
+        box-shadow: var(--school-shadow);
+    }
+
+    .faculty-card:hover {
+        box-shadow: var(--school-shadow-hover);
+    }
+
+    .faculty-image {
+        @apply mx-auto h-28 w-28 rounded-full border-4 object-cover;
+
+        border-color: #f1f4f8;
+    }
+
+    .dark .faculty-image {
+        border-color: #26344a;
+    }
+
+    .faculty-name {
+        @apply mt-4 text-base font-bold;
+
+        color: var(--school-navy);
+    }
+
+    .faculty-role {
+        @apply mt-1 text-sm font-semibold;
+
+        color: var(--school-orange);
+    }
+
+
+    /* =======================================================
+     NEWSLETTER
+     ======================================================= */
+
+    .newsletter-card {
+        @apply rounded-school-lg border p-6;
+
+        background-color: var(--school-surface-warm);
+        border-color: var(--school-border);
+    }
+
+    .newsletter-icon {
+        @apply flex h-14 w-14 items-center justify-center rounded-xl;
+
+        background-color: var(--school-orange-light);
+        color: var(--school-icon);
+    }
+
+
+    /* =======================================================
+     SIDEBAR
+     ======================================================= */
+
+    .sidebar-card {
+        @apply rounded-school border p-5;
+
+        background-color: var(--school-card);
+        border-color: var(--school-border);
+        box-shadow: var(--school-shadow);
+    }
+
+    .sidebar-title {
+        @apply text-lg font-bold;
+
+        color: var(--school-navy);
+    }
+
+
+    /* =======================================================
+     BREADCRUMB
+     ======================================================= */
+
+    .breadcrumb {
+        @apply flex flex-wrap items-center gap-2 text-sm;
+
+        color: var(--school-text-muted);
+    }
+
+    .breadcrumb-link {
+        @apply transition-colors;
+    }
+
+    .breadcrumb-link:hover {
+        color: var(--school-orange);
+    }
+
+    .breadcrumb-current {
+        @apply font-semibold;
+
+        color: var(--school-navy);
+    }
+
+
+    /* =======================================================
+     ARTICLE
+     ======================================================= */
+
+    .article-content {
+        @apply max-w-3xl;
+    }
+
+    .article-content p {
+        @apply mb-5 text-base leading-8;
+
+        color: var(--school-text-secondary);
+    }
+
+    .article-content h2 {
+        @apply mb-4 mt-10 text-2xl font-bold;
+
+        color: var(--school-navy);
+    }
+
+    .article-content h3 {
+        @apply mb-3 mt-8 text-xl font-bold;
+
+        color: var(--school-navy);
+    }
+
+    .article-content img {
+        @apply my-6 w-full rounded-school;
+    }
+
+
+    /* =======================================================
+     ARTICLE QUOTE
+     ======================================================= */
+
+    .article-quote {
+        @apply my-8 rounded-r-xl border-l-4 px-6 py-5;
+
+        background-color: var(--school-orange-light);
+        border-color: var(--school-orange);
+    }
+
+    .article-quote p {
+        @apply mb-0 text-base italic;
+
+        color: var(--school-navy);
+    }
+
+
+    /* =======================================================
+     DARK CTA
+     ======================================================= */
+
+    .school-cta {
+        @apply overflow-hidden rounded-school-lg p-6 text-white sm:p-8 lg:p-10;
+
+        background-color: var(--school-navy);
+    }
+
+    .school-cta h2,
+    .school-cta h3 {
+        color: white;
+    }
+
+    .school-cta p {
+        color: rgb(255 255 255 / 75%);
+    }
+}
+
+
+/* =========================================================
+   UTILITIES
+   ========================================================= */
+
+@layer utilities {
+
+    .text-balance {
+        text-wrap: balance;
+    }
+
+    .text-pretty {
+        text-wrap: pretty;
+    }
+
+    .school-gradient {
+        background:
+            linear-gradient(135deg,
+                var(--school-navy),
+                var(--school-navy-light));
+    }
+
+    .school-orange-gradient {
+        background:
+            linear-gradient(135deg,
+                var(--school-orange),
+                var(--school-orange-dark));
+    }
+
+    .school-soft-gradient {
+        background:
+            linear-gradient(135deg,
+                var(--school-background),
+                var(--school-surface));
+    }
+
+    .scrollbar-hidden {
+        scrollbar-width: none;
+    }
+
+    .scrollbar-hidden::-webkit-scrollbar {
+        display: none;
+    }
+}
+
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 48rem) {
+
+    .school-section {
+        @apply py-12;
+    }
+
+    .page-hero-content {
+        @apply py-12;
+    }
+}
+
+
+@media (max-width: 30rem) {
+
+    .school-container {
+        @apply w-[calc(100%-1.75rem)];
+    }
+
+    .school-btn,
+    .school-btn-primary,
+    .school-btn-orange,
+    .school-btn-outline {
+        @apply w-full;
+    }
+
+    .filter-tabs {
+        @apply grid grid-cols-2;
+    }
+
+    .filter-tab,
+    .filter-tab-active {
+        @apply w-full;
+    }
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    html {
+        scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+    }
+}

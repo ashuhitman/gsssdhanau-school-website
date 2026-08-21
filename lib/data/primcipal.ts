@@ -1,7 +1,7 @@
 export async function getPrincipal() {
     return {
-        name: "Satram Dass",
-        firstName: "Satram",
+        name: "Bhagirath Kuldeep",
+        firstName: "Bhagirath",
         designation: "Principal",
         qualification: "B.Ed.",
         focus: "Academic",
@@ -11,6 +11,6 @@ export async function getPrincipal() {
         message:
             "Our school is committed to providing every student with meaningful opportunities to learn, grow and develop into a confident and responsible citizen. We believe that education goes beyond textbooks and examinations and includes character, discipline, creativity and values.",
         image: "/images/faculty/principal.jpg",
-        imageAlt: "Satram Dass, Principal of PM SHRI GSSS Dhanau",
+        imageAlt: "Bhagirath Kuldeep, Principal of PM SHRI GSSS Dhanau",
     };
 }

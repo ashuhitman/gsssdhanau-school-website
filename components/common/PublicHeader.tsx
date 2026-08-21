@@ -26,18 +26,15 @@ export const navigation = [
         label: "Academics",
         href: "/academics",
     },
-    {
-        label: "Activities",
-        href: "/activities",
-    },
+
     {
         label: "Facilities",
         href: "/facilities",
     },
 
     {
-        label: "News & Events",
-        href: "/events",
+        label: "News & Activity",
+        href: "/activities",
     },
     {
         label: "Faculty",

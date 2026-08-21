@@ -291,7 +291,7 @@ export default function FacultyPage() {
 
                         <div className="flex flex-col justify-center p-6 sm:p-8 lg:p-10">
                             <h3 className="text-2xl font-bold text-primary">
-                                SATRAM DASS
+                                Mr. Bhagirath Kuldeep
                             </h3>
 
                             <p className="mt-1 font-semibold text-accent">
