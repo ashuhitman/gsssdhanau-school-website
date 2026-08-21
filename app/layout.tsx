@@ -6,8 +6,8 @@ import { ThemeProvider } from "@/components/theme/ThemeProvider";
 
 export const metadata: Metadata = {
   title: {
-    default: "PM SHRI GSSS Dhanau",
-    template: "%s | PM SHRI GSSS Dhanau",
+    default: "PM SHRI GSSS DHANAU",
+    template: "%s | PM SHRI GSSS DHANAU",
   },
   description:
     "Official website of PM SHRI Government Senior Secondary School, Dhanau, Barmer, Rajasthan.",
