@@ -1,5 +1,5 @@
 
-import { HomeQuickLinks } from "@/components/home/HomeQuickLinks";
+
 import PageHero from "@/components/common/PageHero";
 import { FeaturedStory } from "@/components/home/FeaturedStory";
 import { LatestNews } from "@/components/home/LatestNews";
@@ -7,6 +7,10 @@ import { Notices } from "@/components/home/Notices";
 import { LatestArticles } from "@/components/home/LatestArticles";
 import { LatestNewsletter } from "@/components/home/LatestNewsletter";
 import { PageLayout } from "@/components/layout/PageLayout";
+import { HomeStats } from "@/components/home/HomeStats";
+import { PrincipalMessage } from "@/components/home/PrincipalMessage";
+
+
 
 
 export default function HomePage() {
@@ -35,7 +39,8 @@ export default function HomePage() {
 
       }>
 
-        <HomeQuickLinks />
+        <HomeStats />
+        <PrincipalMessage />
 
         <section className="py-10 lg:py-14">
           <div className="mx-auto w-full space-y-8">
