@@ -12,7 +12,7 @@ import {
 } from "lucide-react";
 
 export const metadata = {
-    title: "Principal,"
+    title: "Principal",
 };
 
 const visionCards = [
@@ -77,7 +77,7 @@ export default async function Principal() {
                     imageViewTransitionName="principal-photo"
                     stats={[
                         {
-                            value: principal.qualification,
+                            value: principal.qualification.join(" | "),
                             label: "Qualification",
                             icon: <GraduationCap size={20} />,
                         },
