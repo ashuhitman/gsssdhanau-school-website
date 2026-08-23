@@ -23,12 +23,12 @@ export function FacultyCard({
     const subjectText =
         member.subjects.length > 0
             ? member.subjects.join(" | ")
-            : "";
+            : "—";
 
     const qualificationText =
         member.qualifications.length > 0
             ? member.qualifications.join(" | ")
-            : "";
+            : "—";
 
     return (
         <article
@@ -59,6 +59,9 @@ export function FacultyCard({
                     h-24
                     bg-primary-950
                     dark:bg-primary-950
+
+                    md:h-[5.5rem]
+                    lg:h-20
                 "
             >
                 {/* Decorative dots */}
@@ -115,22 +118,27 @@ export function FacultyCard({
                 className="
                     absolute
                     left-1/2
-                    top-7
+                    top-5
                     z-20
                     -translate-x-1/2
+
+                    md:top-4
+                    lg:top-3
                 "
             >
                 <div
                     className="
                         relative
-                        size-24
+                        size-28
                         rounded-full
                         bg-card
                         p-1
                         shadow-md
                         ring-2
                         ring-accent-400
-                        sm:size-28
+
+                        md:size-[6.5rem]
+                        lg:size-24
                     "
                 >
                     <div
@@ -150,8 +158,9 @@ export function FacultyCard({
                             }
                             fill
                             sizes="
-                                (max-width: 639px) 6rem,
-                                7rem
+                                (max-width: 767px) 7rem,
+                                (max-width: 1023px) 6.5rem,
+                                6rem
                             "
                             className="
                                 object-cover
@@ -173,12 +182,19 @@ export function FacultyCard({
                 className="
                     px-4
                     pb-4
-                    pt-12
-                    sm:px-5
-                    sm:pb-5
+                    pt-14
+
+                    md:px-5
+                    md:pt-13
+                    md:pb-4
+
+                    lg:pt-12
+                    lg:pb-4
                 "
             >
-                {/* Name */}
+                {/* ==================================================
+                    Name
+                ================================================== */}
 
                 <h3
                     className="
@@ -187,7 +203,10 @@ export function FacultyCard({
                         font-bold
                         tracking-tight
                         text-foreground
-                        sm:text-xl
+
+                        md:text-lg
+                        lg:text-base
+                        xl:text-lg
                     "
                 >
                     {member.prefix &&
@@ -196,7 +215,9 @@ export function FacultyCard({
                     {member.name}
                 </h3>
 
-                {/* Designation */}
+                {/* ==================================================
+                    Designation
+                ================================================== */}
 
                 <p
                     className="
@@ -210,7 +231,9 @@ export function FacultyCard({
                     {member.designation}
                 </p>
 
-                {/* Gold divider */}
+                {/* ==================================================
+                    Gold Divider
+                ================================================== */}
 
                 <div
                     className="
@@ -253,12 +276,16 @@ export function FacultyCard({
                 ================================================== */}
 
                 <div className="mt-3">
+                    {/* Subject */}
+
                     <FacultyInfoRow
                         icon={BookOpen}
                         label="Subject"
                         value={subjectText}
                         boldLabel
                     />
+
+                    {/* Qualification */}
 
                     <FacultyInfoRow
                         icon={GraduationCap}
@@ -267,26 +294,38 @@ export function FacultyCard({
                         boldLabel
                     />
 
-                    {/* {member.experience && (
+                    {/* Experience */}
+                    {/* 
+                    {member.experience && (
                         <FacultyInfoRow
-                            icon={BriefcaseBusiness}
+                            icon={
+                                BriefcaseBusiness
+                            }
                             label="Experience"
-                            value={member.experience}
+                            value={
+                                member.experience
+                            }
                         />
                     )} */}
+
+                    {/* Email */}
 
                     {member.email && (
                         <FacultyInfoRow
                             icon={Mail}
                             label="Email"
-                            value={member.email}
+                            value={
+                                member.email
+                            }
                             href={`mailto:${member.email}`}
                         />
                     )}
                 </div>
             </div>
 
-            {/* Bottom accent */}
+            {/* ==================================================
+                Bottom Accent
+            ================================================== */}
 
             <div
                 className="
@@ -299,7 +338,7 @@ export function FacultyCard({
 }
 
 /* ================================================================
-   Information Row
+   Faculty Information Row
 ================================================================ */
 
 function FacultyInfoRow({
@@ -353,12 +392,12 @@ function FacultyInfoRow({
                     className={`
                         shrink-0
                         text-xs
-                        text-muted-foreground
                         sm:text-sm
                         ${boldLabel
                             ? "font-bold"
-                            : "font-semibold"
+                            : "font-medium"
                         }
+                        text-foreground
                     `}
                 >
                     {label}
@@ -368,8 +407,8 @@ function FacultyInfoRow({
                     className="
                         shrink-0
                         text-xs
-                        text-muted-foreground
                         sm:text-sm
+                        text-muted-foreground
                     "
                 >
                     -
@@ -403,6 +442,7 @@ function FacultyInfoRow({
                     border-border
                     py-2
                     last:border-b-0
+                    transition-colors
                     hover:text-primary-600
                     dark:hover:text-primary-400
                 "
