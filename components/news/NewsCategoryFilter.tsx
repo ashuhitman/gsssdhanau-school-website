@@ -4,6 +4,7 @@ import { CategoryIcon, NewsCategoryOption } from "@/types/newsTypes";
 import {
     Award,
     CalendarDays,
+    GraduationCap,
     Grid2X2,
     Megaphone,
     Trophy,
@@ -26,7 +27,7 @@ const iconMap: Record<
     activities: UsersRound,
     sports: Trophy,
     achievement: Award,
-    announcement: Megaphone,
+    academic: GraduationCap,
 };
 
 export default function NewsCategoryFilter({

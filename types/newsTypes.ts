@@ -3,7 +3,7 @@ export type NewsCategory =
     | "Activities"
     | "Sports"
     | "Achievements"
-    | "Announcements";
+    | "Academic";
 
 export type CategoryIcon =
     | "grid"
@@ -11,7 +11,7 @@ export type CategoryIcon =
     | "activities"
     | "sports"
     | "achievement"
-    | "announcement";
+    | "academic";
 
 export interface NewsActivity {
     id: string;
