@@ -22,7 +22,7 @@ export async function GET(
 
         const faculty =
             await getFaculty(
-                category ?? undefined
+
             );
 
         return NextResponse.json({
