@@ -49,6 +49,12 @@ if (!FACULTIES_TABLE_ID) {
     );
 }
 
+if (!ACTIVITIES_TABLE_ID) {
+    throw new Error(
+        "Missing APPWRITE_ACTIVITIES_TABLE_ID"
+    );
+}
+
 if (!APPWRITE_BUCKET_ID) {
     throw new Error(
         "Missing APPWRITE_FACULTY_IMAGES_BUCKET_ID"
