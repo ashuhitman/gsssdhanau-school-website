@@ -52,3 +52,30 @@ export function getImageUrl(
         )}`
     );
 }
+
+
+export function formatDate(
+    date: string | Date
+): string {
+    const parsedDate =
+        date instanceof Date
+            ? date
+            : new Date(date);
+
+    if (
+        Number.isNaN(
+            parsedDate.getTime()
+        )
+    ) {
+        return "";
+    }
+
+    return new Intl.DateTimeFormat(
+        "en-IN",
+        {
+            day: "numeric",
+            month: "short",
+            year: "numeric",
+        }
+    ).format(parsedDate);
+}

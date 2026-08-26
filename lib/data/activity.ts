@@ -197,9 +197,9 @@ function mapActivityRow(
 
     const activityType: ActivityType =
         isActivityType(
-            row.ActivityType
+            row.activityType
         )
-            ? row.ActivityType
+            ? row.activityType
             : "activity";
 
     /* ========================================================
@@ -391,5 +391,82 @@ export async function getActivityById(
         );
 
         return null;
+    }
+}
+
+
+/* ============================================================
+   Get Related Activities
+   Same Activity Type
+   Excludes Current Activity
+   ============================================================ */
+
+export async function getRelatedActivities(
+    activityType: ActivityType,
+    currentActivityId: string,
+    limit = 4
+): Promise<Activity[]> {
+    try {
+
+
+        const response =
+            await tablesDB.listRows({
+                databaseId:
+                    DATABASE_ID,
+
+                tableId:
+                    ACTIVITIES_TABLE_ID,
+
+                queries: [
+                    Query.equal(
+                        "status",
+                        "published"
+                    ),
+
+                    Query.equal(
+                        "activityType",
+                        activityType
+                    ),
+
+                    Query.orderDesc(
+                        "activityDate"
+                    ),
+
+                    /*
+                     * Fetch one extra because
+                     * the current activity will
+                     * be removed below.
+                     */
+                    Query.limit(
+                        limit + 1
+                    ),
+                ],
+            });
+
+        return response.rows
+            .filter(
+                (row) =>
+                    row.$id !==
+                    currentActivityId
+            )
+            .slice(0, limit)
+            .map(
+                (row) =>
+                    mapActivityRow(
+                        row as Record<
+                            string,
+                            unknown
+                        > & {
+                            $id: string;
+                        }
+                    )
+            );
+    } catch (error) {
+        console.error(
+            "Failed to get related activities:",
+            error
+        );
+
+        return [];
     }
 }

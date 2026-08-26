@@ -1,7 +1,11 @@
 import {
+    CalendarCheck,
     CalendarDays,
     Trophy,
     Sparkles,
+    UserCheck,
+    UserRound,
+    UsersRound,
 } from "lucide-react";
 
 import type {
@@ -49,6 +53,11 @@ const categoryLabels: Record<
 export default function ActivityDetails({
     activity,
 }: ActivityDetailsProps) {
+    const imageSrc =
+        activity.image?.trim()
+            ? activity.image
+            : "/images/activity/default-featured.jpeg";
+
     return (
         <article
             className="
@@ -207,11 +216,7 @@ export default function ActivityDetails({
                     "
                 >
                     <img
-                        src={
-                            activity.image?.trim()
-                                ? activity.image
-                                : "/images/activity/default-featured.jpeg"
-                        }
+                        src={imageSrc}
                         alt={
                             activity.imageAlt ??
                             activity.title
@@ -230,6 +235,7 @@ export default function ActivityDetails({
 
                     <div
                         className="
+                            pointer-events-none
                             absolute
                             inset-0
                             bg-gradient-to-t
@@ -293,7 +299,7 @@ export default function ActivityDetails({
                 </div>
 
                 {/* ═════════════════════════
-                    PARTICIPANT / DATE
+                    ACTIVITY META
                 ═════════════════════════ */}
 
                 <div
@@ -303,7 +309,8 @@ export default function ActivityDetails({
                         shrink-0
                         flex-wrap
                         items-center
-                        gap-2
+                        gap-x-4
+                        gap-y-2
                         text-xs
                         text-slate-400
                     "
@@ -311,36 +318,57 @@ export default function ActivityDetails({
                     {/* Participant */}
 
                     {activity.participantName && (
-                        <>
+                        <span
+                            className="
+                                flex
+                                items-center
+                                gap-1.5
+                            "
+                        >
+                            {activity.participantType ===
+                                "team" ||
+                                activity.participantType ===
+                                "school" ? (
+                                <UsersRound
+                                    className="
+                                        size-3.5
+                                    "
+                                />
+                            ) : (
+                                <UserRound
+                                    className="
+                                        size-3.5
+                                    "
+                                />
+                            )}
+
                             <span>
                                 {participantLabel(
                                     activity.participantType
-                                )}{" "}
-                                <span
-                                    className="
-                                        font-semibold
-                                        text-slate-600
-                                    "
-                                >
-                                    {
-                                        activity.participantName
-                                    }
-                                </span>
+                                )}
+                                :
                             </span>
 
-                            <span>
-                                •
+                            <span
+                                className="
+                                    font-semibold
+                                    text-slate-600
+                                "
+                            >
+                                {
+                                    activity.participantName
+                                }
                             </span>
-                        </>
+                        </span>
                     )}
 
-                    {/* Date */}
+                    {/* Activity Date */}
 
                     <span
                         className="
                             flex
                             items-center
-                            gap-1
+                            gap-1.5
                         "
                     >
                         <CalendarDays
@@ -350,24 +378,72 @@ export default function ActivityDetails({
                         />
 
                         <span>
-                            Activity date{" "}
-                        </span>
-
-                        <span
-                            className="
-                                font-semibold
-                                text-slate-600
-                            "
-                        >
                             {formatDate(
                                 activity.activityDate
                             )}
                         </span>
                     </span>
+
+                    {/* Published At */}
+
+                    {activity.publishedAt && (
+                        <span
+                            className="
+                                flex
+                                items-center
+                                gap-1.5
+                            "
+                        >
+                            <CalendarCheck
+                                className="
+                                    size-3.5
+                                "
+                            />
+
+                            <span>
+                                Published{" "}
+                                {formatDate(
+                                    activity.publishedAt
+                                )}
+                            </span>
+                        </span>
+                    )}
+
+                    {/* Published By */}
+
+                    {activity.publishedBy && (
+                        <span
+                            className="
+                                flex
+                                items-center
+                                gap-1.5
+                            "
+                        >
+                            <UserCheck
+                                className="
+                                    size-3.5
+                                "
+                            />
+
+                            <span>
+                                By{" "}
+                                <span
+                                    className="
+                                        font-semibold
+                                        text-slate-600
+                                    "
+                                >
+                                    {
+                                        activity.publishedBy
+                                    }
+                                </span>
+                            </span>
+                        </span>
+                    )}
                 </div>
 
                 {/* ═════════════════════════
-                    DESCRIPTION
+                    DESCRIPTION / EXCERPT
                 ═════════════════════════ */}
 
                 {activity.excerpt && (
@@ -541,6 +617,21 @@ function participantLabel(
 function formatDate(
     date: string
 ): string {
+    if (!date) {
+        return "";
+    }
+
+    const parsedDate =
+        new Date(date);
+
+    if (
+        Number.isNaN(
+            parsedDate.getTime()
+        )
+    ) {
+        return "";
+    }
+
     return new Intl.DateTimeFormat(
         "en-IN",
         {
@@ -548,7 +639,5 @@ function formatDate(
             month: "long",
             year: "numeric",
         }
-    ).format(
-        new Date(date)
-    );
+    ).format(parsedDate);
 }

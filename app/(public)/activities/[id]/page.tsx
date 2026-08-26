@@ -8,9 +8,12 @@ import Link from "next/link";
 
 import {
     getActivityById,
+    getRelatedActivities,
 } from "@/lib/data/activity";
 
 import ActivityDetails from "@/components/activity/AcitivityDetails";
+
+import RelatedActivitiesSidebar from "@/components/activity/RelatedActivitiesSidebar";
 
 /* ============================================================
    Page Props
@@ -38,6 +41,16 @@ export default async function ActivityPage({
         notFound();
     }
 
+    /* ========================================================
+       Related Activities
+    ======================================================== */
+
+    const relatedActivities =
+        await getRelatedActivities(
+            activity.activityType,
+            activity.id
+        );
+
     return (
         <main
             className="
@@ -48,7 +61,7 @@ export default async function ActivityPage({
             <div
                 className="
                     mx-auto
-                    max-w-4xl
+                    max-w-6xl
                     px-4
                     py-7
                     sm:px-6
@@ -99,24 +112,50 @@ export default async function ActivityPage({
                 </Link>
 
                 {/* ==================================================
-                    Activity Details
+                    Main Content + Sidebar
                 ================================================== */}
 
-                <article
+                <div
                     className="
                         mt-5
-                        overflow-hidden
-                        rounded-xl
-                        border
-                        border-slate-200
-                        bg-white
-                        shadow-sm
+                        grid
+                        items-start
+                        gap-6
+                        lg:grid-cols-[minmax(0,1fr)_300px]
+                        xl:grid-cols-[minmax(0,1fr)_320px]
                     "
                 >
-                    <ActivityDetails
-                        activity={activity}
+                    {/* ==================================================
+                        Activity Details
+                    ================================================== */}
+
+                    <article
+                        className="
+                            overflow-hidden
+                            rounded-xl
+                            border
+                            border-slate-200
+                            bg-white
+                            shadow-sm
+                        "
+                    >
+                        <ActivityDetails
+                            activity={
+                                activity
+                            }
+                        />
+                    </article>
+
+                    {/* ==================================================
+                        Related Activities
+                    ================================================== */}
+
+                    <RelatedActivitiesSidebar
+                        activities={
+                            relatedActivities
+                        }
                     />
-                </article>
+                </div>
             </div>
         </main>
     );
