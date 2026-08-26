@@ -34,6 +34,9 @@ export const FACULTIES_TABLE_ID =
 export const APPWRITE_BUCKET_ID =
     process.env.APPWRITE_FACULTY_IMAGES_BUCKET_ID!;
 
+export const ACTIVITIES_TABLE_ID =
+    process.env.APPWRITE_ACTIVITIES_TABLE_ID!;
+
 if (!DATABASE_ID) {
     throw new Error(
         "Missing APPWRITE_DATABASE_ID"

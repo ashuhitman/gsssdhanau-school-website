@@ -89,21 +89,6 @@
                     "format": ""
                 },
                 {
-                    "key": "category",
-                    "type": "string",
-                    "required": true,
-                    "array": false,
-                    "default": null,
-                    "format": "enum",
-                    "elements": [
-                        "event",
-                        "activity",
-                        "sports",
-                        "achievement",
-                        "academic"
-                    ]
-                },
-                {
                     "key": "status",
                     "type": "string",
                     "required": false,
@@ -172,6 +157,34 @@
                     "size": 255,
                     "default": null,
                     "encrypt": false
+                },
+                {
+                    "key": "ActivityType",
+                    "type": "string",
+                    "required": true,
+                    "array": false,
+                    "default": null,
+                    "format": "enum",
+                    "elements": [
+                        "event",
+                        "activity",
+                        "achievement",
+                        "competition"
+                    ]
+                },
+                {
+                    "key": "category",
+                    "type": "string",
+                    "required": false,
+                    "array": true,
+                    "default": null,
+                    "format": "enum",
+                    "elements": [
+                        "sports",
+                        "academic",
+                        "cultural",
+                        "social"
+                    ]
                 }
             ],
             "indexes": []
@@ -319,6 +332,41 @@
                     "elements": [
                         "draft",
                         "published"
+                    ]
+                },
+                {
+                    "key": "message",
+                    "type": "text",
+                    "required": false,
+                    "array": false,
+                    "default": null,
+                    "encrypt": false
+                },
+                {
+                    "key": "prefix",
+                    "type": "varchar",
+                    "required": false,
+                    "array": false,
+                    "size": 10,
+                    "default": null,
+                    "encrypt": false
+                },
+                {
+                    "key": "category",
+                    "type": "string",
+                    "required": true,
+                    "array": false,
+                    "default": null,
+                    "format": "enum",
+                    "elements": [
+                        "principal",
+                        "lecturer",
+                        "teacher",
+                        "lab-attendant",
+                        "udc",
+                        "vt",
+                        "other",
+                        "bci"
                     ]
                 }
             ],
