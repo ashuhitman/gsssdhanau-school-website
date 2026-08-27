@@ -1,4 +1,4 @@
-import Link from "next/link";
+"use client";
 
 import {
     BookOpen,
@@ -17,10 +17,10 @@ export interface ContentTopic {
 
 interface ContentTopicsProps {
     topics: ContentTopic[];
-
     activeTopic?: string;
-
-    basePath: string;
+    onTopicChange: (
+        value: string
+    ) => void;
 }
 
 /* ============================================================
@@ -30,7 +30,7 @@ interface ContentTopicsProps {
 export default function ContentTopics({
     topics,
     activeTopic = "all",
-    basePath,
+    onTopicChange,
 }: ContentTopicsProps) {
     return (
         <section
@@ -115,81 +115,77 @@ export default function ContentTopics({
                     scrollbar-none
                 "
             >
-                {topics.map(
-                    (topic) => {
-                        const isActive =
-                            activeTopic ===
-                            topic.value;
+                {topics.map((topic) => {
+                    const isActive =
+                        activeTopic ===
+                        topic.value;
 
-                        const href =
-                            topic.value ===
-                                "all"
-                                ? basePath
-                                : `${basePath}?category=${encodeURIComponent(
+                    return (
+                        <button
+                            key={topic.value}
+                            type="button"
+                            onClick={() =>
+                                onTopicChange(
                                     topic.value
-                                )}`;
-
-                        return (
-                            <Link
-                                key={
-                                    topic.value
+                                )
+                            }
+                            aria-pressed={
+                                isActive
+                            }
+                            className={`
+                                inline-flex
+                                shrink-0
+                                items-center
+                                gap-2
+                                rounded-full
+                                border
+                                px-4
+                                py-2
+                                text-xs
+                                font-semibold
+                                transition-all
+                                ${isActive
+                                    ? "border-blue-950 bg-blue-950 text-white shadow-sm"
+                                    : "border-slate-200 bg-white text-slate-600 hover:border-slate-300 hover:bg-slate-50 hover:text-slate-950"
                                 }
-                                href={href}
-                                className={`
-                                    inline-flex
-                                    shrink-0
-                                    items-center
-                                    gap-2
-                                    rounded-full
-                                    border
-                                    px-4
-                                    py-2
-                                    text-xs
-                                    font-semibold
-                                    transition-all
-                                    ${isActive
-                                        ? "border-blue-950 bg-blue-950 text-white shadow-sm"
-                                        : "border-slate-200 bg-white text-slate-600 hover:border-slate-300 hover:bg-slate-50 hover:text-slate-950"
-                                    }
-                                `}
-                            >
-                                {isActive && (
-                                    <Check
-                                        className="
-                                            size-3.5
-                                        "
-                                    />
-                                )}
+                            `}
+                        >
+                            {isActive && (
+                                <Check
+                                    className="
+                                        size-3.5
+                                    "
+                                />
+                            )}
 
-                                <span>
-                                    {
-                                        topic.label
-                                    }
-                                </span>
+                            <span>
+                                {
+                                    topic.label
+                                }
+                            </span>
 
-                                {topic.count !==
-                                    undefined && (
-                                        <span
-                                            className={`
-                                            rounded-full
-                                            px-1.5
-                                            py-0.5
-                                            text-[9px]
-                                            ${isActive
-                                                    ? "bg-white/15 text-white/70"
-                                                    : "bg-slate-100 text-slate-400"
-                                                }
-                                        `}
-                                        >
-                                            {
-                                                topic.count
+                            {topic.count !==
+                                undefined && (
+                                    <span
+                                        className={`
+                                        rounded-full
+                                        px-1.5
+                                        py-0.5
+                                        text-[9px]
+                                        ${isActive
+                                                ? "bg-white/15 text-white/70"
+                                                : "bg-slate-100 text-slate-400"
                                             }
-                                        </span>
-                                    )}
-                            </Link>
-                        );
-                    }
-                )}
+                                    `}
+                                    >
+                                        {
+                                            topic.count
+                                        }
+                                    </span>
+                                )}
+                        </button>
+                    );
+                })}
             </nav>
         </section>
     );

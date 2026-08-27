@@ -1,4 +1,4 @@
-import Link from "next/link";
+"use client";
 
 import {
     ChevronLeft,
@@ -11,15 +11,10 @@ import {
 
 interface PaginationProps {
     currentPage: number;
-
     totalPages: number;
-
-    basePath: string;
-
-    searchParams?: Record<
-        string,
-        string | undefined
-    >;
+    onPageChange: (
+        page: number
+    ) => void;
 }
 
 /* ============================================================
@@ -29,43 +24,11 @@ interface PaginationProps {
 export default function Pagination({
     currentPage,
     totalPages,
-    basePath,
-    searchParams = {},
+    onPageChange,
 }: PaginationProps) {
     if (totalPages <= 1) {
         return null;
     }
-
-    const createHref = (
-        page: number
-    ) => {
-        const params =
-            new URLSearchParams();
-
-        Object.entries(
-            searchParams
-        ).forEach(
-            ([key, value]) => {
-                if (
-                    value !==
-                    undefined &&
-                    value !== ""
-                ) {
-                    params.set(
-                        key,
-                        value
-                    );
-                }
-            }
-        );
-
-        params.set(
-            "page",
-            String(page)
-        );
-
-        return `${basePath}?${params.toString()}`;
-    };
 
     const pages = getPages(
         currentPage,
@@ -76,7 +39,7 @@ export default function Pagination({
         <nav
             aria-label="Pagination"
             className="
-                mt-7
+                mt-8
                 flex
                 items-center
                 justify-center
@@ -85,16 +48,20 @@ export default function Pagination({
         >
             {/* Previous */}
 
-            <Link
-                href={createHref(
-                    currentPage - 1
-                )}
-                aria-disabled={
+            <button
+                type="button"
+                onClick={() =>
+                    onPageChange(
+                        currentPage - 1
+                    )
+                }
+                disabled={
                     currentPage === 1
                 }
-                className={`
+                aria-label="Previous page"
+                className="
                     flex
-                    size-9
+                    size-8
                     items-center
                     justify-center
                     rounded-lg
@@ -103,93 +70,108 @@ export default function Pagination({
                     bg-white
                     text-slate-500
                     transition-colors
-                    ${currentPage === 1
-                        ? "pointer-events-none opacity-40"
-                        : "hover:bg-slate-50 hover:text-slate-950"
-                    }
-                `}
+                    hover:bg-slate-50
+                    disabled:pointer-events-none
+                    disabled:opacity-30
+                "
             >
                 <ChevronLeft
                     className="
                         size-4
                     "
                 />
-            </Link>
+            </button>
 
             {/* Pages */}
 
             {pages.map(
                 (page, index) => {
                     if (
-                        page === "..."
+                        page ===
+                        "ellipsis"
                     ) {
                         return (
                             <span
                                 key={`ellipsis-${index}`}
                                 className="
                                     flex
-                                    size-9
+                                    size-8
                                     items-center
                                     justify-center
                                     text-xs
                                     text-slate-400
                                 "
                             >
-                                ...
+                                …
                             </span>
                         );
                     }
 
-                    const isActive =
+                    const active =
                         page ===
                         currentPage;
 
                     return (
-                        <Link
+                        <button
                             key={page}
-                            href={createHref(
-                                page
-                            )}
+                            type="button"
+                            onClick={() =>
+                                onPageChange(
+                                    page
+                                )
+                            }
                             aria-current={
-                                isActive
+                                active
                                     ? "page"
                                     : undefined
                             }
                             className={`
                                 flex
-                                size-9
+                                size-8
                                 items-center
                                 justify-center
                                 rounded-lg
-                                border
                                 text-xs
-                                font-semibold
+                                font-bold
                                 transition-colors
-                                ${isActive
-                                    ? "border-blue-950 bg-blue-950 text-white"
-                                    : "border-slate-200 bg-white text-slate-600 hover:bg-slate-50 hover:text-slate-950"
+                                ${active
+                                    ? `
+                                            bg-blue-950
+                                            text-white
+                                        `
+                                    : `
+                                            border
+                                            border-slate-200
+                                            bg-white
+                                            text-slate-500
+                                            hover:bg-slate-50
+                                        `
                                 }
                             `}
                         >
                             {page}
-                        </Link>
+                        </button>
                     );
                 }
             )}
 
             {/* Next */}
 
-            <Link
-                href={createHref(
-                    currentPage + 1
-                )}
-                aria-disabled={
+            <button
+                type="button"
+                onClick={() =>
+                    onPageChange(
+                        currentPage + 1
+                    )
+                }
+                disabled={
                     currentPage ===
                     totalPages
                 }
-                className={`
+                aria-label="Next page"
+                className="
                     flex
-                    size-9
+                    size-8
                     items-center
                     justify-center
                     rounded-lg
@@ -198,19 +180,17 @@ export default function Pagination({
                     bg-white
                     text-slate-500
                     transition-colors
-                    ${currentPage ===
-                        totalPages
-                        ? "pointer-events-none opacity-40"
-                        : "hover:bg-slate-50 hover:text-slate-950"
-                    }
-                `}
+                    hover:bg-slate-50
+                    disabled:pointer-events-none
+                    disabled:opacity-30
+                "
             >
                 <ChevronRight
                     className="
                         size-4
                     "
                 />
-            </Link>
+            </button>
         </nav>
     );
 }
@@ -222,7 +202,10 @@ export default function Pagination({
 function getPages(
     currentPage: number,
     totalPages: number
-): Array<number | "..."> {
+): (
+    | number
+    | "ellipsis"
+)[] {
     if (totalPages <= 7) {
         return Array.from(
             {
@@ -239,7 +222,7 @@ function getPages(
             2,
             3,
             4,
-            "...",
+            "ellipsis",
             totalPages,
         ];
     }
@@ -250,7 +233,7 @@ function getPages(
     ) {
         return [
             1,
-            "...",
+            "ellipsis",
             totalPages - 3,
             totalPages - 2,
             totalPages - 1,
@@ -260,11 +243,11 @@ function getPages(
 
     return [
         1,
-        "...",
+        "ellipsis",
         currentPage - 1,
         currentPage,
         currentPage + 1,
-        "...",
+        "ellipsis",
         totalPages,
     ];
 }

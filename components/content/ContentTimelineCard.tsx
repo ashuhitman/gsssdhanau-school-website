@@ -12,19 +12,12 @@ import {
 
 interface ContentTimelineCardProps {
     href: string;
-
     image: string | null;
-
     imageAlt?: string;
-
     title: string;
-
     category?: string;
-
     articleType?: string;
-
     excerpt?: string;
-
     author?: string;
 }
 
@@ -48,12 +41,7 @@ export default function ContentTimelineCard({
             : "/images/articles/default-card.jpeg";
 
     return (
-        <article
-            className="
-                group
-                min-w-0
-            "
-        >
+        <article className="group min-w-0">
             <Link
                 href={href}
                 className="
@@ -75,9 +63,7 @@ export default function ContentTimelineCard({
                     sm:p-3
                 "
             >
-                {/* ==================================================
-                    Image
-                ================================================== */}
+                {/* Image */}
 
                 <div
                     className="
@@ -110,19 +96,9 @@ export default function ContentTimelineCard({
                     />
                 </div>
 
-                {/* ==================================================
-                    Content
-                ================================================== */}
+                {/* Content */}
 
-                <div
-                    className="
-                        min-w-0
-                        flex-1
-                        py-0.5
-                    "
-                >
-                    {/* Category / Article Type */}
-
+                <div className="min-w-0 flex-1 py-0.5">
                     {(articleType ||
                         category) && (
                             <div
@@ -130,7 +106,7 @@ export default function ContentTimelineCard({
                                 flex
                                 flex-wrap
                                 items-center
-                                gap-2
+                                gap-1.5
                             "
                             >
                                 {articleType && (
@@ -151,11 +127,7 @@ export default function ContentTimelineCard({
 
                                 {articleType &&
                                     category && (
-                                        <span
-                                            className="
-                                            text-slate-300
-                                        "
-                                        >
+                                        <span className="text-slate-300">
                                             •
                                         </span>
                                     )}
@@ -178,8 +150,6 @@ export default function ContentTimelineCard({
                             </div>
                         )}
 
-                    {/* Title */}
-
                     <h3
                         className="
                             mt-1
@@ -196,8 +166,6 @@ export default function ContentTimelineCard({
                         {title}
                     </h3>
 
-                    {/* Excerpt */}
-
                     {excerpt && (
                         <p
                             className="
@@ -212,8 +180,6 @@ export default function ContentTimelineCard({
                         </p>
                     )}
 
-                    {/* Author */}
-
                     {author && (
                         <div
                             className="
@@ -225,11 +191,7 @@ export default function ContentTimelineCard({
                                 text-slate-400
                             "
                         >
-                            <UserRound
-                                className="
-                                    size-3
-                                "
-                            />
+                            <UserRound className="size-3" />
 
                             <span>
                                 {author}
@@ -238,9 +200,7 @@ export default function ContentTimelineCard({
                     )}
                 </div>
 
-                {/* ==================================================
-                    Arrow
-                ================================================== */}
+                {/* Arrow */}
 
                 <ArrowUpRight
                     className="
@@ -249,7 +209,6 @@ export default function ContentTimelineCard({
                         shrink-0
                         text-slate-300
                         transition-all
-                        duration-200
                         group-hover:-translate-y-0.5
                         group-hover:translate-x-0.5
                         group-hover:text-amber-500
@@ -261,7 +220,7 @@ export default function ContentTimelineCard({
 }
 
 /* ============================================================
-   Format Label
+   Label
 ============================================================ */
 
 function formatLabel(

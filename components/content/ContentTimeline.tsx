@@ -73,10 +73,6 @@ export default function ContentTimeline({
                 "
             />
 
-            {/* ==================================================
-                Timeline Items
-            ================================================== */}
-
             <div
                 className="
                     space-y-6
@@ -143,8 +139,6 @@ export default function ContentTimeline({
                                         leading-none
                                     "
                                 >
-                                    {/* Day */}
-
                                     <span
                                         className="
                                             block
@@ -158,8 +152,6 @@ export default function ContentTimeline({
                                             item.publishedAt
                                         )}
                                     </span>
-
-                                    {/* Month */}
 
                                     <span
                                         className="
@@ -177,8 +169,6 @@ export default function ContentTimeline({
                                         )}
                                     </span>
 
-                                    {/* Year */}
-
                                     <span
                                         className="
                                             mt-0.5
@@ -195,12 +185,7 @@ export default function ContentTimeline({
                                     </span>
                                 </time>
                             ) : (
-                                <span
-                                    className="
-                                        text-xs
-                                        text-slate-300
-                                    "
-                                >
+                                <span className="text-xs text-slate-300">
                                     —
                                 </span>
                             )}
