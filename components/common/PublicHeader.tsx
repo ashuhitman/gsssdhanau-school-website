@@ -41,6 +41,14 @@ export const navigation = [
         href: "/faculty",
     },
     {
+        label: "Notices",
+        href: "/notices",
+    },
+    {
+        label: "Articles",
+        href: "/articles",
+    },
+    {
         label: "Newsletter",
         href: "/newsletter",
     },
