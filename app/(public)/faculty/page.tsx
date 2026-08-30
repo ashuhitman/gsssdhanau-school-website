@@ -17,159 +17,25 @@ import PageHero from "@/components/common/PageHero";
 import { FacultyStats } from "@/components/faculty/FacultyStats";
 import { FacultyPrincipal } from "@/components/faculty/FacultyPrincipal";
 import { FacultyDirectory } from "@/components/faculty/FacultyDirectory";
+import { getFaculty } from "@/lib/data/faculty";
 
 export const metadata = {
     title: "Faculty",
 };
-const staffStats = [
-    {
-        label: "Lecturers",
-        value: "12",
-        icon: GraduationCap,
-    },
-    {
-        label: "2nd Grade Teachers",
-        value: "07",
-        icon: BookOpen,
-    },
-    {
-        label: "3rd Grade Teachers",
-        value: "04",
-        icon: UserRound,
-    },
-    {
-        label: "Computer Anudeshak",
-        value: "01",
-        icon: Laptop,
-    },
-    {
-        label: "4th Grade Staff",
-        value: "04",
-        icon: BriefcaseBusiness,
-    },
-    {
-        label: "Vocational Trainers",
-        value: "02",
-        icon: Medal,
-    },
-    {
-        label: "Panchayat Shikshak",
-        value: "01",
-        icon: School,
-    },
-];
-
-const seniorFaculty = [
-    {
-        name: "Rakesh Kumar",
-        designation: "Sr. Teacher",
-        subject: "Mathematics",
-        qualification: "M.Sc., B.Ed.",
-        image: "/images/faculty/rakesh-kumar.jpg",
-    },
-    {
-        name: "Dharmendra Kumar",
-        designation: "Sr. Teacher",
-        subject: "Chemistry",
-        qualification: "M.Sc., B.Ed.",
-        image: "/images/faculty/dharmendra-kumar.jpg",
-    },
-    {
-        name: "Manish Kumar",
-        designation: "Sr. Teacher",
-        subject: "Physics",
-        qualification: "M.Sc., B.Ed.",
-        image: "/images/faculty/manish-kumar.jpg",
-    },
-    {
-        name: "Praveen Kumar",
-        designation: "Sr. Teacher",
-        subject: "Hindi",
-        qualification: "M.A., B.Ed.",
-        image: "/images/faculty/praveen-kumar.jpg",
-    },
-    {
-        name: "Satram Das",
-        designation: "Sr. Teacher",
-        subject: "English",
-        qualification: "M.A., B.Ed.",
-        image: "/images/faculty/satram-das.jpg",
-    },
-    {
-        name: "Mobtar Ram Chaudhary",
-        designation: "Sr. Teacher",
-        subject: "Sanskrit",
-        qualification: "M.A., B.Ed.",
-        image: "/images/faculty/mobtar-ram.jpg",
-    },
-];
-
-const subjectFaculty = [
-    {
-        name: "Sunita Jakhad",
-        subject: "Hindi",
-        qualification: "M.A., B.Ed.",
-        image: "/images/faculty/sunita-jakhad.jpg",
-    },
-    {
-        name: "Bhomaram Jakhad",
-        subject: "English",
-        qualification: "M.A., B.Ed.",
-        image: "/images/faculty/bhomaram-jakhad.jpg",
-    },
-    {
-        name: "Rakesh Kumar",
-        subject: "Mathematics",
-        qualification: "M.Sc., B.Ed.",
-        image: "/images/faculty/rakesh-kumar.jpg",
-    },
-    {
-        name: "Manish Kumar",
-        subject: "Physics",
-        qualification: "M.Sc., B.Ed.",
-        image: "/images/faculty/manish-kumar.jpg",
-    },
-    {
-        name: "Dharmendra Kumar",
-        subject: "Chemistry",
-        qualification: "M.Sc., B.Ed.",
-        image: "/images/faculty/dharmendra-kumar.jpg",
-    },
-    {
-        name: "Ashutosh Singh",
-        subject: "Computer",
-        qualification: "M.Sc. (CS), B.Ed.",
-        image: "/images/faculty/ashutosh-singh.jpg",
-    },
-];
-
-const otherStaff = [
-    {
-        name: "4th Grade Staff",
-        value: "04",
-        description:
-            "Supporting the smooth functioning of school operations.",
-        icon: BriefcaseBusiness,
-    },
-    {
-        name: "Vocational Trainers",
-        value: "02",
-        description:
-            "Providing practical skills and vocational training to students.",
-        icon: Medal,
-    },
-    {
-        name: "Panchayat Shikshak",
-        value: "01",
-        description:
-            "Supporting primary education and community learning initiatives.",
-        icon: Users,
-    },
-];
 
 
 
-export default function FacultyPage() {
+
+
+
+
+export default async function FacultyPage() {
+
+    const faculty = await getFaculty();
+
+    const principal = faculty.find(
+        (member) => member.category === "principal"
+    );
     return (
         <PageLayout
             hero={
@@ -207,9 +73,9 @@ export default function FacultyPage() {
             <FacultyStats />
 
             {/* Principal Message */}
-            <FacultyPrincipal />
+            <FacultyPrincipal principal={principal} />
 
-            <FacultyDirectory />
+            <FacultyDirectory faculty={faculty} />
 
 
 

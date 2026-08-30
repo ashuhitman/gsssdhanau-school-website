@@ -146,7 +146,7 @@
                     "required": false,
                     "array": false,
                     "size": 255,
-                    "default": "500",
+                    "default": "",
                     "encrypt": false
                 },
                 {
@@ -159,7 +159,7 @@
                     "encrypt": false
                 },
                 {
-                    "key": "ActivityType",
+                    "key": "activityType",
                     "type": "string",
                     "required": true,
                     "array": false,
@@ -543,6 +543,42 @@
                     "size": 255,
                     "default": null,
                     "encrypt": false
+                },
+                {
+                    "key": "category",
+                    "type": "string",
+                    "required": false,
+                    "array": true,
+                    "default": null,
+                    "format": "enum",
+                    "elements": [
+                        "academic",
+                        "student-life",
+                        "school-life",
+                        "sports",
+                        "education",
+                        "values",
+                        "inspiration",
+                        "creativity",
+                        "community"
+                    ]
+                },
+                {
+                    "key": "articleType",
+                    "type": "string",
+                    "required": false,
+                    "array": false,
+                    "default": null,
+                    "format": "enum",
+                    "elements": [
+                        "story",
+                        "opinion",
+                        "experience",
+                        "guide",
+                        "reflection",
+                        "achievement",
+                        "report"
+                    ]
                 }
             ],
             "indexes": []
@@ -642,6 +678,189 @@
                     "size": 255,
                     "default": null,
                     "encrypt": false
+                }
+            ],
+            "indexes": []
+        },
+        {
+            "$id": "newslettermembers",
+            "$permissions": [],
+            "databaseId": "6a820e93003b776355b7",
+            "name": "newsletterClubMembers",
+            "enabled": true,
+            "rowSecurity": false,
+            "columns": [
+                {
+                    "key": "name",
+                    "type": "varchar",
+                    "required": false,
+                    "array": false,
+                    "size": 100,
+                    "default": null,
+                    "encrypt": false
+                },
+                {
+                    "key": "role",
+                    "type": "varchar",
+                    "required": false,
+                    "array": false,
+                    "size": 255,
+                    "default": null,
+                    "encrypt": false
+                },
+                {
+                    "key": "memberType",
+                    "type": "string",
+                    "required": true,
+                    "array": false,
+                    "default": null,
+                    "format": "enum",
+                    "elements": [
+                        "teacher",
+                        "student"
+                    ]
+                },
+                {
+                    "key": "className",
+                    "type": "string",
+                    "required": false,
+                    "array": false,
+                    "default": null,
+                    "format": "enum",
+                    "elements": [
+                        "9A",
+                        "9B",
+                        "10A",
+                        "10B",
+                        "11A",
+                        "11B",
+                        "11C",
+                        "12A",
+                        "12B",
+                        "12C"
+                    ]
+                },
+                {
+                    "key": "image",
+                    "type": "varchar",
+                    "required": false,
+                    "array": false,
+                    "size": 255,
+                    "default": null,
+                    "encrypt": false
+                },
+                {
+                    "key": "sortOrder",
+                    "type": "integer",
+                    "required": true,
+                    "array": false,
+                    "default": null,
+                    "min": 1,
+                    "max": 20
+                },
+                {
+                    "key": "facultyId",
+                    "type": "varchar",
+                    "required": false,
+                    "array": false,
+                    "size": 40,
+                    "default": null,
+                    "encrypt": false
+                }
+            ],
+            "indexes": []
+        },
+        {
+            "$id": "newsletters",
+            "$permissions": [],
+            "databaseId": "6a820e93003b776355b7",
+            "name": "newsletters",
+            "enabled": true,
+            "rowSecurity": false,
+            "columns": [
+                {
+                    "key": "title",
+                    "type": "varchar",
+                    "required": true,
+                    "array": false,
+                    "size": 100,
+                    "default": null,
+                    "encrypt": false
+                },
+                {
+                    "key": "month",
+                    "type": "integer",
+                    "required": true,
+                    "array": false,
+                    "default": null,
+                    "min": 1,
+                    "max": 2
+                },
+                {
+                    "key": "year",
+                    "type": "integer",
+                    "required": false,
+                    "array": false,
+                    "default": null,
+                    "min": -9223372036854775808,
+                    "max": 4
+                },
+                {
+                    "key": "issueNumber",
+                    "type": "integer",
+                    "required": true,
+                    "array": false,
+                    "default": null,
+                    "min": -9223372036854775808,
+                    "max": 9223372036854775807
+                },
+                {
+                    "key": "subtitle",
+                    "type": "varchar",
+                    "required": false,
+                    "array": false,
+                    "size": 150,
+                    "default": null,
+                    "encrypt": false
+                },
+                {
+                    "key": "description",
+                    "type": "varchar",
+                    "required": false,
+                    "array": false,
+                    "size": 500,
+                    "default": null,
+                    "encrypt": false
+                },
+                {
+                    "key": "coverImage",
+                    "type": "varchar",
+                    "required": false,
+                    "array": false,
+                    "size": 255,
+                    "default": null,
+                    "encrypt": false
+                },
+                {
+                    "key": "pdfUrl",
+                    "type": "varchar",
+                    "required": false,
+                    "array": false,
+                    "size": 500,
+                    "default": null,
+                    "encrypt": false
+                },
+                {
+                    "key": "status",
+                    "type": "string",
+                    "required": true,
+                    "array": false,
+                    "default": null,
+                    "format": "enum",
+                    "elements": [
+                        "draft",
+                        "published"
+                    ]
                 }
             ],
             "indexes": []

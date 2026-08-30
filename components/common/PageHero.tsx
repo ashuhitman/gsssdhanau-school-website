@@ -264,7 +264,7 @@ export default function PageHero({
                                 font-bold
                                 leading-none
                                 tracking-[-0.04em]
-                                text-primary
+                                text-heading
                             "
                         >
                             {title}
@@ -272,7 +272,7 @@ export default function PageHero({
                             {highlight && (
                                 <>
                                     {" "}
-                                    <span className="text-primary">
+                                    <span className="text-heading">
                                         {highlight}
                                     </span>
                                 </>
@@ -381,7 +381,7 @@ export default function PageHero({
 
                                                     ${variant === "primary"
                                                         ? `
-                                                                bg-primary
+                                                                bg-primary-600
                                                                 text-white
                                                                 shadow-school-button
                                                                 hover:bg-primary-hover
@@ -392,9 +392,9 @@ export default function PageHero({
                                                     ${variant === "secondary"
                                                         ? `
                                                                 border
-                                                                border-default
+                                                                border-primary-600
                                                                 bg-card
-                                                                text-primary
+                                                                text-primary-600
                                                                 hover:bg-surface-hover
                                                             `
                                                         : ""
@@ -547,9 +547,7 @@ export default function PageHero({
                         "
                     >
                         <div
-                            style={{
-                                viewTransitionName: imageViewTransitionName,
-                            }}
+
                             className="relative h-full w-full"
                         >
                             <Image

@@ -1,11 +1,20 @@
 import Image from "next/image";
+
 import { GraduationCap } from "lucide-react";
-import { getPrincipal } from "@/lib/data/primcipal";
 
+import { getPrincipal } from "@/lib/data/faculty";
 
+/* ============================================================
+   Principal Message
+============================================================ */
 
 export async function PrincipalMessage() {
-    const principal = await getPrincipal();
+    const principal =
+        await getPrincipal();
+
+    if (!principal) {
+        return null;
+    }
 
     return (
         <section>
@@ -29,6 +38,7 @@ export async function PrincipalMessage() {
                     "
                 >
                     {/* Principal */}
+
                     <div
                         className="
                             order-1
@@ -46,8 +56,16 @@ export async function PrincipalMessage() {
                             lg:pb-0
                         "
                     >
-                        <div className="flex min-w-0 items-center gap-4">
+                        <div
+                            className="
+                                flex
+                                min-w-0
+                                items-center
+                                gap-4
+                            "
+                        >
                             {/* Principal Image */}
+
                             <div
                                 className="
                                     relative
@@ -63,7 +81,7 @@ export async function PrincipalMessage() {
                             >
                                 <Image
                                     src={principal.image}
-                                    alt={principal.imageAlt}
+                                    alt={principal.imageAlt ?? principal.name}
                                     fill
                                     sizes="80px"
                                     className="object-cover"
@@ -71,6 +89,7 @@ export async function PrincipalMessage() {
                             </div>
 
                             {/* Principal Details */}
+
                             <div className="min-w-0">
                                 <p
                                     className="
@@ -79,7 +98,9 @@ export async function PrincipalMessage() {
                                         text-accent-400
                                     "
                                 >
-                                    {principal.designation}
+                                    {
+                                        principal.designation
+                                    }
                                 </p>
 
                                 <h2
@@ -98,6 +119,7 @@ export async function PrincipalMessage() {
                                 </h2>
 
                                 {/* Qualifications */}
+
                                 <div
                                     className="
                                         mt-1.5
@@ -117,23 +139,39 @@ export async function PrincipalMessage() {
                                             text-accent-400
                                             sm:size-4
                                         "
-                                        strokeWidth={1.8}
+                                        strokeWidth={
+                                            1.8
+                                        }
                                     />
 
-                                    <div className="flex min-w-0 items-center">
-                                        {principal.qualification.map(
-                                            (qualification, index) => (
+                                    <div
+                                        className="
+                                            flex
+                                            min-w-0
+                                            items-center
+                                        "
+                                    >
+                                        {principal.qualifications.map(
+                                            (
+                                                qualification,
+                                                index
+                                            ) => (
                                                 <span
-                                                    key={qualification}
+                                                    key={
+                                                        qualification
+                                                    }
                                                     className={`
                                                         whitespace-nowrap
-                                                        ${index > 0
+                                                        ${index >
+                                                            0
                                                             ? "ml-2 border-l border-white/25 pl-2"
                                                             : ""
                                                         }
                                                     `}
                                                 >
-                                                    {qualification}
+                                                    {
+                                                        qualification
+                                                    }
                                                 </span>
                                             )
                                         )}
@@ -144,6 +182,7 @@ export async function PrincipalMessage() {
                     </div>
 
                     {/* Principal Message */}
+
                     <div
                         className="
                             order-2
@@ -157,6 +196,7 @@ export async function PrincipalMessage() {
                         "
                     >
                         {/* Quote */}
+
                         <span
                             className="
                                 absolute
@@ -187,7 +227,14 @@ export async function PrincipalMessage() {
                             {principal.message}
                         </p>
 
-                        <div className="mt-3 h-0.5 w-10 bg-accent-500" />
+                        <div
+                            className="
+                                mt-3
+                                h-0.5
+                                w-10
+                                bg-accent-500
+                            "
+                        />
                     </div>
                 </div>
             </div>

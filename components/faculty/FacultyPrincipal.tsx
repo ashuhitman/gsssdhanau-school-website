@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import type { FacultyMember } from "@/lib/data/faculty";
 
 import {
     ArrowRight,
@@ -7,11 +8,12 @@ import {
     Quote,
 } from "lucide-react";
 
-import { getPrincipal } from "@/lib/data/faculty";
+interface PrincipalProps {
+    principal?: FacultyMember
+}
 
-export async function FacultyPrincipal() {
-    const principal =
-        await getPrincipal();
+export function FacultyPrincipal({ principal }: PrincipalProps) {
+
 
     if (!principal) {
         return null;

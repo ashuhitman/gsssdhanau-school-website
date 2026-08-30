@@ -43,6 +43,12 @@ export const ARTICLES_TABLE_ID =
 export const NOTICES_TABLE_ID =
     process.env.APPWRITE_NOTICES_TABLE_ID!;
 
+export const NEWSLETTERS_TABLE_ID =
+    process.env.APPWRITE_NEWSLETTERS_TABLE_ID!;
+
+export const NEWSLETTER_MEMBERS_TABLE_ID =
+    process.env.APPWRITE_NEWSLETTER_MEMBERS_TABLE_ID!;
+
 if (!DATABASE_ID) {
     throw new Error(
         "Missing APPWRITE_DATABASE_ID"
@@ -64,5 +70,17 @@ if (!ACTIVITIES_TABLE_ID) {
 if (!APPWRITE_BUCKET_ID) {
     throw new Error(
         "Missing APPWRITE_FACULTY_IMAGES_BUCKET_ID"
+    );
+}
+
+if (!NEWSLETTERS_TABLE_ID) {
+    throw new Error(
+        "Missing APPWRITE_NEWSLETTERS_TABLE_ID"
+    );
+}
+
+if (!NEWSLETTER_MEMBERS_TABLE_ID) {
+    throw new Error(
+        "Missing APPWRITE_NEWSLETTER_MEMBERS_TABLE_ID "
     );
 }

@@ -1,12 +1,13 @@
-import { getFaculty } from "@/lib/data/faculty";
+import { FacultyMember, getFaculty } from "@/lib/data/faculty";
 import { FacultyDirectoryClient } from "./FacultyDirectoryClient";
 
 
+interface FacultyProps {
+    faculty: FacultyMember[]
+}
 
+export function FacultyDirectory({ faculty }: FacultyProps) {
 
-export async function FacultyDirectory() {
-    const faculty =
-        await getFaculty();
 
     return (
         <section className="py-5 sm:py-6">

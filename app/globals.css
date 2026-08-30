@@ -5,30 +5,29 @@
 /* ============================================================
    PM SHRI GSSS DHANAU
    GLOBAL DESIGN SYSTEM
-   DEEP NAVY + MINERAL TEAL + SAFFRON + MAGENTA
+   SCHOOL BLUE + MINERAL TEAL + WARM ORANGE + GOLD
    ============================================================ */
 
 @theme {
 
   /* ==========================================================
-     PRIMARY — DEEP NAVY
+     PRIMARY — SCHOOL BLUE
      ========================================================== */
 
-  --color-primary-50: #f2f7f9;
-  --color-primary-100: #dce9ee;
-  --color-primary-200: #bad3dc;
-  --color-primary-300: #91b8c5;
-  --color-primary-400: #6599aa;
-  --color-primary-500: #477d91;
-  --color-primary-600: #386579;
-  --color-primary-700: #2f5264;
-  --color-primary-800: #294655;
-  --color-primary-900: #253b49;
-  --color-primary-950: #13232d;
-
+  --color-primary-50: #f3f5fa;
+  --color-primary-100: #e5e9f3;
+  --color-primary-200: #cbd2e5;
+  --color-primary-300: #a5b0cc;
+  --color-primary-400: #7180aa;
+  --color-primary-500: #405486;
+  --color-primary-600: #162556;
+  --color-primary-700: #111d45;
+  --color-primary-800: #0d1737;
+  --color-primary-900: #091128;
+  --color-primary-950: #050a19;
 
   /* ==========================================================
-     ACCENT — MINERAL TEAL #70ABAF
+     ACCENT — MINERAL TEAL
      ========================================================== */
 
   --color-accent-50: #f3f9f9;
@@ -138,9 +137,9 @@
      BACKGROUND
      ========================================================== */
 
-  --school-background: #f7f9f8;
-  --school-surface: #f0f5f5;
-  --school-surface-hover: #e7eeee;
+  --school-background: #f8fafc;
+  --school-surface: #f2f6fa;
+  --school-surface-hover: #eaf1f7;
   --school-card: #ffffff;
 
 
@@ -148,74 +147,76 @@
      TEXT
      ========================================================== */
 
-  --school-heading: #162b35;
-  --school-foreground: #293b42;
-  --school-text: #3c4d53;
-  --school-card-foreground: #293b42;
-  --school-muted: #718087;
+  --school-heading: #172b3d;
+  --school-foreground: #263b4d;
+  --school-text: #425466;
+  --school-card-foreground: #263b4d;
+  --school-muted: #748494;
 
 
   /* ==========================================================
      BORDER
      ========================================================== */
 
-  --school-border: #dbe5e7;
+  --school-border: #dbe5ee;
 
 
   /* ==========================================================
-     PRIMARY — DEEP NAVY
+     PRIMARY — SCHOOL BLUE
      ========================================================== */
 
-  --school-primary: #173b4d;
-  --school-primary-hover: #122f3e;
-  --school-primary-soft: #dce9ee;
+  --school-primary: #2563a6;
+  --school-primary-hover: #1e5289;
+  --school-primary-soft: #e5eff9;
 
 
   /* ==========================================================
-     ACCENT — MINERAL TEAL #70ABAF
-     ========================================================== */
+   ACCENT — WARM ORANGE
+   ========================================================== */
 
-  --school-accent: #70abaf;
-  --school-accent-hover: #5d969b;
-  --school-accent-soft: #e1f0f1;
+  --school-accent: #e9823a;
+
+  --school-accent-hover: #d96f2c;
+
+  --school-accent-soft: #ffead6;
 
 
   /* ==========================================================
      STATUS
      ========================================================== */
 
-  --school-success: #4f8a63;
-  --school-warning: #d28a18;
-  --school-danger: #c83e3e;
-  --school-info: #d4773c;
+  --school-success: #27958d;
+  --school-warning: #d8b52a;
+  --school-danger: #c95a45;
+  --school-info: #d98236;
 
 
   /* ==========================================================
      ICON COLORS
      ========================================================== */
 
-  --school-icon-primary: #d94f70;
-  --school-icon-accent: #e0a11a;
-  --school-icon-success: #4f8a63;
-  --school-icon-warning: #d28a18;
-  --school-icon-danger: #c83e3e;
-  --school-icon-info: #d4773c;
-  --school-icon-teal: #70abaf;
-  --school-icon-rose: #b84d72;
+  --school-icon-primary: #2563a6;
+  --school-icon-accent: #d98236;
+  --school-icon-success: #27958d;
+  --school-icon-warning: #c59e1e;
+  --school-icon-danger: #c95a45;
+  --school-icon-info: #2474c6;
+  --school-icon-teal: #27958d;
+  --school-icon-rose: #c96b59;
 
 
   /* ==========================================================
      ICON SOFT BACKGROUNDS
      ========================================================== */
 
-  --school-icon-bg-primary: #fce8ee;
-  --school-icon-bg-accent: #fff4d7;
-  --school-icon-bg-success: #e5f1e8;
-  --school-icon-bg-warning: #fff1cf;
-  --school-icon-bg-danger: #fbe5e5;
-  --school-icon-bg-info: #fff0e3;
-  --school-icon-bg-teal: #e1f0f1;
-  --school-icon-bg-rose: #f9e6ed;
+  --school-icon-bg-primary: #e5eff9;
+  --school-icon-bg-accent: #fdf0df;
+  --school-icon-bg-success: #e3f3f1;
+  --school-icon-bg-warning: #f9f2d8;
+  --school-icon-bg-danger: #fae9e5;
+  --school-icon-bg-info: #e6eff9;
+  --school-icon-bg-teal: #e3f3f1;
+  --school-icon-bg-rose: #f8e9e5;
 
 
   /* ==========================================================
@@ -223,13 +224,13 @@
      ========================================================== */
 
   --school-shadow-card:
-    0 0.4rem 1.5rem rgba(22, 43, 53, 0.08);
+    0 0.4rem 1.5rem rgba(23, 43, 61, 0.07);
 
   --school-shadow-card-hover:
-    0 0.7rem 2rem rgba(22, 43, 53, 0.13);
+    0 0.7rem 2rem rgba(23, 43, 61, 0.11);
 
   --school-shadow-button:
-    0 0.5rem 1.25rem rgba(22, 43, 53, 0.2);
+    0 0.5rem 1.25rem rgba(23, 43, 61, 0.16);
 }
 
 
@@ -246,41 +247,41 @@
      BACKGROUND
      ========================================================== */
 
-  --school-background: #0c151a;
-  --school-surface: #121e24;
-  --school-surface-hover: #1a2930;
-  --school-card: #16232a;
+  --school-background: #0d1722;
+  --school-surface: #142331;
+  --school-surface-hover: #1b3041;
+  --school-card: #182a38;
 
 
   /* ==========================================================
      TEXT
      ========================================================== */
 
-  --school-heading: #edf5f7;
-  --school-foreground: #e2eaed;
-  --school-text: #d9e3e7;
-  --school-card-foreground: #e2eaed;
-  --school-muted: #9ca9ae;
+  --school-heading: #edf5fb;
+  --school-foreground: #e2ebf2;
+  --school-text: #d2dee8;
+  --school-card-foreground: #e2ebf2;
+  --school-muted: #9babb9;
 
 
   /* ==========================================================
      BORDER
      ========================================================== */
 
-  --school-border: #2c3e45;
+  --school-border: #2b4051;
 
 
   /* ==========================================================
-     PRIMARY — DEEP NAVY
+     PRIMARY — SCHOOL BLUE
      ========================================================== */
 
-  --school-primary: #6599aa;
-  --school-primary-hover: #91b8c5;
-  --school-primary-soft: #193642;
+  --school-primary: #72a5cf;
+  --school-primary-hover: #91b9d9;
+  --school-primary-soft: #193752;
 
 
   /* ==========================================================
-     ACCENT — MINERAL TEAL #70ABAF
+     ACCENT — MINERAL TEAL
      ========================================================== */
 
   --school-accent: #70abaf;
@@ -292,38 +293,38 @@
      STATUS
      ========================================================== */
 
-  --school-success: #72b786;
-  --school-warning: #efbd4e;
-  --school-danger: #ef7777;
-  --school-info: #ee9b61;
+  --school-success: #43aaa2;
+  --school-warning: #d8bc4c;
+  --school-danger: #df7564;
+  --school-info: #df9a5a;
 
 
   /* ==========================================================
      ICON COLORS
      ========================================================== */
 
-  --school-icon-primary: #f07898;
-  --school-icon-accent: #f2c34d;
-  --school-icon-success: #72b786;
-  --school-icon-warning: #efc34e;
-  --school-icon-danger: #ef7777;
-  --school-icon-info: #ee9b61;
-  --school-icon-teal: #70c1c3;
-  --school-icon-rose: #f07899;
+  --school-icon-primary: #91b9d9;
+  --school-icon-accent: #df9a5a;
+  --school-icon-success: #43aaa2;
+  --school-icon-warning: #d8bc4c;
+  --school-icon-danger: #df7564;
+  --school-icon-info: #91b9d9;
+  --school-icon-teal: #43aaa2;
+  --school-icon-rose: #df826e;
 
 
   /* ==========================================================
      ICON SOFT BACKGROUNDS
      ========================================================== */
 
-  --school-icon-bg-primary: #411b28;
-  --school-icon-bg-accent: #3e310e;
-  --school-icon-bg-success: #193723;
-  --school-icon-bg-warning: #3b310e;
-  --school-icon-bg-danger: #411d1e;
-  --school-icon-bg-info: #412719;
-  --school-icon-bg-teal: #17383a;
-  --school-icon-bg-rose: #411b29;
+  --school-icon-bg-primary: #193752;
+  --school-icon-bg-accent: #49331f;
+  --school-icon-bg-success: #193d3a;
+  --school-icon-bg-warning: #403817;
+  --school-icon-bg-danger: #492722;
+  --school-icon-bg-info: #193752;
+  --school-icon-bg-teal: #193d3a;
+  --school-icon-bg-rose: #492722;
 
 
   /* ==========================================================
@@ -450,6 +451,8 @@
 
     color: var(--school-muted);
   }
+
+
 }
 
 

@@ -1,6 +1,7 @@
 import PageHero from "@/components/common/PageHero";
 import { PageLayout } from "@/components/layout/PageLayout";
-import { getPrincipal } from "@/lib/data/primcipal";
+import { getPrincipal } from "@/lib/data/faculty";
+
 import {
     Award,
     BookOpen,
@@ -71,13 +72,13 @@ export default async function Principal() {
                     ]}
                     title="Mr."
                     highlight={principal.name}
-                    description={principal.description}
+                    description={"principal.description"}
                     image={principal.image}
                     imageAlt={principal.imageAlt}
                     imageViewTransitionName="principal-photo"
                     stats={[
                         {
-                            value: principal.qualification.join(" | "),
+                            value: principal.qualifications.join(" | "),
                             label: "Qualification",
                             icon: <GraduationCap size={20} />,
                         },
@@ -89,7 +90,7 @@ export default async function Principal() {
                                 "bg-accent-soft text-accent",
                         },
                         {
-                            value: principal.focus,
+                            value: "principal.focus",
                             label: "Focus",
                             icon: <BookOpen size={20} />,
                         },
@@ -134,7 +135,7 @@ export default async function Principal() {
 
                             <div className="my-2 flex h-12 w-36 items-center">
                                 <span className="font-[cursive] text-3xl italic text-purple-800">
-                                    {principal.firstName}
+                                    {principal.name.split(" ")[0]}
                                 </span>
                             </div>
 

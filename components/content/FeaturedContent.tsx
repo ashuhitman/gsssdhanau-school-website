@@ -1,4 +1,5 @@
 import Image from "next/image";
+
 import Link from "next/link";
 
 import {
@@ -8,7 +9,9 @@ import {
     UserRound,
 } from "lucide-react";
 
-import { formatDate } from "@/lib/utils/utils";
+import {
+    formatDate,
+} from "@/lib/utils/utils";
 
 /* ============================================================
    Props
@@ -16,17 +19,24 @@ import { formatDate } from "@/lib/utils/utils";
 
 interface FeaturedContentProps {
     href: string;
-    image: string | null;
+
+    image?: string | null;
+
     imageAlt?: string;
 
     category?: string;
+
     articleType?: string;
 
     title: string;
+
     description?: string;
 
     publishedAt?: string;
+
     author?: string;
+
+    fallbackImage?: string;
 }
 
 /* ============================================================
@@ -43,11 +53,16 @@ export default function FeaturedContent({
     description,
     publishedAt,
     author,
+    fallbackImage = "/images/articles/default-featured.jpeg",
 }: FeaturedContentProps) {
+    /* ========================================================
+       Image
+    ======================================================== */
+
     const imageSrc =
         image?.trim()
             ? image
-            : "/images/articles/default-featured.jpeg";
+            : fallbackImage;
 
     return (
         <article
@@ -113,7 +128,9 @@ export default function FeaturedContent({
                         "
                     />
 
-                    {/* Featured */}
+                    {/* ==================================================
+                        Featured
+                    ================================================== */}
 
                     <div
                         className="
@@ -150,7 +167,9 @@ export default function FeaturedContent({
                         lg:p-10
                     "
                 >
-                    {/* Type / Category */}
+                    {/* ==================================================
+                        Type / Category
+                    ================================================== */}
 
                     {(articleType ||
                         category) && (
@@ -200,7 +219,9 @@ export default function FeaturedContent({
                             </div>
                         )}
 
-                    {/* Title */}
+                    {/* ==================================================
+                        Title
+                    ================================================== */}
 
                     <Link
                         href={href}
@@ -227,7 +248,9 @@ export default function FeaturedContent({
                         </h2>
                     </Link>
 
-                    {/* Description */}
+                    {/* ==================================================
+                        Description
+                    ================================================== */}
 
                     {description && (
                         <p
@@ -244,7 +267,9 @@ export default function FeaturedContent({
                         </p>
                     )}
 
-                    {/* Metadata */}
+                    {/* ==================================================
+                        Metadata
+                    ================================================== */}
 
                     {(publishedAt ||
                         author) && (
@@ -326,7 +351,9 @@ export default function FeaturedContent({
                             </div>
                         )}
 
-                    {/* Read More */}
+                    {/* ==================================================
+                        Read More
+                    ================================================== */}
 
                     <Link
                         href={href}
@@ -362,7 +389,9 @@ export default function FeaturedContent({
                 </div>
             </div>
 
-            {/* Bottom accent */}
+            {/* ============================================================
+                Bottom Accent
+            ============================================================ */}
 
             <div
                 aria-hidden="true"
@@ -384,7 +413,9 @@ function formatLabel(
 ): string {
     return value
         .replace(/-/g, " ")
-        .replace(/\b\w/g, (char) =>
-            char.toUpperCase()
+        .replace(
+            /\b\w/g,
+            (char) =>
+                char.toUpperCase()
         );
 }

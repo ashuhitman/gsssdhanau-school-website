@@ -7,21 +7,20 @@ import {
 import Link from "next/link";
 
 import {
-    getActivityById,
-    getActivities,
-    getRelatedActivities,
-} from "@/lib/data/activity";
+    getArticleById,
+    getArticles,
+} from "@/lib/data/article";
 
-
-
-import RelatedActivitiesSidebar from "@/components/activity/RelatedActivitiesSidebar";
 import ContentDetails from "@/components/content/ContentDetails";
+import RelatedContentSidebar from "@/components/Articles/RelatedSidebar";
+
+
 
 /* ============================================================
    Page Props
 ============================================================ */
 
-interface ActivityPageProps {
+interface ArticlePageProps {
     params: Promise<{
         id: string;
     }>;
@@ -32,46 +31,57 @@ interface ActivityPageProps {
 ============================================================ */
 
 export async function generateStaticParams() {
-    const activities =
-        await getActivities();
+    const articles = await getArticles();
 
-    return activities.map((activity) => ({
-        id: activity.id,
+    return articles.map((article) => ({
+        id: article.id,
     }));
 }
 
 /* ============================================================
-   Activity Page
+   Article Page
 ============================================================ */
 
-export default async function ActivityPage({
+export default async function ArticlePage({
     params,
-}: ActivityPageProps) {
+}: ArticlePageProps) {
     const { id } = await params;
 
     /* ========================================================
-       Activity
+       Article
     ======================================================== */
 
-    const activity =
-        await getActivityById(id);
+    const article =
+        await getArticleById(id);
 
-    if (!activity) {
+    if (!article) {
         notFound();
     }
 
     /* ========================================================
-       Related Activities
+       Related Articles
     ======================================================== */
 
-    const relatedActivities =
-        await getRelatedActivities(
-            activity.activityType,
-            activity.id
-        );
+    const allArticles =
+        await getArticles();
+
+    const relatedArticles =
+        allArticles
+            .filter(
+                (item) =>
+                    item.id !==
+                    article.id &&
+                    item.category.some(
+                        (category) =>
+                            article.category.includes(
+                                category
+                            )
+                    )
+            )
+            .slice(0, 3);
 
     return (
-        <main
+        <div
             className="
                 min-h-screen
                 bg-slate-50
@@ -93,7 +103,7 @@ export default async function ActivityPage({
                 ================================================== */}
 
                 <Link
-                    href="/activities"
+                    href="/articles"
                     className="
                         group
                         inline-flex
@@ -127,7 +137,7 @@ export default async function ActivityPage({
                         />
                     </span>
 
-                    All activities
+                    All articles
                 </Link>
 
                 {/* ==================================================
@@ -145,7 +155,7 @@ export default async function ActivityPage({
                     "
                 >
                     {/* ==================================================
-                        Activity Details
+                        Article
                     ================================================== */}
 
                     <article
@@ -160,51 +170,48 @@ export default async function ActivityPage({
                     >
                         <ContentDetails
                             title={
-                                activity.title
+                                article.title
                             }
                             image={
-                                activity.image
+                                article.image
                             }
                             imageAlt={
-                                activity.imageAlt
+                                article.imageAlt
                             }
                             contentType={
-                                activity.activityType
+                                article.articleType
                             }
                             category={
-                                activity.category
+                                article.category
                             }
                             excerpt={
-                                activity.excerpt
+                                article.excerpt
                             }
                             content={
-                                activity.description
-                            }
-                            date={
-                                activity.activityDate
+                                article.content
                             }
                             publishedAt={
-                                activity.publishedAt
+                                article.publishedAt
                             }
                             publishedBy={
-                                activity.publishedBy
+                                article.authorBy
                             }
-                            footerLabel="School Activity"
-                            fallbackImage="/images/activity/default-featured.jpeg"
+                            footerLabel="Article"
+                            fallbackImage="/images/articles/default-card.jpeg"
                         />
                     </article>
 
                     {/* ==================================================
-                        Related Activities
+                        Related Articles
                     ================================================== */}
 
-                    <RelatedActivitiesSidebar
-                        activities={
-                            relatedActivities
+                    <RelatedContentSidebar
+                        articles={
+                            relatedArticles
                         }
                     />
                 </div>
             </div>
-        </main>
+        </div>
     );
 }

@@ -3,6 +3,7 @@ interface SectionHeadingProps {
     title: string;
     description?: string;
     align?: "left" | "center";
+    icon?: React.ReactNode;
 }
 
 export default function SectionHeading({
@@ -10,11 +11,11 @@ export default function SectionHeading({
     title,
     description,
     align = "center",
+    icon,
 }: SectionHeadingProps) {
     return (
         <div
             className={`
-               
                 ${align === "center"
                     ? "mx-auto text-center"
                     : "text-left"
@@ -46,6 +47,10 @@ export default function SectionHeading({
 
             <h2
                 className="
+                    flex
+                    items-center
+                    justify-center
+                    gap-2
                     text-[clamp(1.5rem,3vw,2.25rem)]
                     font-bold
                     leading-tight
@@ -53,7 +58,13 @@ export default function SectionHeading({
                     text-heading
                 "
             >
-                {title}
+                {icon && (
+                    <span className="shrink-0">
+                        {icon}
+                    </span>
+                )}
+
+                <span>{title}</span>
             </h2>
 
             {/* =====================================================
@@ -67,7 +78,6 @@ export default function SectionHeading({
                         text-sm
                         leading-6
                         text-muted
-
                         sm:text-base
                     "
                 >

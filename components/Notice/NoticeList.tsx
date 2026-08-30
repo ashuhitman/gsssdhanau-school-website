@@ -5,145 +5,201 @@ import {
     SlidersHorizontal,
     X,
 } from "lucide-react";
-import { useMemo, useState } from "react";
+
+import {
+    useMemo,
+    useState,
+} from "react";
 
 import { NoticeCard } from "./NoticeCard";
 
-export interface Notice {
-    date: string;
-    month: string;
-    year: string;
-    title: string;
-    description: string;
-    category: string;
-    href?: string;
-    isNew?: boolean;
-}
+import {
+    Notice,
+    NoticeCategory,
+} from "@/lib/data/notices";
+
+/* ============================================================
+   Props
+============================================================ */
 
 interface NoticeListProps {
     notices: Notice[];
-    categories: string[];
+
+    categories: readonly (
+        | "All Notices"
+        | NoticeCategory
+    )[];
 }
 
+/* ============================================================
+   Constants
+============================================================ */
+
 const NOTICES_PER_PAGE = 5;
+
+/* ============================================================
+   Notice List
+============================================================ */
 
 export function NoticeList({
     notices,
     categories,
 }: NoticeListProps) {
-    const [search, setSearch] = useState("");
-    const [category, setCategory] = useState("All Notices");
+    const [search, setSearch] =
+        useState("");
 
-    const [sort, setSort] = useState<
-        "latest" | "oldest"
-    >("latest");
+    const [category, setCategory] =
+        useState<
+            | "All Notices"
+            | NoticeCategory
+        >("All Notices");
 
-    const [currentPage, setCurrentPage] = useState(1);
+    const [sort, setSort] =
+        useState<
+            "latest" | "oldest"
+        >("latest");
 
-    /* =========================================================
+    const [currentPage, setCurrentPage] =
+        useState(1);
+
+    /* ========================================================
        FILTER + SEARCH + SORT
-    ========================================================= */
-    const filteredNotices = useMemo(() => {
-        const query = search.trim().toLowerCase();
+    ======================================================== */
 
-        const result = notices.filter((notice) => {
-            const matchesSearch =
-                !query ||
-                notice.title
-                    .toLowerCase()
-                    .includes(query) ||
-                notice.description
-                    .toLowerCase()
-                    .includes(query) ||
-                notice.category
-                    .toLowerCase()
-                    .includes(query);
+    const filteredNotices =
+        useMemo(() => {
+            const query =
+                search
+                    .trim()
+                    .toLowerCase();
 
-            const matchesCategory =
-                category === "All Notices" ||
-                notice.category === category;
+            const result =
+                notices.filter(
+                    (notice) => {
+                        const searchableDescription =
+                            (
+                                notice.excerpt ||
+                                notice.description ||
+                                ""
+                            ).toLowerCase();
 
-            return (
-                matchesSearch &&
-                matchesCategory
+                        const matchesSearch =
+                            !query ||
+                            notice.title
+                                .toLowerCase()
+                                .includes(
+                                    query
+                                ) ||
+                            searchableDescription.includes(
+                                query
+                            ) ||
+                            notice.category
+                                .toLowerCase()
+                                .includes(
+                                    query
+                                );
+
+                        const matchesCategory =
+                            category ===
+                            "All Notices" ||
+                            notice.category ===
+                            category;
+
+                        return (
+                            matchesSearch &&
+                            matchesCategory
+                        );
+                    }
+                );
+
+            return [...result].sort(
+                (a, b) => {
+                    const dateA =
+                        new Date(
+                            a.noticeDate
+                        ).getTime();
+
+                    const dateB =
+                        new Date(
+                            b.noticeDate
+                        ).getTime();
+
+                    return sort ===
+                        "latest"
+                        ? dateB - dateA
+                        : dateA - dateB;
+                }
             );
-        });
+        }, [
+            notices,
+            search,
+            category,
+            sort,
+        ]);
 
-        return [...result].sort((a, b) => {
-            const dateA = new Date(
-                `${a.month} ${a.date}, ${a.year}`,
-            ).getTime();
-
-            const dateB = new Date(
-                `${b.month} ${b.date}, ${b.year}`,
-            ).getTime();
-
-            return sort === "latest"
-                ? dateB - dateA
-                : dateA - dateB;
-        });
-    }, [
-        notices,
-        search,
-        category,
-        sort,
-    ]);
-
-    /* =========================================================
+    /* ========================================================
        PAGINATION
-    ========================================================= */
-    const totalNotices = filteredNotices.length;
+    ======================================================== */
 
-    const totalPages = Math.max(
-        1,
-        Math.ceil(
-            totalNotices / NOTICES_PER_PAGE,
-        ),
-    );
+    const totalNotices =
+        filteredNotices.length;
 
-    /*
-     * Make sure current page never becomes
-     * greater than the available pages.
-     */
-    const safeCurrentPage = Math.min(
-        currentPage,
-        totalPages,
-    );
+    const totalPages =
+        Math.max(
+            1,
+            Math.ceil(
+                totalNotices /
+                NOTICES_PER_PAGE
+            )
+        );
+
+    const safeCurrentPage =
+        Math.min(
+            currentPage,
+            totalPages
+        );
 
     const startIndex =
         (safeCurrentPage - 1) *
         NOTICES_PER_PAGE;
 
-    const endIndex = Math.min(
-        startIndex + NOTICES_PER_PAGE,
-        totalNotices,
-    );
+    const endIndex =
+        Math.min(
+            startIndex +
+            NOTICES_PER_PAGE,
+            totalNotices
+        );
 
     const paginatedNotices =
         filteredNotices.slice(
             startIndex,
-            endIndex,
+            endIndex
         );
 
-    /* =========================================================
+    /* ========================================================
        HANDLERS
-    ========================================================= */
+    ======================================================== */
+
     const handleSearchChange = (
-        value: string,
+        value: string
     ) => {
         setSearch(value);
         setCurrentPage(1);
     };
 
     const handleCategoryChange = (
-        value: string,
+        value:
+            | "All Notices"
+            | NoticeCategory
     ) => {
         setCategory(value);
         setCurrentPage(1);
     };
 
     const handleSortChange = (
-        value: "latest" | "oldest",
+        value:
+            | "latest"
+            | "oldest"
     ) => {
         setSort(value);
         setCurrentPage(1);
@@ -151,36 +207,34 @@ export function NoticeList({
 
     const clearFilters = () => {
         setSearch("");
-        setCategory("All Notices");
+        setCategory(
+            "All Notices"
+        );
         setSort("latest");
         setCurrentPage(1);
     };
 
     const hasFilters =
         search.trim() !== "" ||
-        category !== "All Notices" ||
+        category !==
+        "All Notices" ||
         sort !== "latest";
 
-    /* =========================================================
+    /* ========================================================
        PAGINATION RANGE
-    ========================================================= */
+    ======================================================== */
+
     const getPageNumbers = () => {
-        /*
-         * For a small number of pages, show all.
-         */
         if (totalPages <= 7) {
             return Array.from(
-                { length: totalPages },
-                (_, index) => index + 1,
+                {
+                    length: totalPages,
+                },
+                (_, index) =>
+                    index + 1
             );
         }
 
-        /*
-         * Always show:
-         * first page
-         * last page
-         * pages around current page
-         */
         const pages: (
             | number
             | "ellipsis"
@@ -194,12 +248,12 @@ export function NoticeList({
 
         const start = Math.max(
             2,
-            safeCurrentPage - 1,
+            safeCurrentPage - 1
         );
 
         const end = Math.min(
             totalPages - 1,
-            safeCurrentPage + 1,
+            safeCurrentPage + 1
         );
 
         for (
@@ -222,14 +276,16 @@ export function NoticeList({
         return pages;
     };
 
-    /* =========================================================
+    /* ========================================================
        RENDER
-    ========================================================= */
+    ======================================================== */
+
     return (
         <div className="min-w-0">
-            {/* =====================================================
+            {/* ==================================================
                 SEARCH + FILTER BAR
-            ===================================================== */}
+            ================================================== */}
+
             <div
                 className="
                     mb-5
@@ -252,6 +308,7 @@ export function NoticeList({
                     "
                 >
                     {/* Search */}
+
                     <div className="relative min-w-0 flex-1">
                         <Search
                             className="
@@ -270,7 +327,8 @@ export function NoticeList({
                             value={search}
                             onChange={(event) =>
                                 handleSearchChange(
-                                    event.target.value,
+                                    event.target
+                                        .value
                                 )
                             }
                             placeholder="Search notices..."
@@ -298,7 +356,7 @@ export function NoticeList({
                                 type="button"
                                 onClick={() =>
                                     handleSearchChange(
-                                        "",
+                                        ""
                                     )
                                 }
                                 aria-label="Clear search"
@@ -323,6 +381,7 @@ export function NoticeList({
                     </div>
 
                     {/* Filters */}
+
                     <div className="flex items-center gap-2">
                         <SlidersHorizontal
                             className="
@@ -335,11 +394,15 @@ export function NoticeList({
                         />
 
                         {/* Category */}
+
                         <select
                             value={category}
                             onChange={(event) =>
                                 handleCategoryChange(
-                                    event.target.value,
+                                    event.target
+                                        .value as
+                                    | "All Notices"
+                                    | NoticeCategory
                                 )
                             }
                             className="
@@ -365,13 +428,19 @@ export function NoticeList({
                                         key={item}
                                         value={item}
                                     >
-                                        {item}
+                                        {item ===
+                                            "All Notices"
+                                            ? item
+                                            : formatCategory(
+                                                item
+                                            )}
                                     </option>
-                                ),
+                                )
                             )}
                         </select>
 
                         {/* Sort */}
+
                         <select
                             value={sort}
                             onChange={(event) =>
@@ -379,7 +448,7 @@ export function NoticeList({
                                     event.target
                                         .value as
                                     | "latest"
-                                    | "oldest",
+                                    | "oldest"
                                 )
                             }
                             className="
@@ -406,7 +475,8 @@ export function NoticeList({
                     </div>
                 </div>
 
-                {/* Active filters */}
+                {/* Active Filters */}
+
                 {hasFilters && (
                     <div
                         className="
@@ -459,13 +529,17 @@ export function NoticeList({
                                     dark:text-primary-300
                                 "
                                 >
-                                    {category}
+                                    {formatCategory(
+                                        category
+                                    )}
                                 </span>
                             )}
 
                         <button
                             type="button"
-                            onClick={clearFilters}
+                            onClick={
+                                clearFilters
+                            }
                             className="
                                 ml-auto
                                 text-[10px]
@@ -481,9 +555,10 @@ export function NoticeList({
                 )}
             </div>
 
-            {/* =====================================================
+            {/* ==================================================
                 RESULT HEADER
-            ===================================================== */}
+            ================================================== */}
+
             <div
                 className="
                     mb-4
@@ -508,7 +583,8 @@ export function NoticeList({
 
                     <p className="mt-0.5 text-xs text-muted-foreground">
                         {totalNotices > 0
-                            ? `Showing ${startIndex + 1
+                            ? `Showing ${startIndex +
+                            1
                             }–${endIndex} of ${totalNotices} notices`
                             : "No notices found"}
                     </p>
@@ -529,37 +605,70 @@ export function NoticeList({
                 </span>
             </div>
 
-            {/* =====================================================
+            {/* ==================================================
                 NOTICE CARDS
-            ===================================================== */}
-            {paginatedNotices.length > 0 ? (
+            ================================================== */}
+
+            {paginatedNotices.length >
+                0 ? (
                 <div className="space-y-3">
                     {paginatedNotices.map(
-                        (notice) => (
-                            <NoticeCard
-                                key={`${notice.date}-${notice.month}-${notice.title}`}
-                                date={notice.date}
-                                month={notice.month}
-                                year={notice.year}
-                                title={notice.title}
-                                description={
-                                    notice.description
-                                }
-                                category={
-                                    notice.category
-                                }
-                                href={notice.href}
-                                isNew={
-                                    notice.isNew
-                                }
-                            />
-                        ),
+                        (notice) => {
+                            const noticeDate =
+                                new Date(
+                                    notice.noticeDate
+                                );
+
+                            return (
+                                <NoticeCard
+                                    key={
+                                        notice.id
+                                    }
+                                    date={String(
+                                        noticeDate.getDate()
+                                    ).padStart(
+                                        2,
+                                        "0"
+                                    )}
+                                    month={noticeDate.toLocaleDateString(
+                                        "en-IN",
+                                        {
+                                            month: "short",
+                                        }
+                                    )}
+                                    year={String(
+                                        noticeDate.getFullYear()
+                                    )}
+                                    title={
+                                        notice.title
+                                    }
+                                    description={
+                                        notice.excerpt ||
+                                        notice.description ||
+                                        ""
+                                    }
+                                    category={formatCategory(
+                                        notice.category
+                                    )}
+                                    // href={`/notices/${notice.id}`}
+                                    attachment={notice.attachment}
+                                    isNew={
+                                        notice.publishedAt
+                                            ? isNewNotice(
+                                                notice.publishedAt
+                                            )
+                                            : false
+                                    }
+                                />
+                            );
+                        }
                     )}
                 </div>
             ) : (
                 /* =================================================
                    NO RESULTS
                 ================================================= */
+
                 <div
                     className="
                         rounded-xl
@@ -594,13 +703,16 @@ export function NoticeList({
                     </h3>
 
                     <p className="mt-1 text-xs text-muted-foreground">
-                        Try changing your search or
-                        category filter.
+                        Try changing your
+                        search or category
+                        filter.
                     </p>
 
                     <button
                         type="button"
-                        onClick={clearFilters}
+                        onClick={
+                            clearFilters
+                        }
                         className="
                             mt-4
                             rounded-lg
@@ -618,9 +730,10 @@ export function NoticeList({
                 </div>
             )}
 
-            {/* =====================================================
+            {/* ==================================================
                 PAGINATION
-            ===================================================== */}
+            ================================================== */}
+
             {totalPages > 1 && (
                 <div
                     className="
@@ -633,18 +746,20 @@ export function NoticeList({
                     "
                 >
                     {/* Previous */}
+
                     <button
                         type="button"
                         disabled={
-                            safeCurrentPage === 1
+                            safeCurrentPage ===
+                            1
                         }
                         onClick={() =>
                             setCurrentPage(
                                 (page) =>
                                     Math.max(
                                         1,
-                                        page - 1,
-                                    ),
+                                        page - 1
+                                    )
                             )
                         }
                         aria-label="Previous page"
@@ -669,7 +784,8 @@ export function NoticeList({
                         ‹
                     </button>
 
-                    {/* Page numbers */}
+                    {/* Page Numbers */}
+
                     {getPageNumbers().map(
                         (page, index) => {
                             if (
@@ -699,7 +815,7 @@ export function NoticeList({
                                     type="button"
                                     onClick={() =>
                                         setCurrentPage(
-                                            page,
+                                            page
                                         )
                                     }
                                     aria-current={
@@ -727,10 +843,11 @@ export function NoticeList({
                                     {page}
                                 </button>
                             );
-                        },
+                        }
                     )}
 
                     {/* Next */}
+
                     <button
                         type="button"
                         disabled={
@@ -742,8 +859,8 @@ export function NoticeList({
                                 (page) =>
                                     Math.min(
                                         totalPages,
-                                        page + 1,
-                                    ),
+                                        page + 1
+                                    )
                             )
                         }
                         aria-label="Next page"
@@ -770,5 +887,58 @@ export function NoticeList({
                 </div>
             )}
         </div>
+    );
+}
+
+/* ============================================================
+   Format Category
+============================================================ */
+
+function formatCategory(
+    category:
+        | NoticeCategory
+        | "All Notices"
+): string {
+    if (
+        category ===
+        "All Notices"
+    ) {
+        return category;
+    }
+
+    return category
+        .replace(/-/g, " ")
+        .replace(
+            /\b\w/g,
+            (char) =>
+                char.toUpperCase()
+        );
+}
+
+/* ============================================================
+   New Notice
+============================================================ */
+
+function isNewNotice(
+    publishedAt: string
+): boolean {
+    const published =
+        new Date(
+            publishedAt
+        ).getTime();
+
+    const now =
+        Date.now();
+
+    const sevenDays =
+        7 *
+        24 *
+        60 *
+        60 *
+        1000;
+
+    return (
+        now - published <=
+        sevenDays
     );
 }
