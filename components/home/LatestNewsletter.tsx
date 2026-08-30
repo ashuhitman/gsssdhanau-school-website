@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
-import { NewsletterCard } from "../newsletter/NewsletterCard";
+import { NewsletterCard } from "../newsletters/NewsletterCard";
+
 
 
 
@@ -61,7 +62,7 @@ export function LatestNewsletter({
                     issue={newsletter.issue}
                     date={newsletter.date}
                     description={newsletter.description}
-
+                    coverImage={"/images/newsletters/default-newsletter.jpeg"}
                     href={newsletter.href}
                 />
             </div>

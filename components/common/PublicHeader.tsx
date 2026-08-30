@@ -53,10 +53,8 @@ export const navigation = [
         label: "Newsletter",
         href: "/newsletters",
     },
-    {
-        label: "Newsletter",
-        href: "/newsletter",
-    },
+
+
 ];
 
 export function PublicHeader({ subtitle }: PublicHeaderProps) {
