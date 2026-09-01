@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { Archive } from "lucide-react";
 
 import { NewsletterCard } from "./NewsletterCard";
@@ -8,12 +9,12 @@ import SectionHeading from "../common/SectionHeading";
 ============================================================ */
 
 export interface PreviousIssue {
-    id: string | null;
+    id: string;
     month: number;
     year: number;
     volume: string;
     issue: number;
-    coverImage: string;
+    coverImage: string | null;
     href: string;
     downloadHref: string | null;
 }
@@ -32,7 +33,7 @@ function getMonthName(month: number) {
     return new Date(
         2000,
         month - 1,
-        1
+        1,
     ).toLocaleString("en-US", {
         month: "long",
     });
@@ -76,7 +77,7 @@ export default function PreviousIssues({
                 />
 
                 {showViewAll && (
-                    <a
+                    <Link
                         href={viewAllHref}
                         className="
                             mb-[0.2rem]
@@ -104,7 +105,7 @@ export default function PreviousIssues({
                         >
                             →
                         </span>
-                    </a>
+                    </Link>
                 )}
             </div>
 
@@ -129,15 +130,12 @@ export default function PreviousIssues({
             >
                 {newsletters.map((newsletter) => {
                     const monthName = getMonthName(
-                        newsletter.month
+                        newsletter.month,
                     );
 
                     return (
                         <div
-                            key={
-                                newsletter.id ??
-                                `${newsletter.year}-${newsletter.month}-${newsletter.issue}`
-                            }
+                            key={newsletter.id}
                             className="
                                 w-[12rem]
                                 shrink-0
@@ -146,15 +144,10 @@ export default function PreviousIssues({
                         >
                             <NewsletterCard
                                 title={`${monthName} ${newsletter.year}`}
-                                issue={String(
-                                    newsletter.issue
-                                )}
+                                issue={String(newsletter.issue)}
                                 date={`${monthName} ${newsletter.year}`}
-                                coverImage={
-                                    newsletter.coverImage
-                                }
+                                coverImage={newsletter.coverImage}
                                 href={newsletter.href}
-
                                 showInfo={true}
                             />
                         </div>

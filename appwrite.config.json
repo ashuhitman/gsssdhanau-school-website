@@ -794,34 +794,25 @@
                     "array": false,
                     "default": null,
                     "min": 1,
-                    "max": 2
+                    "max": 12
                 },
                 {
                     "key": "year",
                     "type": "integer",
-                    "required": false,
+                    "required": true,
                     "array": false,
                     "default": null,
-                    "min": -9223372036854775808,
-                    "max": 4
+                    "min": 2025,
+                    "max": 2040
                 },
                 {
-                    "key": "issueNumber",
+                    "key": "issue",
                     "type": "integer",
                     "required": true,
                     "array": false,
                     "default": null,
-                    "min": -9223372036854775808,
-                    "max": 9223372036854775807
-                },
-                {
-                    "key": "subtitle",
-                    "type": "varchar",
-                    "required": false,
-                    "array": false,
-                    "size": 150,
-                    "default": null,
-                    "encrypt": false
+                    "min": 1,
+                    "max": 1000
                 },
                 {
                     "key": "description",
@@ -861,6 +852,92 @@
                         "draft",
                         "published"
                     ]
+                },
+                {
+                    "key": "volume",
+                    "type": "varchar",
+                    "required": false,
+                    "array": false,
+                    "size": 20,
+                    "default": null,
+                    "encrypt": false
+                },
+                {
+                    "key": "publishedAt",
+                    "type": "datetime",
+                    "required": false,
+                    "array": false,
+                    "default": null,
+                    "format": ""
+                },
+                {
+                    "key": "slug",
+                    "type": "varchar",
+                    "required": true,
+                    "array": false,
+                    "size": 255,
+                    "default": null,
+                    "encrypt": false
+                }
+            ],
+            "indexes": []
+        },
+        {
+            "$id": "newsletteritems",
+            "$permissions": [],
+            "databaseId": "6a820e93003b776355b7",
+            "name": "newsletterItems",
+            "enabled": true,
+            "rowSecurity": false,
+            "columns": [
+                {
+                    "key": "type",
+                    "type": "string",
+                    "required": true,
+                    "array": false,
+                    "default": null,
+                    "format": "enum",
+                    "elements": [
+                        "activity",
+                        "article"
+                    ]
+                },
+                {
+                    "key": "contentId",
+                    "type": "varchar",
+                    "required": true,
+                    "array": false,
+                    "size": 40,
+                    "default": null,
+                    "encrypt": false
+                },
+                {
+                    "key": "sortOrder",
+                    "type": "integer",
+                    "required": true,
+                    "array": false,
+                    "default": null,
+                    "min": 1,
+                    "max": 1000
+                },
+                {
+                    "key": "newsletterId",
+                    "type": "relationship",
+                    "required": false,
+                    "array": false,
+                    "relatedTable": "newsletters",
+                    "relationType": "manyToOne",
+                    "twoWay": false,
+                    "twoWayKey": "6a95825e00205d87a90c",
+                    "onDelete": "cascade",
+                    "side": "parent"
+                },
+                {
+                    "key": "isFeatured",
+                    "type": "boolean",
+                    "required": false,
+                    "array": false,
+                    "default": true
                 }
             ],
             "indexes": []

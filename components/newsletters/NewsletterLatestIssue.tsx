@@ -3,26 +3,23 @@ import {
     CalendarDays,
     Download,
     FileText,
-
 } from "lucide-react";
 
-import { NewsletterSummary } from "@/lib/data/newsletter";
+import type { Newsletter } from "@/lib/data/newsletter/types";
 
 import { NewsletterCard } from "./NewsletterCard";
 import Link from "next/link";
 
-
-
-
-
 interface NewsletterLatestIssueProps {
-    newsletter: NewsletterSummary;
+    newsletter: Newsletter;
+    articleCount: number;
+    activityCount: number;
     pages?: string;
     size?: string;
-    downloadHref?: string;
+    downloadHref?: string | null;
 }
 
-const monthNames = [
+export const monthNames = [
     "January",
     "February",
     "March",
@@ -39,6 +36,8 @@ const monthNames = [
 
 export default function NewsletterLatestIssue({
     newsletter,
+    articleCount,
+    activityCount,
     pages,
     size,
     downloadHref,
@@ -46,6 +45,8 @@ export default function NewsletterLatestIssue({
     const monthName = monthNames[newsletter.month - 1] ?? "";
 
     const date = `${monthName} ${newsletter.year}`;
+
+    const pdfUrl = downloadHref ?? newsletter.pdfUrl;
 
     return (
         <article
@@ -96,12 +97,12 @@ export default function NewsletterLatestIssue({
                     >
                         <NewsletterCard
                             title={newsletter.title}
-                            issue={newsletter.issueNumber.toString()}
+                            issue={newsletter.issue.toString()}
                             description=""
                             date={date}
                             coverImage={newsletter.coverImage}
                             showInfo={false}
-                            href={newsletter.href}
+                            href={`/newsletters/${newsletter.slug}`}
                         />
                     </div>
                 </div>
@@ -164,18 +165,20 @@ export default function NewsletterLatestIssue({
 
                     {/* Description */}
 
-                    <p
-                        className="
-                            mt-3
-                            max-w-[42rem]
-                            text-sm
-                            leading-6
-                            text-muted
-                            sm:text-base
-                        "
-                    >
-                        {newsletter.description}
-                    </p>
+                    {newsletter.description && (
+                        <p
+                            className="
+                                mt-3
+                                max-w-[42rem]
+                                text-sm
+                                leading-6
+                                text-muted
+                                sm:text-base
+                            "
+                        >
+                            {newsletter.description}
+                        </p>
+                    )}
 
                     {/* =================================================
                         META INFORMATION
@@ -227,7 +230,7 @@ export default function NewsletterLatestIssue({
                             />
 
                             <span>
-                                {newsletter.articleCount} Articles
+                                {articleCount} Articles
                             </span>
                         </div>
 
@@ -248,7 +251,7 @@ export default function NewsletterLatestIssue({
                             />
 
                             <span>
-                                {newsletter.activityCount} Activities
+                                {activityCount} Activities
                             </span>
                         </div>
                     </div>
@@ -269,16 +272,18 @@ export default function NewsletterLatestIssue({
                         "
                     >
                         <span>
-                            {newsletter.memberCount} Contributors
+                            Issue {newsletter.issue}
                         </span>
 
-                        <span>
-                            Issue {newsletter.issueNumber}
-                        </span>
+                        {newsletter.volume && (
+                            <span>
+                                Volume {newsletter.volume}
+                            </span>
+                        )}
 
-                        <span>{pages}</span>
+                        {pages && <span>{pages}</span>}
 
-                        <span>{size}</span>
+                        {size && <span>{size}</span>}
                     </div>
 
                     {/* =================================================
@@ -296,41 +301,39 @@ export default function NewsletterLatestIssue({
                     >
                         {/* Read */}
 
-                        {newsletter.href && (
-                            <Link
-                                href={newsletter.href}
-                                className="
-                                    inline-flex
-                                    min-h-11
-                                    items-center
-                                    justify-center
-                                    gap-2
-                                    rounded-lg
-                                    border
-                                    border-primary
-                                    px-5
-                                    py-2.5
-                                    text-sm
-                                    font-semibold
-                                    text-primary
-                                    transition-colors
-                                    hover:bg-primary-soft
-                                "
-                            >
-                                <BookOpen
-                                    size={17}
-                                    className="shrink-0"
-                                />
+                        <Link
+                            href={`/newsletters/${newsletter.slug}`}
+                            className="
+                                inline-flex
+                                min-h-11
+                                items-center
+                                justify-center
+                                gap-2
+                                rounded-lg
+                                border
+                                border-primary
+                                px-5
+                                py-2.5
+                                text-sm
+                                font-semibold
+                                text-primary
+                                transition-colors
+                                hover:bg-primary-soft
+                            "
+                        >
+                            <BookOpen
+                                size={17}
+                                className="shrink-0"
+                            />
 
-                                Read Now
-                            </Link>
-                        )}
+                            Read Now
+                        </Link>
 
                         {/* Download */}
 
-                        {downloadHref && (
+                        {pdfUrl && (
                             <a
-                                href={downloadHref}
+                                href={pdfUrl}
                                 download
                                 className="
                                     inline-flex

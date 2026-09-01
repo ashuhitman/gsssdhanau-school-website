@@ -49,6 +49,9 @@ export const NEWSLETTERS_TABLE_ID =
 export const NEWSLETTER_MEMBERS_TABLE_ID =
     process.env.APPWRITE_NEWSLETTER_MEMBERS_TABLE_ID!;
 
+export const NEWSLETTER_ITEM_TABLE_ID =
+    process.env.APPWRITE_NEWSLETTER_ITEMS_TABLE_ID!;
+
 if (!DATABASE_ID) {
     throw new Error(
         "Missing APPWRITE_DATABASE_ID"
@@ -82,5 +85,11 @@ if (!NEWSLETTERS_TABLE_ID) {
 if (!NEWSLETTER_MEMBERS_TABLE_ID) {
     throw new Error(
         "Missing APPWRITE_NEWSLETTER_MEMBERS_TABLE_ID "
+    );
+}
+
+if (!NEWSLETTER_ITEM_TABLE_ID) {
+    throw new Error(
+        "Missing APPWRITE_NEWSLETTER_ITEMS_TABLE_ID "
     );
 }

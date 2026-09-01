@@ -7,8 +7,12 @@ import ClubMembers from "@/components/newsletters/ClubMembers";
 import PreviousIssues from "@/components/newsletters/PreviousIssues";
 
 import {
-    getAllNewsletters,
-} from "@/lib/data/newsletter";
+    getPublishedNewsletters,
+} from "@/lib/data/newsletter/get";
+
+import {
+    getNewsletterItemCounts,
+} from "@/lib/data/newsletter/items";
 
 import {
     getAllClubMembers,
@@ -19,38 +23,83 @@ import {
 ============================================================ */
 
 export default async function NewslettersPage() {
-    /* ========================================================
-       Newsletters
-    ======================================================== */
+    const start = performance.now();
 
-    const newsletters =
-        await getAllNewsletters();
+    const [newsletters, clubMembers] = await Promise.all([
+        (async () => {
+            const start = performance.now();
 
-    const currentNewsletter =
-        newsletters[0];
+            const result = await getPublishedNewsletters();
+
+            console.log(
+                `getPublishedNewsletters: ${(
+                    performance.now() - start
+                ).toFixed(0)}ms`,
+            );
+
+            return result;
+        })(),
+
+        (async () => {
+            const start = performance.now();
+
+            const result = await getAllClubMembers();
+
+            console.log(
+                `getAllClubMembers: ${(
+                    performance.now() - start
+                ).toFixed(0)}ms`,
+            );
+
+            return result;
+        })(),
+    ]);
+
+    const currentNewsletter = newsletters[0];
+
+    const counts = currentNewsletter
+        ? await (async () => {
+            const start = performance.now();
+
+            const result = await getNewsletterItemCounts(
+                currentNewsletter.id,
+            );
+
+            console.log(
+                `getNewsletterItemCounts: ${(
+                    performance.now() - start
+                ).toFixed(0)}ms`,
+            );
+
+            return result;
+        })()
+        : {
+            articleCount: 0,
+            activityCount: 0,
+        };
+
+    console.log(
+        `Newsletter data total: ${(
+            performance.now() - start
+        ).toFixed(0)}ms`,
+    );
 
     /* ========================================================
        Previous Issues
     ======================================================== */
 
-    const previousIssues =
-        newsletters.slice(1).map((newsletter) => ({
+    const previousIssues = newsletters
+        .slice(1)
+        .map((newsletter) => ({
             id: newsletter.id,
             month: newsletter.month,
             year: newsletter.year,
-            volume: "1",
-            issue: newsletter.issueNumber,
+            volume: newsletter.volume ?? "1",
+            issue: newsletter.issue,
             coverImage: newsletter.coverImage,
-            href: `/newsletters/${newsletter.year}/${newsletter.month}`,
-            downloadHref: null,
+            href: `/newsletters/${newsletter.slug}`,
+            downloadHref: newsletter.pdfUrl,
         }));
-
-    /* ========================================================
-       Club Members
-    ======================================================== */
-
-    const clubMembers =
-        await getAllClubMembers();
 
     return (
         <main>
@@ -67,7 +116,7 @@ export default async function NewslettersPage() {
                             {
                                 label: "Read Latest Issue",
                                 href: currentNewsletter
-                                    ? `/newsletters/${currentNewsletter.year}/${currentNewsletter.month}`
+                                    ? `/newsletters/${currentNewsletter.slug}`
                                     : "/newsletters",
                                 variant: "primary",
                             },
@@ -103,8 +152,12 @@ export default async function NewslettersPage() {
 
                         {currentNewsletter && (
                             <NewsletterLatestIssue
-                                newsletter={
-                                    currentNewsletter
+                                newsletter={currentNewsletter}
+                                articleCount={
+                                    counts.articleCount
+                                }
+                                activityCount={
+                                    counts.activityCount
                                 }
                             />
                         )}
@@ -115,9 +168,7 @@ export default async function NewslettersPage() {
 
                         {clubMembers.length > 0 && (
                             <ClubMembers
-                                members={
-                                    clubMembers
-                                }
+                                members={clubMembers}
                             />
                         )}
 
@@ -128,9 +179,7 @@ export default async function NewslettersPage() {
                         {previousIssues.length > 0 && (
                             <div id="archive">
                                 <PreviousIssues
-                                    newsletters={
-                                        previousIssues
-                                    }
+                                    newsletters={previousIssues}
                                 />
                             </div>
                         )}
