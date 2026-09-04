@@ -6,12 +6,11 @@ import {
     CalendarDays,
 } from "lucide-react";
 
-import type {
-    Activity,
-    ActivityCategory,
-    ActivityType,
-} from "@/lib/data/activity";
-
+import type { Activity } from "@/lib/data/activity/types";
+import {
+    ACTIVITY_CATEGORY,
+    ACTIVITY_TYPE,
+} from "@/lib/data/activity/constants";
 
 /* ============================================================
    Default Image
@@ -20,36 +19,33 @@ import type {
 const DEFAULT_FEATURED_IMAGE =
     "/images/activity/default-featured.jpeg";
 
-
 /* ============================================================
    Activity Type Labels
 ============================================================ */
 
 const activityTypeLabels: Record<
-    ActivityType,
+    Activity["activityType"],
     string
 > = {
-    event: "Event",
-    activity: "Activity",
-    achievement: "Achievement",
-    competition: "Competition",
+    [ACTIVITY_TYPE.EVENT]: "Event",
+    [ACTIVITY_TYPE.ACTIVITY]: "Activity",
+    [ACTIVITY_TYPE.ACHIEVEMENT]: "Achievement",
+    [ACTIVITY_TYPE.COMPETITION]: "Competition",
 };
-
 
 /* ============================================================
    Category Labels
 ============================================================ */
 
 const categoryLabels: Record<
-    ActivityCategory,
+    Activity["category"][number],
     string
 > = {
-    sports: "Sports",
-    academic: "Academic",
-    cultural: "Cultural",
-    social: "Social",
+    [ACTIVITY_CATEGORY.SPORTS]: "Sports",
+    [ACTIVITY_CATEGORY.ACADEMIC]: "Academic",
+    [ACTIVITY_CATEGORY.CULTURAL]: "Cultural",
+    [ACTIVITY_CATEGORY.SOCIAL]: "Social",
 };
-
 
 /* ============================================================
    Featured Activity Card
@@ -65,7 +61,9 @@ export default function FeaturedActivityCard({
             ? activity.image
             : DEFAULT_FEATURED_IMAGE;
 
-    console.log("featured activity: ", imageSrc)
+    const activityHref =
+        `/activities/${activity.slug}`;
+    console.log("Activity Href:", activityHref, activity); // Debugging line
 
     return (
         <article
@@ -90,29 +88,25 @@ export default function FeaturedActivityCard({
                     lg:grid-cols-[1.15fr_0.85fr]
                 "
             >
-
                 {/* ==================================================
                     Image
                 ================================================== */}
 
                 <Link
-                    href={`/activities/${activity.id}`}
+                    href={activityHref}
                     className="
                         relative
                         block
                         aspect-[16/10]
                         overflow-hidden
-                        bg-muted
+                        bg-surface
                         lg:aspect-auto
-                        lg:min-h-[310px]
+                        lg:min-h-[19.375rem]
                     "
                 >
                     <Image
                         src={imageSrc}
-                        alt={
-                            activity.imageAlt ??
-                            activity.title
-                        }
+                        alt={activity.title}
                         fill
                         priority
                         sizes="(max-width: 1023px) 100vw, 58vw"
@@ -132,7 +126,7 @@ export default function FeaturedActivityCard({
                             right-4
                             top-4
                             rounded-lg
-                            bg-accent-500
+                            bg-accent
                             px-3
                             py-1.5
                             text-xs
@@ -151,7 +145,6 @@ export default function FeaturedActivityCard({
                     </span>
                 </Link>
 
-
                 {/* ==================================================
                     Content
                 ================================================== */}
@@ -166,7 +159,6 @@ export default function FeaturedActivityCard({
                         lg:p-8
                     "
                 >
-
                     {/* ==================================================
                         Categories
                     ================================================== */}
@@ -186,15 +178,13 @@ export default function FeaturedActivityCard({
                                         key={category}
                                         className="
                                             rounded-md
-                                            bg-primary-50
+                                            bg-primary-soft
                                             px-2
                                             py-0.5
                                             text-[0.6875rem]
                                             font-medium
                                             capitalize
-                                            text-primary-700
-                                            dark:bg-primary-950
-                                            dark:text-primary-300
+                                            text-primary
                                         "
                                     >
                                         {
@@ -208,7 +198,6 @@ export default function FeaturedActivityCard({
                         </div>
                     )}
 
-
                     {/* ==================================================
                         Title
                     ================================================== */}
@@ -221,14 +210,13 @@ export default function FeaturedActivityCard({
                             font-bold
                             leading-tight
                             tracking-tight
-                            text-foreground
+                            text-heading
                             sm:text-[1.65rem]
                             lg:text-3xl
                         "
                     >
                         {activity.title}
                     </h2>
-
 
                     {/* ==================================================
                         Excerpt
@@ -242,15 +230,14 @@ export default function FeaturedActivityCard({
                                 max-w-lg
                                 text-sm
                                 leading-6
-                                text-muted-foreground
+                                text-muted
                                 sm:text-base
-                                sm:leading-6.5
+                                sm:leading-[1.625rem]
                             "
                         >
                             {activity.excerpt}
                         </p>
                     )}
-
 
                     {/* ==================================================
                         Bottom Information
@@ -262,7 +249,6 @@ export default function FeaturedActivityCard({
                             pt-6
                         "
                     >
-
                         {/* Date */}
 
                         <div
@@ -271,7 +257,7 @@ export default function FeaturedActivityCard({
                                 items-center
                                 gap-2
                                 text-sm
-                                text-muted-foreground
+                                text-muted
                             "
                         >
                             <CalendarDays
@@ -292,11 +278,10 @@ export default function FeaturedActivityCard({
                             </time>
                         </div>
 
-
                         {/* Read More */}
 
                         <Link
-                            href={`/activities/${activity.id}`}
+                            href={activityHref}
                             className="
                                 mt-6
                                 inline-flex
@@ -305,10 +290,9 @@ export default function FeaturedActivityCard({
                                 self-start
                                 text-sm
                                 font-semibold
-                                text-primary-700
+                                text-primary
                                 transition-colors
-                                hover:text-primary-500
-                                dark:text-primary-400
+                                hover:text-primary-hover
                             "
                         >
                             Read more
@@ -322,46 +306,31 @@ export default function FeaturedActivityCard({
                                 "
                             />
                         </Link>
-
                     </div>
-
                 </div>
-
             </div>
-
         </article>
     );
 }
-
 
 /* ============================================================
    Date Formatter
 ============================================================ */
 
-function formatDate(
-    date: string
-): string {
+function formatDate(date: string): string {
     if (!date) {
         return "";
     }
 
-    const parsedDate =
-        new Date(date);
+    const parsedDate = new Date(date);
 
-    if (
-        Number.isNaN(
-            parsedDate.getTime()
-        )
-    ) {
+    if (Number.isNaN(parsedDate.getTime())) {
         return date;
     }
 
-    return new Intl.DateTimeFormat(
-        "en-IN",
-        {
-            day: "2-digit",
-            month: "short",
-            year: "numeric",
-        }
-    ).format(parsedDate);
+    return new Intl.DateTimeFormat("en-IN", {
+        day: "2-digit",
+        month: "short",
+        year: "numeric",
+    }).format(parsedDate);
 }

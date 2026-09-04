@@ -10,9 +10,9 @@ import {
 
 import type {
     Activity,
-    ActivityCategory,
-    ActivityType,
-} from "@/lib/data/activity";
+
+} from "@/lib/data/activity/types";
+import { ActivityCategory, ActivityType } from "@/lib/data/activity/constants";
 
 /* ============================================================
    Props
@@ -217,10 +217,7 @@ export default function ActivityDetails({
                 >
                     <img
                         src={imageSrc}
-                        alt={
-                            activity.imageAlt ??
-                            activity.title
-                        }
+                        alt={activity.title}
                         className="
                             h-full
                             w-full
@@ -284,16 +281,12 @@ export default function ActivityDetails({
                         >
                             {activity.category
                                 .map(
-                                    (
-                                        category
-                                    ) =>
+                                    (category) =>
                                         categoryLabels[
                                         category
                                         ]
                                 )
-                                .join(
-                                    " • "
-                                )}
+                                .join(" • ")}
                         </span>
                     </div>
                 </div>
@@ -504,9 +497,7 @@ export default function ActivityDetails({
                                 text-slate-700
                             "
                         >
-                            {
-                                activity.description
-                            }
+                            {activity.description}
                         </div>
                     </div>
                 )}
@@ -588,9 +579,7 @@ function ActivityIcon({
 ============================================================ */
 
 function participantLabel(
-    type?: Activity[
-        "participantType"
-    ]
+    type?: Activity["participantType"]
 ): string {
     switch (type) {
         case "student":

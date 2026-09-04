@@ -1,4 +1,4 @@
-import type { FacultyMember } from "@/lib/data/faculty";
+import type { Faculty } from "@/lib/data/faculty/types";
 import { titleCase } from "@/lib/utils/utils";
 
 import {
@@ -12,23 +12,17 @@ import Image from "next/image";
 export function FacultyCard({
     member,
 }: {
-    member: FacultyMember;
+    member: Faculty;
 }) {
     /* ============================================================
        Faculty Image
     ============================================================ */
 
     const imageSrc =
-        member.image ||
+        member.profileImage ??
         (member.gender === "female"
             ? "/images/faculty/default-female.jpg"
             : "/images/faculty/default-male.jpg");
-
-    /* ============================================================
-       Format Name
-    ============================================================ */
-
-
 
     /* ============================================================
        Clean + Format Subjects
@@ -41,9 +35,9 @@ export function FacultyCard({
                     typeof subject === "string" &&
                     subject.trim() !== ""
             )
-            .map((subject) => {
-                return titleCase(subject)
-            })
+            .map((subject) =>
+                titleCase(subject)
+            )
         : [];
 
     /* ============================================================
@@ -76,7 +70,6 @@ export function FacultyCard({
     } else if (
         member.category === "udc" ||
         member.category === "lab-attendant" ||
-        member.category === "fourth-grade" ||
         member.category === "other"
     ) {
         subjectLabel = "Role";
@@ -115,7 +108,6 @@ export function FacultyCard({
                     shrink-0
                     bg-primary-950
                     dark:bg-primary-950
-
                     md:h-[5.5rem]
                     lg:h-20
                 "
@@ -177,24 +169,23 @@ export function FacultyCard({
                     top-5
                     z-20
                     -translate-x-1/2
-
                     md:top-4
                     lg:top-3
                 "
             >
                 <div
-                    className="
-                        relative
-                        size-28
-                        rounded-full
-                        bg-card
-                        p-1
-                        shadow-md
-                        ring-2
-                        ring-accent-400
 
-                        md:size-[6.5rem]
-                        lg:size-24
+                    className="
+        relative
+        size-32
+        rounded-full
+        bg-card
+        p-1
+        shadow-md
+        ring-2
+        ring-accent-400
+        md:size-[7rem]
+       lg:size-24
                     "
                 >
                     <div
@@ -208,10 +199,9 @@ export function FacultyCard({
                     >
                         <Image
                             src={imageSrc}
-                            alt={
-                                member.imageAlt ??
-                                `${titleCase(member.name)}, ${member.designation}`
-                            }
+                            alt={`${titleCase(
+                                member.name
+                            )}, ${member.designation}`}
                             fill
                             sizes="
                                 (max-width: 767px) 7rem,
@@ -242,14 +232,11 @@ export function FacultyCard({
                     px-4
                     pb-4
                     pt-14
-
                     md:px-5
                     md:pt-13
                     md:pb-4
-
                     lg:pt-12
                     lg:pb-4
-                    \
                 "
             >
                 {/* ==================================================
@@ -264,7 +251,6 @@ export function FacultyCard({
                         font-bold
                         tracking-tight
                         text-foreground
-
                         md:text-lg
                         lg:text-base
                         xl:text-lg
@@ -298,43 +284,43 @@ export function FacultyCard({
 
                 <div
                     className="
-        mx-auto
-        mt-3
-        flex
-        w-full
-        max-w-40
-        items-center
-        gap-1.5
-    "
+                        mx-auto
+                        mt-3
+                        flex
+                        w-full
+                        max-w-40
+                        items-center
+                        gap-1.5
+                    "
                     aria-hidden="true"
                 >
                     <span
                         className="
-            block
-            h-px
-            min-w-0
-            flex-1
-            bg-accent-400
-        "
+                            block
+                            h-px
+                            min-w-0
+                            flex-1
+                            bg-accent-400
+                        "
                     />
 
                     <span
                         className="
-            size-1.5
-            shrink-0
-            rounded-full
-            bg-accent-400
-        "
+                            size-1.5
+                            shrink-0
+                            rounded-full
+                            bg-accent-400
+                        "
                     />
 
                     <span
                         className="
-            block
-            h-px
-            min-w-0
-            flex-1
-            bg-accent-400
-        "
+                            block
+                            h-px
+                            min-w-0
+                            flex-1
+                            bg-accent-400
+                        "
                     />
                 </div>
 
@@ -345,21 +331,25 @@ export function FacultyCard({
                 <div className="mt-3">
                     {/* Subject / Trade / Role */}
 
-                    <FacultyInfoRow
-                        icon={BookOpen}
-                        label={subjectLabel}
-                        value={subjectText}
-                        boldLabel
-                    />
+                    {subjectText && (
+                        <FacultyInfoRow
+                            icon={BookOpen}
+                            label={subjectLabel}
+                            value={subjectText}
+                            boldLabel
+                        />
+                    )}
 
                     {/* Qualification */}
 
-                    <FacultyInfoRow
-                        icon={GraduationCap}
-                        label="Qualification"
-                        value={qualificationText}
-                        boldLabel
-                    />
+                    {qualificationText && (
+                        <FacultyInfoRow
+                            icon={GraduationCap}
+                            label="Qualification"
+                            value={qualificationText}
+                            boldLabel
+                        />
+                    )}
 
                     {/* Email */}
 
@@ -377,9 +367,6 @@ export function FacultyCard({
 
             {/* ==================================================
                 Bottom Accent
-
-                Because the article is flex-col and the content
-                uses flex-1, this remains at the bottom.
             ================================================== */}
 
             <div

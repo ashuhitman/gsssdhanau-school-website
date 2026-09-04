@@ -5,10 +5,8 @@ import {
     Trophy,
 } from "lucide-react";
 
-import type {
-    Activity,
-    ActivityType,
-} from "@/lib/data/activity";
+import type { Activity } from "@/lib/data/activity/types";
+import { ACTIVITY_TYPE } from "@/lib/data/activity/constants";
 
 import ImageInfoCard from "@/components/common/ImageInfoCard";
 
@@ -25,13 +23,13 @@ interface RelatedActivitiesSidebarProps {
 ============================================================ */
 
 const activityTypeLabels: Record<
-    ActivityType,
+    Activity["activityType"],
     string
 > = {
-    event: "Events",
-    activity: "Activities",
-    achievement: "Achievements",
-    competition: "Competitions",
+    [ACTIVITY_TYPE.EVENT]: "Events",
+    [ACTIVITY_TYPE.ACTIVITY]: "Activities",
+    [ACTIVITY_TYPE.ACHIEVEMENT]: "Achievements",
+    [ACTIVITY_TYPE.COMPETITION]: "Competitions",
 };
 
 /* ============================================================
@@ -44,9 +42,6 @@ export default function RelatedActivitiesSidebar({
     if (activities.length === 0) {
         return null;
     }
-
-    const activityType =
-        activities[0].activityType;
 
     return (
         <aside
@@ -71,11 +66,11 @@ export default function RelatedActivitiesSidebar({
                 <div>
                     <p
                         className="
-                            text-[9px]
+                            text-[0.5625rem]
                             font-black
                             uppercase
                             tracking-[0.2em]
-                            text-accent-600
+                            text-accent
                         "
                     >
                         Related
@@ -87,7 +82,7 @@ export default function RelatedActivitiesSidebar({
                             text-xl
                             font-black
                             tracking-tight
-                            text-slate-950
+                            text-heading
                         "
                     >
                         News and Activities
@@ -102,15 +97,11 @@ export default function RelatedActivitiesSidebar({
                         items-center
                         justify-center
                         rounded-full
-                        bg-blue-950
+                        bg-primary
                         text-white
                     "
                 >
-                    <Trophy
-                        className="
-                            size-3.5
-                        "
-                    />
+                    <Trophy className="size-3.5" />
                 </div>
             </div>
 
@@ -132,7 +123,7 @@ export default function RelatedActivitiesSidebar({
                     className="
                         h-px
                         flex-1
-                        bg-accent-400
+                        bg-accent
                     "
                 />
 
@@ -141,7 +132,7 @@ export default function RelatedActivitiesSidebar({
                         size-1.5
                         shrink-0
                         rounded-full
-                        bg-accent-400
+                        bg-accent
                     "
                 />
 
@@ -149,7 +140,7 @@ export default function RelatedActivitiesSidebar({
                     className="
                         h-px
                         flex-1
-                        bg-accent-400
+                        bg-accent
                     "
                 />
             </div>
@@ -164,42 +155,29 @@ export default function RelatedActivitiesSidebar({
                     space-y-3
                 "
             >
-                {activities.map(
-                    (activity) => (
-                        <ImageInfoCard
-                            key={
-                                activity.id
-                            }
-                            href={`/activities/${activity.id}`}
-                            image={
-                                activity.image ??
-                                ""
-                            }
-                            imageAlt={
-                                activity.imageAlt ??
-                                activity.title
-                            }
-                            title={
-                                activity.title
-                            }
-                            label={
-                                formatType(
-                                    activity.activityType
-                                )
-                            }
-                            description={
-                                activity.excerpt
-                            }
-                            info={
-                                activity.participantName
-                            }
-                            date={
-                                activity.activityDate
-                            }
-                            compact
-                        />
-                    )
-                )}
+                {activities.map((activity) => (
+                    <ImageInfoCard
+                        key={activity.id}
+                        href={`/activities/${activity.slug}`}
+                        image={activity.image ?? ""}
+                        imageAlt={activity.title}
+                        title={activity.title}
+                        label={
+                            activityTypeLabels[
+                            activity.activityType
+                            ]
+                        }
+                        description={
+                            activity.excerpt ?? undefined
+                        }
+                        info={
+                            activity.participantName ??
+                            undefined
+                        }
+                        date={activity.activityDate}
+                        compact
+                    />
+                ))}
             </div>
 
             {/* ==================================================
@@ -216,40 +194,23 @@ export default function RelatedActivitiesSidebar({
                     gap-1.5
                     rounded-lg
                     border
-                    border-slate-200
-                    bg-white
+                    border-border
+                    bg-card
                     px-4
                     py-2.5
                     text-xs
                     font-semibold
-                    text-slate-600
+                    text-muted
                     transition-all
-                    hover:border-slate-300
-                    hover:bg-slate-50
-                    hover:text-slate-950
+                    hover:border-primary
+                    hover:bg-surface
+                    hover:text-heading
                 "
             >
                 View all activities
 
-                <ArrowUpRight
-                    className="
-                        size-3.5
-                    "
-                />
+                <ArrowUpRight className="size-3.5" />
             </Link>
         </aside>
-    );
-}
-
-/* ============================================================
-   Format Type
-============================================================ */
-
-function formatType(
-    type: ActivityType
-): string {
-    return (
-        type.charAt(0).toUpperCase() +
-        type.slice(1)
     );
 }

@@ -1,14 +1,14 @@
-import { FacultyMember, getFaculty } from "@/lib/data/faculty";
+import type { Faculty } from "@/lib/data/faculty/types";
+
 import { FacultyDirectoryClient } from "./FacultyDirectoryClient";
 
-
 interface FacultyProps {
-    faculty: FacultyMember[]
+    faculty: Faculty[];
 }
 
-export function FacultyDirectory({ faculty }: FacultyProps) {
-
-
+export function FacultyDirectory({
+    faculty,
+}: FacultyProps) {
     return (
         <section className="py-5 sm:py-6">
             <div className="mb-6">
@@ -46,12 +46,9 @@ export function FacultyDirectory({ faculty }: FacultyProps) {
                         text-muted-foreground
                     "
                 >
-                    Meet the dedicated
-                    teachers and staff members
-                    who contribute to the
-                    academic and overall
-                    development of our
-                    students.
+                    Meet the dedicated teachers and staff
+                    members who contribute to the academic
+                    and overall development of our students.
                 </p>
             </div>
 

@@ -185,6 +185,27 @@
                         "cultural",
                         "social"
                     ]
+                },
+                {
+                    "key": "slug",
+                    "type": "varchar",
+                    "required": true,
+                    "array": false,
+                    "size": 255,
+                    "default": null,
+                    "encrypt": false
+                },
+                {
+                    "key": "newsletter",
+                    "type": "relationship",
+                    "required": false,
+                    "array": false,
+                    "relatedTable": "newsletters",
+                    "relationType": "oneToMany",
+                    "twoWay": true,
+                    "twoWayKey": "activity",
+                    "onDelete": "setNull",
+                    "side": "child"
                 }
             ],
             "indexes": []
@@ -579,6 +600,27 @@
                         "achievement",
                         "report"
                     ]
+                },
+                {
+                    "key": "slug",
+                    "type": "varchar",
+                    "required": true,
+                    "array": false,
+                    "size": 255,
+                    "default": null,
+                    "encrypt": false
+                },
+                {
+                    "key": "newsletter",
+                    "type": "relationship",
+                    "required": false,
+                    "array": false,
+                    "relatedTable": "newsletters",
+                    "relationType": "oneToMany",
+                    "twoWay": true,
+                    "twoWayKey": "articles",
+                    "onDelete": "setNull",
+                    "side": "child"
                 }
             ],
             "indexes": []
@@ -721,26 +763,6 @@
                     ]
                 },
                 {
-                    "key": "className",
-                    "type": "string",
-                    "required": false,
-                    "array": false,
-                    "default": null,
-                    "format": "enum",
-                    "elements": [
-                        "9A",
-                        "9B",
-                        "10A",
-                        "10B",
-                        "11A",
-                        "11B",
-                        "11C",
-                        "12A",
-                        "12B",
-                        "12C"
-                    ]
-                },
-                {
                     "key": "image",
                     "type": "varchar",
                     "required": false,
@@ -760,10 +782,31 @@
                 },
                 {
                     "key": "facultyId",
+                    "type": "relationship",
+                    "required": false,
+                    "array": false,
+                    "relatedTable": "faculties",
+                    "relationType": "oneToOne",
+                    "twoWay": false,
+                    "twoWayKey": "newslettermembers",
+                    "onDelete": "setNull",
+                    "side": "parent"
+                },
+                {
+                    "key": "class",
+                    "type": "integer",
+                    "required": false,
+                    "array": false,
+                    "default": null,
+                    "min": -2,
+                    "max": 12
+                },
+                {
+                    "key": "section",
                     "type": "varchar",
                     "required": false,
                     "array": false,
-                    "size": 40,
+                    "size": 1,
                     "default": null,
                     "encrypt": false
                 }
@@ -878,6 +921,30 @@
                     "size": 255,
                     "default": null,
                     "encrypt": false
+                },
+                {
+                    "key": "articles",
+                    "type": "relationship",
+                    "required": false,
+                    "array": false,
+                    "relatedTable": "articles",
+                    "relationType": "oneToMany",
+                    "twoWay": true,
+                    "twoWayKey": "newsletter",
+                    "onDelete": "setNull",
+                    "side": "parent"
+                },
+                {
+                    "key": "activity",
+                    "type": "relationship",
+                    "required": false,
+                    "array": false,
+                    "relatedTable": "newsactivity",
+                    "relationType": "oneToMany",
+                    "twoWay": true,
+                    "twoWayKey": "newsletter",
+                    "onDelete": "setNull",
+                    "side": "parent"
                 }
             ],
             "indexes": []
@@ -903,41 +970,35 @@
                     ]
                 },
                 {
-                    "key": "contentId",
-                    "type": "varchar",
-                    "required": true,
-                    "array": false,
-                    "size": 40,
-                    "default": null,
-                    "encrypt": false
-                },
-                {
-                    "key": "sortOrder",
-                    "type": "integer",
-                    "required": true,
-                    "array": false,
-                    "default": null,
-                    "min": 1,
-                    "max": 1000
-                },
-                {
-                    "key": "newsletterId",
-                    "type": "relationship",
-                    "required": false,
-                    "array": false,
-                    "relatedTable": "newsletters",
-                    "relationType": "manyToOne",
-                    "twoWay": false,
-                    "twoWayKey": "6a95825e00205d87a90c",
-                    "onDelete": "cascade",
-                    "side": "parent"
-                },
-                {
                     "key": "isFeatured",
                     "type": "boolean",
                     "required": false,
                     "array": false,
                     "default": true
+                },
+                {
+                    "key": "article",
+                    "type": "relationship",
+                    "required": false,
+                    "array": false,
+                    "relatedTable": "articles",
+                    "relationType": "oneToOne",
+                    "twoWay": false,
+                    "twoWayKey": "newsletteritems",
+                    "onDelete": "setNull",
+                    "side": "parent"
+                },
+                {
+                    "key": "activity",
+                    "type": "relationship",
+                    "required": false,
+                    "array": false,
+                    "relatedTable": "newsactivity",
+                    "relationType": "oneToOne",
+                    "twoWay": false,
+                    "twoWayKey": "newsletteritems",
+                    "onDelete": "setNull",
+                    "side": "parent"
                 }
             ],
             "indexes": []

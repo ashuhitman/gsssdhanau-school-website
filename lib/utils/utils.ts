@@ -79,3 +79,14 @@ export function formatDate(
         }
     ).format(parsedDate);
 }
+
+export function slugify(value: string): string {
+    return value
+        .trim()
+        .toLowerCase()
+        .normalize("NFC")
+        .replace(/[^\p{L}\p{N}\s-]/gu, "")
+        .replace(/\s+/g, "-")
+        .replace(/-+/g, "-")
+        .replace(/^-|-$/g, "");
+}

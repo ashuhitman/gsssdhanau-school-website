@@ -7,10 +7,10 @@ import {
     Tag,
 } from "lucide-react";
 
-import type {
-    Activity,
-    ActivityType,
-} from "@/lib/data/activity";
+import type { Activity } from "@/lib/data/activity/types";
+import {
+    ACTIVITY_TYPE,
+} from "@/lib/data/activity/constants";
 
 /* ============================================================
    Default Image
@@ -24,13 +24,13 @@ const DEFAULT_CARD_IMAGE =
 ============================================================ */
 
 const activityTypeLabels: Record<
-    ActivityType,
+    Activity["activityType"],
     string
 > = {
-    event: "Event",
-    activity: "Activity",
-    achievement: "Achievement",
-    competition: "Competition",
+    [ACTIVITY_TYPE.EVENT]: "Event",
+    [ACTIVITY_TYPE.ACTIVITY]: "Activity",
+    [ACTIVITY_TYPE.ACHIEVEMENT]: "Achievement",
+    [ACTIVITY_TYPE.COMPETITION]: "Competition",
 };
 
 /* ============================================================
@@ -38,35 +38,27 @@ const activityTypeLabels: Record<
 ============================================================ */
 
 const activityTypeStyles: Record<
-    ActivityType,
+    Activity["activityType"],
     string
 > = {
-    event: `
-        bg-blue-50
-        text-blue-700
-        dark:bg-blue-950/40
-        dark:text-blue-300
+    [ACTIVITY_TYPE.EVENT]: `
+        bg-primary-soft
+        text-primary
     `,
 
-    activity: `
-        bg-violet-50
-        text-violet-700
-        dark:bg-violet-950/40
-        dark:text-violet-300
+    [ACTIVITY_TYPE.ACTIVITY]: `
+        bg-accent-soft
+        text-accent
     `,
 
-    achievement: `
-        bg-emerald-50
-        text-emerald-700
-        dark:bg-emerald-950/40
-        dark:text-emerald-300
+    [ACTIVITY_TYPE.ACHIEVEMENT]: `
+        bg-primary-soft
+        text-primary
     `,
 
-    competition: `
-        bg-orange-50
-        text-orange-700
-        dark:bg-orange-950/40
-        dark:text-orange-300
+    [ACTIVITY_TYPE.COMPETITION]: `
+        bg-accent-soft
+        text-accent
     `,
 };
 
@@ -83,6 +75,9 @@ export default function ActivityCard({
         activity.image?.trim()
             ? activity.image
             : DEFAULT_CARD_IMAGE;
+
+    const activityHref =
+        `/activities/${activity.slug}`;
 
     return (
         <article
@@ -107,23 +102,25 @@ export default function ActivityCard({
             ================================================== */}
 
             <Link
-                href={`/activities/${activity.id}`}
+                href={activityHref}
                 className="
                     relative
                     block
                     aspect-[16/9]
                     overflow-hidden
-                    bg-muted
+                    bg-surface
                 "
             >
                 <Image
                     src={imageSrc}
-                    alt={
-                        activity.imageAlt ??
-                        activity.title
-                    }
+                    alt={activity.title}
                     fill
-                    sizes="(max-width: 639px) 100vw, (max-width: 1023px) 50vw, (max-width: 1279px) 33vw, 25vw"
+                    sizes="
+                        (max-width: 639px) 100vw,
+                        (max-width: 1023px) 50vw,
+                        (max-width: 1279px) 33vw,
+                        25vw
+                    "
                     className="
                         object-cover
                         transition-transform
@@ -161,8 +158,8 @@ export default function ActivityCard({
                         items-center
                         justify-center
                         rounded-full
-                        bg-white/95
-                        text-primary-900
+                        bg-card/95
+                        text-primary
                         opacity-0
                         shadow-sm
                         transition-all
@@ -170,9 +167,7 @@ export default function ActivityCard({
                         group-hover:opacity-100
                     "
                 >
-                    <ArrowUpRight
-                        className="size-4"
-                    />
+                    <ArrowUpRight className="size-4" />
                 </span>
 
                 {/* Date Badge */}
@@ -186,30 +181,24 @@ export default function ActivityCard({
                         items-center
                         gap-1.5
                         rounded-lg
-                        bg-white
+                        bg-card
                         px-2.5
                         py-1.5
                         text-xs
                         font-semibold
-                        text-foreground
+                        text-card-foreground
                         shadow-sm
                     "
                 >
                     <CalendarDays
                         className="
                             size-3.5
-                            text-accent-500
+                            text-accent
                         "
                     />
 
-                    <time
-                        dateTime={
-                            activity.activityDate
-                        }
-                    >
-                        {formatDate(
-                            activity.activityDate
-                        )}
+                    <time dateTime={activity.activityDate}>
+                        {formatDate(activity.activityDate)}
                     </time>
                 </div>
             </Link>
@@ -242,8 +231,7 @@ export default function ActivityCard({
                         tracking-wider
                         ${activityTypeStyles[
                         activity.activityType
-                        ]
-                        }
+                        ]}
                     `}
                 >
                     {
@@ -265,7 +253,7 @@ export default function ActivityCard({
                         font-bold
                         leading-snug
                         tracking-tight
-                        text-foreground
+                        text-heading
                     "
                 >
                     {activity.title}
@@ -281,8 +269,8 @@ export default function ActivityCard({
                             mt-2.5
                             line-clamp-2
                             text-sm
-                            leading-5.5
-                            text-muted-foreground
+                            leading-[1.375rem]
+                            text-muted
                         "
                     >
                         {activity.excerpt}
@@ -319,7 +307,7 @@ export default function ActivityCard({
                             className="
                                 size-3
                                 shrink-0
-                                text-muted-foreground
+                                text-muted
                             "
                         />
 
@@ -339,26 +327,23 @@ export default function ActivityCard({
                                         index
                                     ) => (
                                         <span
-                                            key={
-                                                category
-                                            }
+                                            key={category}
                                             className="
                                                 inline-flex
                                                 items-center
                                             "
                                         >
-                                            {index >
-                                                0 && (
-                                                    <span
-                                                        aria-hidden="true"
-                                                        className="
+                                            {index > 0 && (
+                                                <span
+                                                    aria-hidden="true"
+                                                    className="
                                                         mx-2
                                                         h-3
                                                         w-px
                                                         bg-border
                                                     "
-                                                    />
-                                                )}
+                                                />
+                                            )}
 
                                             <span
                                                 className="
@@ -366,12 +351,10 @@ export default function ActivityCard({
                                                     font-medium
                                                     uppercase
                                                     tracking-wide
-                                                    text-muted-foreground
+                                                    text-muted
                                                 "
                                             >
-                                                {
-                                                    category
-                                                }
+                                                {category}
                                             </span>
                                         </span>
                                     )
@@ -382,7 +365,7 @@ export default function ActivityCard({
                     {/* Read More */}
 
                     <Link
-                        href={`/activities/${activity.id}`}
+                        href={activityHref}
                         className="
                             inline-flex
                             shrink-0
@@ -390,10 +373,9 @@ export default function ActivityCard({
                             gap-1
                             text-xs
                             font-bold
-                            text-primary-700
+                            text-primary
                             transition-colors
-                            hover:text-accent-500
-                            dark:text-primary-400
+                            hover:text-accent
                         "
                     >
                         Read more
@@ -418,7 +400,7 @@ export default function ActivityCard({
                 className="
                     h-0.5
                     w-full
-                    bg-accent-400
+                    bg-accent
                 "
             />
         </article>
@@ -429,30 +411,20 @@ export default function ActivityCard({
    Date Formatter
 ============================================================ */
 
-function formatDate(
-    date: string
-): string {
+function formatDate(date: string): string {
     if (!date) {
         return "";
     }
 
-    const parsedDate =
-        new Date(date);
+    const parsedDate = new Date(date);
 
-    if (
-        Number.isNaN(
-            parsedDate.getTime()
-        )
-    ) {
+    if (Number.isNaN(parsedDate.getTime())) {
         return date;
     }
 
-    return new Intl.DateTimeFormat(
-        "en-IN",
-        {
-            day: "2-digit",
-            month: "short",
-            year: "numeric",
-        }
-    ).format(parsedDate);
+    return new Intl.DateTimeFormat("en-IN", {
+        day: "2-digit",
+        month: "short",
+        year: "numeric",
+    }).format(parsedDate);
 }

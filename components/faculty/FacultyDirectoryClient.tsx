@@ -1,6 +1,5 @@
 "use client";
 
-
 import { useMemo, useState } from "react";
 
 import {
@@ -13,26 +12,22 @@ import {
     Wrench,
 } from "lucide-react";
 
-import type { FacultyMember } from "@/lib/data/faculty";
+import type { Faculty } from "@/lib/data/faculty/types";
+import { FACULTY_CATEGORY } from "@/lib/data/faculty/constants";
+
 import { FacultyCard } from "./FacultyCard";
 
 /* ============================================================
    Filter Types
-   ============================================================ */
+============================================================ */
 
 type FilterId =
     | "all"
-    | "lecturer"
-    | "teacher"
-    | "bci"
-    | "lab-attendant"
-    | "udc"
-    | "vt"
-    | "other";
+    | Faculty["category"];
 
 /* ============================================================
    Filters
-   ============================================================ */
+============================================================ */
 
 const filters: {
     id: FilterId;
@@ -45,37 +40,37 @@ const filters: {
             icon: UsersRound,
         },
         {
-            id: "lecturer",
+            id: FACULTY_CATEGORY.LECTURER,
             label: "Lecturers",
             icon: GraduationCap,
         },
         {
-            id: "teacher",
+            id: FACULTY_CATEGORY.TEACHER,
             label: "Teachers",
             icon: BookOpen,
         },
         {
-            id: "bci",
+            id: FACULTY_CATEGORY.BCI,
             label: "Computer Anudeshak",
             icon: Laptop,
         },
         {
-            id: "lab-attendant",
+            id: FACULTY_CATEGORY.LAB_ATTENDANT,
             label: "Lab Attendants",
             icon: FlaskConical,
         },
         {
-            id: "udc",
+            id: FACULTY_CATEGORY.UDC,
             label: "UDC",
             icon: ClipboardList,
         },
         {
-            id: "vt",
+            id: FACULTY_CATEGORY.VT,
             label: "VT",
             icon: Wrench,
         },
         {
-            id: "other",
+            id: FACULTY_CATEGORY.OTHER,
             label: "Other Staff",
             icon: UsersRound,
         },
@@ -83,12 +78,12 @@ const filters: {
 
 /* ============================================================
    Faculty Directory
-   ============================================================ */
+============================================================ */
 
 export function FacultyDirectoryClient({
     faculty,
 }: {
-    faculty: FacultyMember[];
+    faculty: Faculty[];
 }) {
     /*
      * Principal is displayed separately
@@ -100,7 +95,7 @@ export function FacultyDirectoryClient({
             faculty.filter(
                 (member) =>
                     member.category !==
-                    "principal"
+                    FACULTY_CATEGORY.PRINCIPAL
             ),
         [faculty]
     );
@@ -112,41 +107,22 @@ export function FacultyDirectoryClient({
 
     /* ========================================================
        Filter Faculty
-       ======================================================== */
+    ======================================================== */
 
     const filteredFaculty = useMemo(() => {
         if (activeFilter === "all") {
             return staff;
         }
 
-        /*
-         * Other Staff includes:
-         * - Fourth Grade
-         * - Panchayat Shikshak
-         * - Other
-         */
-        if (activeFilter === "other") {
-            return staff.filter(
-                (member) =>
-                    member.category ===
-                    "fourth-grade" ||
-                    member.category ===
-                    "panchayat-shikshak" ||
-                    member.category ===
-                    "other"
-            );
-        }
-
         return staff.filter(
             (member) =>
-                member.category ===
-                activeFilter
+                member.category === activeFilter
         );
     }, [staff, activeFilter]);
 
     /* ========================================================
        Filter Count
-       ======================================================== */
+    ======================================================== */
 
     const getFilterCount = (
         filterId: FilterId
@@ -155,28 +131,15 @@ export function FacultyDirectoryClient({
             return staff.length;
         }
 
-        if (filterId === "other") {
-            return staff.filter(
-                (member) =>
-                    member.category ===
-                    "fourth-grade" ||
-                    member.category ===
-                    "panchayat-shikshak" ||
-                    member.category ===
-                    "other"
-            ).length;
-        }
-
         return staff.filter(
             (member) =>
-                member.category ===
-                filterId
+                member.category === filterId
         ).length;
     };
 
     /* ========================================================
        Render
-       ======================================================== */
+    ======================================================== */
 
     return (
         <div>
@@ -210,9 +173,9 @@ export function FacultyDirectoryClient({
                      * Don't show an empty
                      * category.
                      */
+
                     if (
-                        filter.id !==
-                        "all" &&
+                        filter.id !== "all" &&
                         count === 0
                     ) {
                         return null;
@@ -336,41 +299,41 @@ export function FacultyDirectoryClient({
                 0 && (
                     <div
                         className="
-                        rounded-xl
-                        border
-                        border-dashed
-                        border-border
-                        bg-muted/30
-                        px-6
-                        py-12
-                        text-center
-                    "
+                            rounded-xl
+                            border
+                            border-dashed
+                            border-border
+                            bg-muted/30
+                            px-6
+                            py-12
+                            text-center
+                        "
                     >
                         <UsersRound
                             className="
-                            mx-auto
-                            size-8
-                            text-muted-foreground
-                        "
+                                mx-auto
+                                size-8
+                                text-muted-foreground
+                            "
                         />
 
                         <p
                             className="
-                            mt-3
-                            text-sm
-                            font-semibold
-                            text-foreground
-                        "
+                                mt-3
+                                text-sm
+                                font-semibold
+                                text-foreground
+                            "
                         >
                             No staff members found
                         </p>
 
                         <p
                             className="
-                            mt-1
-                            text-xs
-                            text-muted-foreground
-                        "
+                                mt-1
+                                text-xs
+                                text-muted-foreground
+                            "
                         >
                             Try selecting another
                             category.
@@ -380,8 +343,3 @@ export function FacultyDirectoryClient({
         </div>
     );
 }
-
-/* ================================================================
-   Faculty Card
-================================================================ */
-

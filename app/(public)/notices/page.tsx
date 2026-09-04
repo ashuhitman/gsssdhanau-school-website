@@ -16,10 +16,8 @@ import { NoticeList } from "@/components/Notice/NoticeList";
 import PageHero from "@/components/common/PageHero";
 import { PageLayout } from "@/components/layout/PageLayout";
 
-import {
-    getNotices,
-    NoticeCategory,
-} from "@/lib/data/notices";
+import { getPublishedNotices } from "@/lib/data/notice/get";
+import { NOTICE_CATEGORY } from "@/lib/data/notice/constants";
 
 /* ============================================================
    Metadata
@@ -35,12 +33,12 @@ export const metadata = {
 
 const noticeCategories = [
     "All Notices",
-    NoticeCategory.ACADEMIC,
-    NoticeCategory.EXAMINATION,
-    NoticeCategory.ADMISSION,
-    NoticeCategory.HOLIDAY,
-    NoticeCategory.GENERAL,
-    NoticeCategory.ANNOUNCEMENT,
+    NOTICE_CATEGORY.ACADEMIC,
+    NOTICE_CATEGORY.EXAMINATION,
+    NOTICE_CATEGORY.ADMISSION,
+    NOTICE_CATEGORY.HOLIDAY,
+    NOTICE_CATEGORY.GENERAL,
+    NOTICE_CATEGORY.ANNOUNCEMENT,
 ] as const;
 
 /* ============================================================
@@ -89,8 +87,7 @@ export default async function NoticesPage() {
        Get Published Notices
     ======================================================== */
 
-    const notices =
-        await getNotices();
+    const notices = await getPublishedNotices();
 
     /* ========================================================
        Category Counts
@@ -102,7 +99,7 @@ export default async function NoticesPage() {
             count: notices.filter(
                 (notice) =>
                     notice.category ===
-                    NoticeCategory.ACADEMIC
+                    NOTICE_CATEGORY.ACADEMIC
             ).length,
             icon: GraduationCap,
         },
@@ -111,7 +108,7 @@ export default async function NoticesPage() {
             count: notices.filter(
                 (notice) =>
                     notice.category ===
-                    NoticeCategory.EXAMINATION
+                    NOTICE_CATEGORY.EXAMINATION
             ).length,
             icon: FileText,
         },
@@ -120,7 +117,7 @@ export default async function NoticesPage() {
             count: notices.filter(
                 (notice) =>
                     notice.category ===
-                    NoticeCategory.ADMISSION
+                    NOTICE_CATEGORY.ADMISSION
             ).length,
             icon: Users,
         },
@@ -129,7 +126,7 @@ export default async function NoticesPage() {
             count: notices.filter(
                 (notice) =>
                     notice.category ===
-                    NoticeCategory.HOLIDAY
+                    NOTICE_CATEGORY.HOLIDAY
             ).length,
             icon: CalendarDays,
         },
@@ -138,7 +135,7 @@ export default async function NoticesPage() {
             count: notices.filter(
                 (notice) =>
                     notice.category ===
-                    NoticeCategory.GENERAL
+                    NOTICE_CATEGORY.GENERAL
             ).length,
             icon: Megaphone,
         },
@@ -147,7 +144,7 @@ export default async function NoticesPage() {
             count: notices.filter(
                 (notice) =>
                     notice.category ===
-                    NoticeCategory.ANNOUNCEMENT
+                    NOTICE_CATEGORY.ANNOUNCEMENT
             ).length,
             icon: Bell,
         },
@@ -175,12 +172,7 @@ export default async function NoticesPage() {
                 MAIN CONTENT
             ================================================== */}
 
-            <section
-                className="
-                    py-6
-                    lg:py-8
-                "
-            >
+            <section className="py-6 lg:py-8">
                 <div className="mx-auto">
                     <div
                         className="
@@ -195,9 +187,7 @@ export default async function NoticesPage() {
 
                         <NoticeList
                             notices={notices}
-                            categories={
-                                noticeCategories
-                            }
+                            categories={noticeCategories}
                         />
 
                         {/* ==================================================
@@ -264,37 +254,25 @@ export default async function NoticesPage() {
                                 </div>
 
                                 <div className="p-2">
-                                    {quickLinks.map(
-                                        (
-                                            item
-                                        ) => (
-                                            <InfoCard
-                                                key={
-                                                    item.href
-                                                }
-                                                icon={
-                                                    item.icon
-                                                }
-                                                title={
-                                                    item.title
-                                                }
-                                                description={
-                                                    item.description
-                                                }
-                                                href={
-                                                    item.href
-                                                }
-                                                variant="circleIcon"
-                                                className="
-                                                    rounded-lg
-                                                    px-3
-                                                    py-2.5
-                                                    hover:bg-primary-50
-                                                    dark:hover:bg-primary-950/40
-                                                "
-                                            />
-                                        )
-                                    )}
+                                    {quickLinks.map((item) => (
+                                        <InfoCard
+                                            key={item.href}
+                                            icon={item.icon}
+                                            title={item.title}
+                                            description={
+                                                item.description
+                                            }
+                                            href={item.href}
+                                            variant="circleIcon"
+                                            className="
+                                                rounded-lg
+                                                px-3
+                                                py-2.5
+                                                hover:bg-primary-50
+                                                dark:hover:bg-primary-950/40
+                                            "
+                                        />
+                                    ))}
                                 </div>
                             </div>
 
@@ -357,77 +335,66 @@ export default async function NoticesPage() {
                                 </div>
 
                                 <div className="p-3">
-                                    {categoryCards.map(
-                                        (
-                                            category
-                                        ) => {
-                                            const Icon =
-                                                category.icon;
+                                    {categoryCards.map((category) => {
+                                        const Icon = category.icon;
 
-                                            return (
-                                                <div
-                                                    key={
-                                                        category.title
-                                                    }
+                                        return (
+                                            <div
+                                                key={category.title}
+                                                className="
+                                                    flex
+                                                    items-center
+                                                    gap-3
+                                                    rounded-lg
+                                                    px-3
+                                                    py-2.5
+                                                    transition-colors
+                                                    hover:bg-primary-50
+                                                    dark:hover:bg-primary-950/40
+                                                "
+                                            >
+                                                <Icon
                                                     className="
-                                                        flex
-                                                        items-center
-                                                        gap-3
-                                                        rounded-lg
-                                                        px-3
-                                                        py-2.5
-                                                        transition-colors
-                                                        hover:bg-primary-50
-                                                        dark:hover:bg-primary-950/40
+                                                        size-4
+                                                        shrink-0
+                                                        text-primary-600
+                                                        dark:text-primary-400
+                                                    "
+                                                />
+
+                                                <span
+                                                    className="
+                                                        min-w-0
+                                                        flex-1
+                                                        text-xs
+                                                        font-medium
+                                                        text-foreground
                                                     "
                                                 >
-                                                    <Icon
-                                                        className="
-                                                            size-4
-                                                            shrink-0
-                                                            text-primary-600
-                                                            dark:text-primary-400
-                                                        "
-                                                    />
+                                                    {category.title}
+                                                </span>
 
-                                                    <span
-                                                        className="
-                                                            min-w-0
-                                                            flex-1
-                                                            text-xs
-                                                            font-medium
-                                                            text-foreground
-                                                        "
-                                                    >
-                                                        {
-                                                            category.title
-                                                        }
-                                                    </span>
-
-                                                    <span
-                                                        className="
-                                                            flex
-                                                            size-6
-                                                            shrink-0
-                                                            items-center
-                                                            justify-center
-                                                            rounded-full
-                                                            bg-primary-50
-                                                            text-[10px]
-                                                            font-bold
-                                                            text-primary-700
-                                                            dark:bg-primary-900
-                                                            dark:text-primary-300
-                                                        "
-                                                    >
-                                                        {
-                                                            category.count
-                                                        }
-                                                    </span>
-                                                </div>
-                                            );
-                                        }
-                                    )}
+                                                <span
+                                                    className="
+                                                        flex
+                                                        size-6
+                                                        shrink-0
+                                                        items-center
+                                                        justify-center
+                                                        rounded-full
+                                                        bg-primary-50
+                                                        text-[10px]
+                                                        font-bold
+                                                        text-primary-700
+                                                        dark:bg-primary-900
+                                                        dark:text-primary-300
+                                                    "
+                                                >
+                                                    {category.count}
+                                                </span>
+                                            </div>
+                                        );
+                                    })}
                                 </div>
                             </div>
 
@@ -483,18 +450,11 @@ export default async function NoticesPage() {
                                         text-muted-foreground
                                     "
                                 >
-                                    Please check
-                                    this page
-                                    regularly
-                                    for important
-                                    updates and
-                                    announcements.
-                                    Students are
-                                    advised to
-                                    follow the
-                                    instructions
-                                    mentioned in
-                                    each notice.
+                                    Please check this page regularly
+                                    for important updates and
+                                    announcements. Students are advised
+                                    to follow the instructions mentioned
+                                    in each notice.
                                 </p>
                             </div>
                         </aside>

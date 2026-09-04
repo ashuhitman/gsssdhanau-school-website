@@ -2,9 +2,9 @@ import { UsersRound } from "lucide-react";
 
 import ClubMemberCard from "./ClubMemberCard";
 
-
-import type { NewsletterClubMember } from "@/lib/data/clubMember";
 import SectionHeading from "../common/SectionHeading";
+
+import type { NewsletterClubMember } from "@/lib/data/clubMember/types";
 
 export interface ClubMembersProps {
     members: NewsletterClubMember[];
@@ -36,10 +36,11 @@ export default function ClubMembers({
                     mt-6
                     flex
                     w-full
-                    gap-4
+                    flex-nowrap
+                    gap-5
                     overflow-x-auto
                     overflow-y-hidden
-                    flex-nowrap
+                    pb-[0.5rem]
                     [scrollbar-width:none]
                     [-ms-overflow-style:none]
                     [&::-webkit-scrollbar]:hidden
@@ -50,7 +51,9 @@ export default function ClubMembers({
                         key={member.id}
                         className="shrink-0"
                     >
-                        <ClubMemberCard member={member} />
+                        <ClubMemberCard
+                            member={member}
+                        />
                     </div>
                 ))}
             </div>

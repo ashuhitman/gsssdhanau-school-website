@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
-import type { FacultyMember } from "@/lib/data/faculty";
+
+import type { Faculty } from "@/lib/data/faculty/types";
 
 import {
     ArrowRight,
@@ -8,13 +9,21 @@ import {
     Quote,
 } from "lucide-react";
 
+/* ============================================================
+   Props
+============================================================ */
+
 interface PrincipalProps {
-    principal?: FacultyMember
+    principal: Faculty | null;
 }
 
-export function FacultyPrincipal({ principal }: PrincipalProps) {
+/* ============================================================
+   Faculty Principal
+============================================================ */
 
-
+export function FacultyPrincipal({
+    principal,
+}: PrincipalProps) {
     if (!principal) {
         return null;
     }
@@ -62,13 +71,10 @@ export function FacultyPrincipal({ principal }: PrincipalProps) {
                         >
                             <Image
                                 src={
-                                    principal.image ||
+                                    principal.profileImage ??
                                     "/images/faculty/principal.jpg"
                                 }
-                                alt={
-                                    principal.imageAlt ??
-                                    `${principal.name}, ${principal.designation}`
-                                }
+                                alt={`${principal.name}, ${principal.designation}`}
                                 fill
                                 priority
                                 sizes="(max-width: 1023px) 100vw, 38vw"
@@ -77,6 +83,7 @@ export function FacultyPrincipal({ principal }: PrincipalProps) {
                         </div>
 
                         {/* Desktop image gradient */}
+
                         <div
                             className="
                                 pointer-events-none
@@ -94,6 +101,7 @@ export function FacultyPrincipal({ principal }: PrincipalProps) {
                         />
 
                         {/* Mobile designation */}
+
                         <div
                             className="
                                 absolute
@@ -111,9 +119,7 @@ export function FacultyPrincipal({ principal }: PrincipalProps) {
                                 lg:hidden
                             "
                         >
-                            {
-                                principal.designation
-                            }
+                            {principal.designation}
                         </div>
                     </div>
 
@@ -178,9 +184,7 @@ export function FacultyPrincipal({ principal }: PrincipalProps) {
                                             text-accent-500
                                             sm:size-7
                                         "
-                                        strokeWidth={
-                                            1.5
-                                        }
+                                        strokeWidth={1.5}
                                     />
 
                                     <p
@@ -193,9 +197,7 @@ export function FacultyPrincipal({ principal }: PrincipalProps) {
                                             sm:leading-6
                                         "
                                     >
-                                        {
-                                            principal.message
-                                        }
+                                        {principal.message}
                                     </p>
                                 </div>
                             )}
@@ -231,7 +233,10 @@ export function FacultyPrincipal({ principal }: PrincipalProps) {
                                                 dark:text-primary-400
                                             "
                                         >
-                                            S
+                                            {principal.prefix ??
+                                                principal.name
+                                                    .trim()
+                                                    .charAt(0)}
                                         </span>
 
                                         <div className="min-w-0">
@@ -245,9 +250,7 @@ export function FacultyPrincipal({ principal }: PrincipalProps) {
                                                     sm:text-base
                                                 "
                                             >
-                                                {
-                                                    principal.name
-                                                }
+                                                {principal.name}
                                             </h3>
 
                                             <p
@@ -258,9 +261,7 @@ export function FacultyPrincipal({ principal }: PrincipalProps) {
                                                     sm:text-xs
                                                 "
                                             >
-                                                {
-                                                    principal.designation
-                                                }
+                                                {principal.designation}
                                             </p>
                                         </div>
                                     </div>
@@ -269,9 +270,7 @@ export function FacultyPrincipal({ principal }: PrincipalProps) {
                                         Qualifications
                                     ================================================== */}
 
-                                    {principal
-                                        .qualifications
-                                        .length >
+                                    {principal.qualifications.length >
                                         0 && (
                                             <div
                                                 className="
@@ -291,9 +290,7 @@ export function FacultyPrincipal({ principal }: PrincipalProps) {
                                                     text-primary-600
                                                     dark:text-primary-400
                                                 "
-                                                    strokeWidth={
-                                                        1.8
-                                                    }
+                                                    strokeWidth={1.8}
                                                 />
 
                                                 <div className="flex items-center">
@@ -305,8 +302,7 @@ export function FacultyPrincipal({ principal }: PrincipalProps) {
                                                             <span
                                                                 key={`${qualification}-${index}`}
                                                                 className={
-                                                                    index >
-                                                                        0
+                                                                    index > 0
                                                                         ? "ml-2 border-l border-border pl-2"
                                                                         : ""
                                                                 }

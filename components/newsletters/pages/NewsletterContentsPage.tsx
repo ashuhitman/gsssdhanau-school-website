@@ -4,24 +4,19 @@ import {
     Sparkles,
 } from "lucide-react";
 
-import type { Newsletter } from "@/lib/data/newsletter";
+import type { NewsletterWithContent } from "@/lib/data/newsletter/types";
 
 /* ============================================================
    Props
 ============================================================ */
 
 interface NewsletterContentsPageProps {
-    newsletter: Newsletter;
+    newsletter: NewsletterWithContent;
     compact?: boolean;
 }
 
 /* ============================================================
    Newsletter Contents Page
-
-   - A4 ratio: 210 / 297
-   - Naturally grows when content exceeds A4 height
-   - Responsive on mobile
-   - rem-based typography and spacing
 ============================================================ */
 
 export function NewsletterContentsPage({
@@ -45,9 +40,10 @@ export function NewsletterContentsPage({
                 w-full
                 min-w-0
                 overflow-hidden
+                rounded-[0.25rem]
                 bg-[#eaf4ff]
                 text-slate-900
-                    relative rounded-[0.25rem] shadow-[0_0.5rem_1.25rem_rgba(0,0,0,0.14),0_0.15rem_0.35rem_rgba(0,0,0,0.08)]
+                shadow-[0_0.5rem_1.25rem_rgba(0,0,0,0.14),0_0.15rem_0.35rem_rgba(0,0,0,0.08)]
             "
         >
             {/* ==================================================
@@ -95,12 +91,6 @@ export function NewsletterContentsPage({
 
             {/* ==================================================
                 PAGE
-
-                aspect-[210/297] gives the page an A4 proportion
-                when the content fits.
-
-                Because height is auto, content can make the
-                page taller than the A4 ratio when necessary.
             ================================================== */}
 
             <div
@@ -111,7 +101,6 @@ export function NewsletterContentsPage({
                     w-full
                     min-w-0
                     flex-col
-
                     aspect-[210/297]
                     h-auto
 
@@ -134,10 +123,6 @@ export function NewsletterContentsPage({
                             gap-[1rem]
                         "
                     >
-                        {/* ==================================================
-                            LEFT
-                        ================================================== */}
-
                         <div className="min-w-0">
                             <p
                                 className={`
@@ -145,13 +130,12 @@ export function NewsletterContentsPage({
                                     uppercase
                                     tracking-[0.15em]
                                     text-amber-600
+                                    sm:tracking-[0.2em]
 
                                     ${compact
                                         ? "text-[0.625rem]"
                                         : "text-[0.75rem]"
                                     }
-
-                                    sm:tracking-[0.2em]
                                 `}
                             >
                                 School Newsletter
@@ -175,10 +159,6 @@ export function NewsletterContentsPage({
                                 Contents
                             </h1>
                         </div>
-
-                        {/* ==================================================
-                            RIGHT
-                        ================================================== */}
 
                         <div
                             className="
@@ -218,9 +198,7 @@ export function NewsletterContentsPage({
                         </div>
                     </div>
 
-                    {/* ==================================================
-                        HEADER LINE
-                    ================================================== */}
+                    {/* Header Line */}
 
                     <div
                         className="
@@ -261,11 +239,6 @@ export function NewsletterContentsPage({
 
                 {/* ==================================================
                     CONTENT
-
-                    No flex-1.
-                    No overflow-hidden.
-
-                    This allows the page to grow naturally.
                 ================================================== */}
 
                 <main
@@ -295,9 +268,7 @@ export function NewsletterContentsPage({
                                     />
                                 }
                                 title="Activities"
-                                count={
-                                    activities.length
-                                }
+                                count={activities.length}
                                 compact={compact}
                             />
 
@@ -313,24 +284,13 @@ export function NewsletterContentsPage({
                                 `}
                             >
                                 {activities.map(
-                                    (
-                                        activity,
-                                        index,
-                                    ) => (
+                                    (activity, index) => (
                                         <ContentItem
-                                            key={
-                                                activity.id
-                                            }
-                                            number={
-                                                index + 1
-                                            }
-                                            title={
-                                                activity.title
-                                            }
+                                            key={`activity-${index}`}
+                                            number={index + 1}
+                                            title={activity.title}
                                             accent="amber"
-                                            compact={
-                                                compact
-                                            }
+                                            compact={compact}
                                         />
                                     ),
                                 )}
@@ -363,9 +323,7 @@ export function NewsletterContentsPage({
                                     />
                                 }
                                 title="Articles"
-                                count={
-                                    articles.length
-                                }
+                                count={articles.length}
                                 compact={compact}
                             />
 
@@ -381,26 +339,17 @@ export function NewsletterContentsPage({
                                 `}
                             >
                                 {articles.map(
-                                    (
-                                        article,
-                                        index,
-                                    ) => (
+                                    (article, index) => (
                                         <ContentItem
-                                            key={
-                                                article.id
-                                            }
+                                            key={`article-${index}`}
                                             number={
                                                 activities.length +
                                                 index +
                                                 1
                                             }
-                                            title={
-                                                article.title
-                                            }
+                                            title={article.title}
                                             accent="blue"
-                                            compact={
-                                                compact
-                                            }
+                                            compact={compact}
                                         />
                                     ),
                                 )}
@@ -436,10 +385,6 @@ export function NewsletterContentsPage({
 
                 {/* ==================================================
                     FOOTER
-
-                    mt-auto keeps it near the bottom when the page
-                    is naturally A4-sized, but it still moves down
-                    when the content becomes taller.
                 ================================================== */}
 
                 <footer
@@ -523,8 +468,6 @@ function SectionHeading({
                 gap-[0.75rem]
             "
         >
-            {/* LEFT */}
-
             <div
                 className="
                     flex
@@ -569,8 +512,6 @@ function SectionHeading({
                     {title}
                 </h2>
             </div>
-
-            {/* COUNT */}
 
             <span
                 className={`
@@ -625,10 +566,6 @@ function ContentItem({
                 gap-[0.625rem]
             "
         >
-            {/* ==================================================
-                NUMBER
-            ================================================== */}
-
             <span
                 className={`
                     shrink-0
@@ -642,15 +579,8 @@ function ContentItem({
                     }
                 `}
             >
-                {String(number).padStart(
-                    2,
-                    "0",
-                )}
+                {String(number).padStart(2, "0")}
             </span>
-
-            {/* ==================================================
-                TITLE
-            ================================================== */}
 
             <div
                 className="
@@ -673,8 +603,6 @@ function ContentItem({
                 >
                     {title}
                 </p>
-
-                {/* Dotted Guide */}
 
                 <div
                     className="

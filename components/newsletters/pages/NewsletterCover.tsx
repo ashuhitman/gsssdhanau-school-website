@@ -1,10 +1,9 @@
 import Image from "next/image";
 import { Sparkles } from "lucide-react";
-import { title } from "process";
 
 interface NewsletterCoverProps {
-    title: string,
-    schoolName?: string,
+    title: string;
+    schoolName?: string;
     issue: string;
     date: string;
     coverImage: string | null;
@@ -16,18 +15,6 @@ export function NewsletterCover({
     coverImage,
     title = "CAMPUS CHRONICLES",
 }: NewsletterCoverProps) {
-
-    const titleParts = title.trim().split(/\s+/);
-
-    const firstLine =
-        titleParts.length > 1
-            ? titleParts.slice(0, -1).join(" ")
-            : title;
-
-    const secondLine =
-        titleParts.length > 1
-            ? titleParts[titleParts.length - 1]
-            : "";
     return (
         <div
             className="
@@ -122,7 +109,7 @@ export function NewsletterCover({
                                     min-w-0
                                     max-w-[75%]
                                     whitespace-normal
-                                    break-normal
+                                    break-words
                                     text-[0.4375rem]
                                     font-bold
                                     uppercase
@@ -203,7 +190,7 @@ export function NewsletterCover({
                                     min-w-0
                                     max-w-[80%]
                                     whitespace-normal
-                                    break-normal
+                                    break-words
                                     text-[0.4375rem]
                                     leading-3
                                     text-muted
@@ -280,15 +267,13 @@ export function NewsletterCover({
                         transition-transform
                         duration-700
                         ease-[cubic-bezier(0.4,0,0.2,1)]
+                        [container-type:inline-size]
                         [transform-style:preserve-3d]
                         group-hover:[transform:rotateY(-72deg)]
                     "
                 >
                     {/* =================================================
                         COVER IMAGE
-
-                        The image only occupies the lower part of
-                        the cover. It does NOT cover the whole page.
                     ================================================== */}
 
                     {coverImage && (
@@ -366,9 +351,6 @@ export function NewsletterCover({
 
                     {/* =================================================
                         TOP COVER COLOR
-
-                        Ensures the upper portion always remains
-                        clean behind the school/title text.
                     ================================================== */}
 
                     <div
@@ -444,9 +426,9 @@ export function NewsletterCover({
                     <div
                         className="
                             absolute
-                            left-4
-                            right-4
-                            top-4
+                            left-[7%]
+                            right-[7%]
+                            top-[7%]
                             z-50
                             min-w-0
                         "
@@ -464,13 +446,12 @@ export function NewsletterCover({
                                 className="
                                     min-w-0
                                     max-w-[calc(100%-1.375rem)]
-                                    whitespace-normal
-                                    break-normal
-                                    text-[0.4375rem]
+                                    break-words
+                                    text-[clamp(0.3rem,3.5cqw,0.4375rem)]
                                     font-bold
                                     uppercase
-                                    leading-3
-                                    tracking-[0.11em]
+                                    leading-[1.1]
+                                    tracking-[0.09em]
                                     text-white
                                     drop-shadow
                                 "
@@ -480,7 +461,7 @@ export function NewsletterCover({
 
                             <Sparkles
                                 className="
-                                    size-3.5
+                                    size-[clamp(0.55rem,4cqw,0.875rem)]
                                     shrink-0
                                     text-white/90
                                 "
@@ -489,7 +470,7 @@ export function NewsletterCover({
 
                         <div
                             className="
-                                mt-2.5
+                                mt-[6%]
                                 h-px
                                 bg-white/30
                             "
@@ -503,8 +484,8 @@ export function NewsletterCover({
                     <div
                         className="
                             absolute
-                            left-3
-                            right-3
+                            left-[7%]
+                            right-[7%]
                             top-[20%]
                             z-50
                             min-w-0
@@ -512,46 +493,29 @@ export function NewsletterCover({
                             text-center
                         "
                     >
-                        <p
-                            className="
-                                whitespace-nowrap
-                                text-[0.8375rem]
-                                font-semibold
-                                uppercase
-                                leading-3
-                                tracking-[0.2em]
-                                text-white/85
-                                drop-shadow
-                            "
-                        >
-                            {firstLine}
-                        </p>
-
                         <h2
                             className="
-                                mt-1.5
                                 w-full
-                                whitespace-nowrap
-                                text-center
+                                break-words
                                 font-serif
-                                text-[1.35rem]
+                                text-[clamp(0.55rem,9cqw,1.35rem)]
                                 font-black
                                 uppercase
-                                leading-none
+                                leading-[0.9]
                                 tracking-[-0.03em]
                                 text-white
                                 drop-shadow-md
                             "
                         >
-                            {secondLine}
+                            {title}
                         </h2>
 
                         <div
                             className="
                                 mx-auto
-                                mt-4
-                                h-0.5
-                                w-9
+                                mt-[7%]
+                                h-[0.1rem]
+                                w-[18%]
                                 bg-white/80
                             "
                         />
@@ -559,13 +523,13 @@ export function NewsletterCover({
                         <p
                             className="
                                 mx-auto
-                                mt-2.5
+                                mt-[5%]
                                 max-w-full
-                                whitespace-nowrap
-                                text-[0.375rem]
+                                break-words
+                                text-[clamp(0.3rem,2.5cqw,0.375rem)]
                                 font-medium
-                                leading-3
-                                tracking-[0.04em]
+                                leading-[1.1]
+                                tracking-[0.03em]
                                 text-white/85
                                 drop-shadow
                             "
@@ -581,9 +545,9 @@ export function NewsletterCover({
                     <div
                         className="
                             absolute
-                            bottom-6
-                            left-4
-                            right-4
+                            bottom-[7%]
+                            left-[7%]
+                            right-[7%]
                             z-50
                             flex
                             min-w-0
@@ -593,15 +557,13 @@ export function NewsletterCover({
                         "
                     >
                         <div className="min-w-0 max-w-[48%]">
-
-
                             <p
                                 className="
                                     mt-0.5
                                     whitespace-nowrap
-                                    text-xs
+                                    text-[clamp(0.35rem,3.5cqw,0.75rem)]
                                     font-bold
-                                    leading-4
+                                    leading-[1.1]
                                     text-white
                                     drop-shadow
                                 "
@@ -612,13 +574,13 @@ export function NewsletterCover({
 
                         <p
                             className="
-                               mt-0.5
-                                    whitespace-nowrap
-                                    text-xs
-                                    font-bold
-                                    leading-4
-                                    text-white
-                                    drop-shadow
+                                mt-0.5
+                                whitespace-nowrap
+                                text-[clamp(0.35rem,3.5cqw,0.75rem)]
+                                font-bold
+                                leading-[1.1]
+                                text-white
+                                drop-shadow
                             "
                         >
                             {date}

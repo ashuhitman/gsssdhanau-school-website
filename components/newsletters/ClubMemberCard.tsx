@@ -1,6 +1,7 @@
 import Image from "next/image";
+import { GraduationCap } from "lucide-react";
 
-import type { NewsletterClubMember } from "@/lib/data/newsletter";
+import type { NewsletterClubMember } from "@/lib/data/clubMember/types";
 
 interface ClubMemberCardProps {
     member: NewsletterClubMember;
@@ -10,142 +11,291 @@ export default function ClubMemberCard({
     member,
 }: ClubMemberCardProps) {
     const formattedName = member.name
-        .toLowerCase()
-        .replace(/\b\w/g, (letter) => letter.toUpperCase());
+        ? member.name
+            .toLowerCase()
+            .replace(/\b\w/g, (letter) =>
+                letter.toUpperCase(),
+            )
+        : "";
+
+    const className =
+        member.class !== null
+            ? `${member.class}${member.section ?? ""}`
+            : "";
 
     return (
         <article
             className="
                 group
-                flex
-                w-fit
-                min-w-0
-                flex-col
-                items-center
+                relative
+                w-[12rem]
+                shrink-0
                 overflow-hidden
-                rounded-[0.75rem]
+                rounded-[1rem]
                 bg-white
-                px-[1.5rem]
-                pb-[1rem]
-                pt-[1rem]
-                shadow-[0_0.25rem_0.9rem_rgba(15,35,70,0.08)]
+                shadow-[0_0.35rem_1rem_rgba(15,35,70,0.10)]
                 transition-all
                 duration-300
-                hover:-translate-y-[0.15rem]
-                hover:shadow-[0_0.5rem_1.2rem_rgba(15,35,70,0.14)]
+                hover:-translate-y-[0.2rem]
+                hover:shadow-[0_0.6rem_1.4rem_rgba(15,35,70,0.15)]
             "
         >
-            {/* Circular Image */}
+            {/* =====================================================
+                TOP COLORED AREA
+            ====================================================== */}
+
             <div
                 className="
                     relative
-                    h-[7rem]
-                    w-[7rem]
-                    shrink-0
+                    h-[8.5rem]
+                    w-full
                     overflow-hidden
-                    rounded-full
-                    border-[0.2rem]
-                    border-white
-                    bg-slate-100
-                    shadow-[0_0.15rem_0.5rem_rgba(0,0,0,0.12)]
-                    ring-[0.1rem]
-                    ring-slate-200
-                    transition-transform
-                    duration-300
-                    group-hover:scale-[1.02]
+                    bg-primary
                 "
             >
-                {member.image ? (
-                    <Image
-                        src={member.image}
-                        alt={member.name}
-                        fill
-                        sizes="7rem"
-                        className="
-                            object-cover
-                            transition-transform
-                            duration-500
-                            group-hover:scale-105
-                        "
-                    />
-                ) : (
-                    <div
-                        className="
-                            flex
-                            h-full
-                            w-full
-                            items-center
-                            justify-center
-                            text-[2rem]
-                            font-bold
-                            text-slate-400
-                        "
-                    >
-                        {member.name.charAt(0).toUpperCase()}
-                    </div>
-                )}
+                {/* Decorative curved shapes */}
+
+                <div
+                    aria-hidden="true"
+                    className="
+                        absolute
+                        -right-[2.5rem]
+                        -top-[2.5rem]
+                        h-[7rem]
+                        w-[7rem]
+                        rounded-full
+                        bg-primary-hover
+                        opacity-70
+                    "
+                />
+
+                <div
+                    aria-hidden="true"
+                    className="
+                        absolute
+                        -bottom-[3.5rem]
+                        -left-[3rem]
+                        h-[6rem]
+                        w-[6rem]
+                        rounded-full
+                        bg-primary-hover
+                        opacity-40
+                    "
+                />
+
+                {/* =================================================
+                    PROFILE IMAGE
+                ================================================== */}
+
+                <div
+                    className="
+                        absolute
+                        left-1/2
+                        top-[1rem]
+                        z-10
+                        h-[7rem]
+                        w-[7rem]
+                        -translate-x-1/2
+                        overflow-hidden
+                        rounded-full
+                        border-[0.2rem]
+                        border-white
+                        bg-slate-100
+                        shadow-[0_0.25rem_0.8rem_rgba(15,35,70,0.20)]
+                        ring-[0.1rem]
+                        ring-white/80
+                        transition-transform
+                        duration-300
+                        group-hover:scale-[1.03]
+                    "
+                >
+                    {member.image ? (
+                        <Image
+                            src={member.image}
+                            alt={formattedName}
+                            fill
+                            sizes="7rem"
+                            className="
+                                object-cover
+                                transition-transform
+                                duration-500
+                                group-hover:scale-105
+                            "
+                        />
+                    ) : (
+                        <div
+                            className="
+                                flex
+                                h-full
+                                w-full
+                                items-center
+                                justify-center
+                                bg-slate-100
+                                text-[2rem]
+                                font-bold
+                                text-slate-400
+                            "
+                        >
+                            {formattedName.charAt(0)}
+                        </div>
+                    )}
+                </div>
             </div>
 
-            {/* Role */}
-            {member.role && (
-                <span
-                    className="
-                        mt-[0.6rem]
-                        rounded-[0.3rem]
-                        bg-[#0b4a9e]
-                        px-[0.65rem]
-                        py-[0.25rem]
-                        text-center
-                        text-[0.58rem]
-                        font-semibold
-                        leading-none
-                        text-white
-                        shadow-[0_0.1rem_0.25rem_rgba(0,0,0,0.14)]
-                        sm:px-[0.75rem]
-                        sm:py-[0.28rem]
-                        sm:text-[0.62rem]
-                    "
-                >
-                    {member.role}
-                </span>
-            )}
+            {/* =====================================================
+                INFORMATION AREA
+            ====================================================== */}
 
-            {/* Name */}
-            <h3
+            <div
                 className="
-                    mt-[0.5rem]
-                    truncate
-                    px-[0.25rem]
-                    text-center
-                    text-[0.78rem]
-                    font-semibold
-                    leading-tight
-                    text-[#102d63]
-                    sm:text-[0.84rem]
+                    flex
+                    min-h-[8.5rem]
+                    flex-col
+                    items-center
+                    px-[0.75rem]
+                    pb-[0.75rem]
+                    pt-[1.5rem]
                 "
-                title={formattedName}
             >
-                {formattedName}
-            </h3>
+                {/* =================================================
+                    NEWSLETTER ROLE
+                ================================================== */}
 
-            {/* Class */}
-            {member.className && (
-                <p
+                {member.role && (
+                    <span
+                        className="
+                            max-w-full
+                            truncate
+                            rounded-full
+                            bg-primary
+                            px-[0.75rem]
+                            py-[0.3rem]
+                            text-center
+                            text-[0.52rem]
+                            font-bold
+                            uppercase
+                            tracking-wide
+                            text-white
+                            shadow-[0_0.1rem_0.3rem_rgba(15,35,70,0.16)]
+                            sm:text-[0.56rem]
+                        "
+                        title={member.role}
+                    >
+                        {member.role}
+                    </span>
+                )}
+
+                {/* =================================================
+                    NAME
+                ================================================== */}
+
+                <h3
                     className="
-                        mt-[0.3rem]
+                        mt-[0.55rem]
+                        w-full
                         truncate
-                        px-[0.25rem]
                         text-center
-                        text-[0.62rem]
+                        font-serif
+                        text-[0.95rem]
+                        font-bold
                         leading-tight
-                        text-slate-500
-                        sm:text-[0.68rem]
+                        text-heading
+                        sm:text-[1rem]
                     "
-                    title={member.className}
+                    title={formattedName}
                 >
-                    {member.className}
-                </p>
-            )}
+                    {formattedName}
+                </h3>
+
+                {/* =================================================
+                    FACULTY DESIGNATION
+                ================================================== */}
+
+                {member.memberType === "teacher" &&
+                    member.designation && (
+                        <p
+                            className="
+                                mt-[0.25rem]
+                                w-full
+                                truncate
+                                text-center
+                                text-[0.68rem]
+                                font-medium
+                                leading-tight
+                                text-body
+                                sm:text-[0.72rem]
+                            "
+                            title={member.designation}
+                        >
+                            {member.designation}
+                        </p>
+                    )}
+
+                {/* =================================================
+                    STUDENT CLASS
+                ================================================== */}
+
+                {member.memberType === "student" &&
+                    className && (
+                        <p
+                            className="
+                                mt-[0.25rem]
+                                text-center
+                                text-[0.68rem]
+                                font-medium
+                                leading-tight
+                                text-body
+                                sm:text-[0.72rem]
+                            "
+                        >
+                            Class {className}
+                        </p>
+                    )}
+
+                {/* =================================================
+                    BOTTOM DECORATION
+                ================================================== */}
+
+                <div
+                    className="
+                        mt-auto
+                        flex
+                        w-full
+                        items-center
+                        justify-center
+                        gap-[0.5rem]
+                        pt-[0.75rem]
+                    "
+                >
+                    <span
+                        aria-hidden="true"
+                        className="
+                            h-px
+                            w-[2rem]
+                            bg-slate-200
+                        "
+                    />
+
+                    <GraduationCap
+                        aria-hidden="true"
+                        className="
+                            size-[1rem]
+                            shrink-0
+                            text-primary
+                        "
+                        strokeWidth={2}
+                    />
+
+                    <span
+                        aria-hidden="true"
+                        className="
+                            h-px
+                            w-[2rem]
+                            bg-slate-200
+                        "
+                    />
+                </div>
+            </div>
         </article>
     );
 }

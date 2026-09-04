@@ -1,105 +1,67 @@
 import PageHero from "@/components/common/PageHero";
-
 import { PageLayout } from "@/components/layout/PageLayout";
-
 import NewsletterLatestIssue from "@/components/newsletters/NewsletterLatestIssue";
 import ClubMembers from "@/components/newsletters/ClubMembers";
 import PreviousIssues from "@/components/newsletters/PreviousIssues";
 
 import {
     getPublishedNewsletters,
+    getNewsletterById,
 } from "@/lib/data/newsletter/get";
 
-import {
-    getNewsletterItemCounts,
-} from "@/lib/data/newsletter/items";
-
-import {
-    getAllClubMembers,
-} from "@/lib/data/clubMember";
+import { getAllClubMembers } from "@/lib/data/clubMember/get";
 
 /* ============================================================
    Newsletters Page
 ============================================================ */
 
 export default async function NewslettersPage() {
-    const start = performance.now();
+    /* ========================================================
+       Newsletters + Club Members
+    ======================================================== */
 
     const [newsletters, clubMembers] = await Promise.all([
-        (async () => {
-            const start = performance.now();
-
-            const result = await getPublishedNewsletters();
-
-            console.log(
-                `getPublishedNewsletters: ${(
-                    performance.now() - start
-                ).toFixed(0)}ms`,
-            );
-
-            return result;
-        })(),
-
-        (async () => {
-            const start = performance.now();
-
-            const result = await getAllClubMembers();
-
-            console.log(
-                `getAllClubMembers: ${(
-                    performance.now() - start
-                ).toFixed(0)}ms`,
-            );
-
-            return result;
-        })(),
+        getPublishedNewsletters(),
+        getAllClubMembers(),
     ]);
+
 
     const currentNewsletter = newsletters[0];
 
-    const counts = currentNewsletter
-        ? await (async () => {
-            const start = performance.now();
+    /* ========================================================
+       Latest Newsletter Content
+    ======================================================== */
 
-            const result = await getNewsletterItemCounts(
-                currentNewsletter.id,
-            );
+    const latestNewsletter = currentNewsletter
+        ? await getNewsletterById(currentNewsletter.id, true)
+        : null;
 
-            console.log(
-                `getNewsletterItemCounts: ${(
-                    performance.now() - start
-                ).toFixed(0)}ms`,
-            );
+    const articleCount =
+        latestNewsletter &&
+            "articles" in latestNewsletter
+            ? latestNewsletter.articles.length
+            : 0;
 
-            return result;
-        })()
-        : {
-            articleCount: 0,
-            activityCount: 0,
-        };
-
-    console.log(
-        `Newsletter data total: ${(
-            performance.now() - start
-        ).toFixed(0)}ms`,
-    );
+    const activityCount =
+        latestNewsletter &&
+            "activities" in latestNewsletter
+            ? latestNewsletter.activities.length
+            : 0;
 
     /* ========================================================
        Previous Issues
     ======================================================== */
 
-    const previousIssues = newsletters
-        .slice(1)
-        .map((newsletter) => ({
-            id: newsletter.id,
-            month: newsletter.month,
-            year: newsletter.year,
-            volume: newsletter.volume ?? "1",
-            issue: newsletter.issue,
-            coverImage: newsletter.coverImage,
-            href: `/newsletters/${newsletter.slug}`,
-            downloadHref: newsletter.pdfUrl,
-        }));
+    const previousIssues = newsletters.slice(1).map((newsletter) => ({
+        id: newsletter.id,
+        month: newsletter.month,
+        year: newsletter.year,
+        volume: newsletter.volume ?? "1",
+        issue: newsletter.issue,
+        coverImage: newsletter.coverImage,
+        href: `/newsletters/${newsletter.slug}`,
+        downloadHref: newsletter.pdfUrl,
+    }));
 
     return (
         <main>
@@ -133,19 +95,8 @@ export default async function NewslettersPage() {
                     NEWSLETTER CONTENT
                 ================================================== */}
 
-                <section
-                    className="
-                        py-10
-                        lg:py-14
-                    "
-                >
-                    <div
-                        className="
-                            mx-auto
-                            w-full
-                            space-y-12
-                        "
-                    >
+                <section className="py-10 lg:py-14">
+                    <div className="mx-auto w-full space-y-12">
                         {/* ==================================================
                             LATEST NEWSLETTER
                         ================================================== */}
@@ -153,12 +104,8 @@ export default async function NewslettersPage() {
                         {currentNewsletter && (
                             <NewsletterLatestIssue
                                 newsletter={currentNewsletter}
-                                articleCount={
-                                    counts.articleCount
-                                }
-                                activityCount={
-                                    counts.activityCount
-                                }
+                                articleCount={articleCount}
+                                activityCount={activityCount}
                             />
                         )}
 
@@ -167,9 +114,7 @@ export default async function NewslettersPage() {
                         ================================================== */}
 
                         {clubMembers.length > 0 && (
-                            <ClubMembers
-                                members={clubMembers}
-                            />
+                            <ClubMembers members={clubMembers} />
                         )}
 
                         {/* ==================================================

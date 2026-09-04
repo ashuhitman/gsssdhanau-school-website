@@ -1,8 +1,7 @@
 import ImageInfoCard from "@/components/common/ImageInfoCard";
+import { Article } from "@/lib/data/article/types";
 
-import type {
-    Article,
-} from "@/lib/data/article";
+
 
 /* ============================================================
    Props
@@ -38,28 +37,24 @@ export default function RelatedContentSidebar({
                 className="
                     rounded-xl
                     border
-                    border-slate-200
-                    bg-white
+                    border-default
+                    bg-card
                     p-4
-                    shadow-sm
+                    shadow-school-card
                 "
             >
                 {/* ==================================================
                     HEADING
                 ================================================== */}
 
-                <div
-                    className="
-                        mb-4
-                    "
-                >
+                <div className="mb-4">
                     <p
                         className="
-                            text-[9px]
+                            text-[0.5625rem]
                             font-black
                             uppercase
                             tracking-[0.18em]
-                            text-amber-600
+                            text-accent
                         "
                     >
                         Keep Exploring
@@ -71,7 +66,7 @@ export default function RelatedContentSidebar({
                             text-lg
                             font-black
                             tracking-tight
-                            text-slate-950
+                            text-heading
                         "
                     >
                         {title}
@@ -83,7 +78,7 @@ export default function RelatedContentSidebar({
                                 mt-1.5
                                 text-xs
                                 leading-5
-                                text-slate-500
+                                text-muted
                             "
                         >
                             {description}
@@ -95,39 +90,22 @@ export default function RelatedContentSidebar({
                     RELATED ARTICLES
                 ================================================== */}
 
-                <div
-                    className="
-                        space-y-3
-                    "
-                >
-                    {articles.map(
-                        (article) => (
-                            <ImageInfoCard
-                                key={
-                                    article.id
-                                }
-                                href={`/articles/${article.id}`}
-                                image={
-                                    article.image ??
-                                    "/images/articles/default-card.jpeg"
-                                }
-                                imageAlt={
-                                    article.imageAlt ??
-                                    article.title
-                                }
-                                title={
-                                    article.title
-                                }
-                                label={
-                                    article.category?.[0]
-                                }
-                                date={
-                                    article.publishedAt
-                                }
-                                compact
-                            />
-                        )
-                    )}
+                <div className="space-y-3">
+                    {articles.map((article) => (
+                        <ImageInfoCard
+                            key={article.id}
+                            href={`/articles/${article.slug}`}
+                            image={
+                                article.image ??
+                                "/images/articles/default-card.jpeg"
+                            }
+                            imageAlt={article.title}
+                            title={article.title}
+                            label={article.category?.[0]}
+                            date={article.publishedAt ?? undefined}
+                            compact
+                        />
+                    ))}
                 </div>
             </div>
         </aside>

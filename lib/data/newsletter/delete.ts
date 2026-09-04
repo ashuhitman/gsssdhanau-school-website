@@ -1,11 +1,11 @@
 import {
-    tablesDB,
     DATABASE_ID,
     NEWSLETTERS_TABLE_ID,
+    tablesDB,
 } from "@/lib/appwrite/server";
 
 export async function deleteNewsletter(
-    id: string,
+    id: string
 ): Promise<void> {
     await tablesDB.deleteRow({
         databaseId: DATABASE_ID,

@@ -1,31 +1,31 @@
-
-
 import ActivitiesClient from "@/components/activity/ActivitiesClient";
+
 import PageHero from "@/components/common/PageHero";
 import SectionHeading from "@/components/common/SectionHeading";
 import { PageLayout } from "@/components/layout/PageLayout";
-import { getActivities } from "@/lib/data/activity";
 
-
+import { getPublishedActivities } from "@/lib/data/activity/get";
 
 export default async function NewsActivitiesPage() {
-    const activities = await getActivities();
+    const activities =
+        await getPublishedActivities();
+
     return (
-
-        <PageLayout hero={<PageHero
-            title="News and Events"
-            description="A wide range of co-curricular and extra-curricular activities that nurture talent, build character and promote the holistic development of our students."
-            image="/images/activity/hero.jpg"
-            imageAlt="Students of PM SHRI GSSS Dhanau participating in activities"
-
-            breadcrumb={[
-                {
-                    label: "News and Events",
-                },
-            ]}
-        />}>
-
-
+        <PageLayout
+            hero={
+                <PageHero
+                    title="News and Events"
+                    description="A wide range of co-curricular and extra-curricular activities that nurture talent, build character and promote the holistic development of our students."
+                    image="/images/activity/hero.jpg"
+                    imageAlt="Students of PM SHRI GSSS Dhanau participating in activities"
+                    breadcrumb={[
+                        {
+                            label: "News and Events",
+                        },
+                    ]}
+                />
+            }
+        >
             <section
                 className="
                     py-10
@@ -50,16 +50,10 @@ export default async function NewsActivitiesPage() {
                     {/* Activities */}
 
                     <ActivitiesClient
-                        activities={
-                            activities
-                        }
+                        activities={activities}
                     />
                 </div>
             </section>
-
         </PageLayout>
-
-
-
     );
 }

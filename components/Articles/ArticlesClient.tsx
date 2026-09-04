@@ -1,22 +1,20 @@
 "use client";
 
-import {
-    useMemo,
-    useState,
-} from "react";
+import { useMemo, useState } from "react";
 
 import ContentTopics from "@/components/content/ContentTopics";
 import FeaturedContent from "@/components/content/FeaturedContent";
 import ContentTimeline from "@/components/content/ContentTimeline";
 import ContentQuoteCard from "@/components/content/ContentQuoteCard";
 import ContentCTA from "@/components/content/ContentCTA";
-
+import Pagination from "../content/Pagination";
 
 import type {
     Article,
-    ArticleCategory,
-} from "@/lib/data/article";
-import Pagination from "../content/Pagination";
+
+} from "@/lib/data/article/types";
+
+import { ARTICLE_CATEGORY, ArticleCategory } from "@/lib/data/article/constants";
 
 /* ============================================================
    Props
@@ -24,14 +22,13 @@ import Pagination from "../content/Pagination";
 
 interface ArticlesClientProps {
     articles: Article[];
-    featuredArticle: Article | null;
 }
 
 /* ============================================================
    Constants
 ============================================================ */
 
-const ARTICLES_PER_PAGE = 5;
+const ARTICLES_PER_PAGE = 4;
 
 /* ============================================================
    Topics
@@ -46,39 +43,39 @@ const TOPICS: {
             label: "All Articles",
         },
         {
-            value: "academic",
+            value: ARTICLE_CATEGORY.ACADEMIC,
             label: "Academic",
         },
         {
-            value: "student-life",
+            value: ARTICLE_CATEGORY.STUDENT_LIFE,
             label: "Student Life",
         },
         {
-            value: "school-life",
+            value: ARTICLE_CATEGORY.SCHOOL_LIFE,
             label: "School Life",
         },
         {
-            value: "sports",
+            value: ARTICLE_CATEGORY.SPORTS,
             label: "Sports",
         },
         {
-            value: "education",
+            value: ARTICLE_CATEGORY.EDUCATION,
             label: "Education",
         },
         {
-            value: "values",
+            value: ARTICLE_CATEGORY.VALUES,
             label: "Values",
         },
         {
-            value: "inspiration",
+            value: ARTICLE_CATEGORY.INSPIRATION,
             label: "Inspiration",
         },
         {
-            value: "creativity",
+            value: ARTICLE_CATEGORY.CREATIVITY,
             label: "Creativity",
         },
         {
-            value: "community",
+            value: ARTICLE_CATEGORY.COMMUNITY,
             label: "Community",
         },
     ];
@@ -89,90 +86,64 @@ const TOPICS: {
 
 export default function ArticlesClient({
     articles,
-    featuredArticle,
 }: ArticlesClientProps) {
-    const [
-        selectedCategory,
-        setSelectedCategory,
-    ] = useState<
+    const [selectedCategory, setSelectedCategory] = useState<
         "all" | ArticleCategory
     >("all");
 
-    const [
-        currentPage,
-        setCurrentPage,
-    ] = useState(1);
+    const [currentPage, setCurrentPage] = useState(1);
+
+    /* ========================================================
+       Featured Article
+    ======================================================== */
+
+    const featuredArticle = articles[0] ?? null;
 
     /* ========================================================
        Filter
     ======================================================== */
 
-    const filteredArticles =
-        useMemo(() => {
-            if (
-                selectedCategory ===
-                "all"
-            ) {
-                return articles;
-            }
+    const filteredArticles = useMemo(() => {
+        if (selectedCategory === "all") {
+            return articles;
+        }
 
-            return articles.filter(
-                (article) =>
-                    article.category.includes(
-                        selectedCategory
-                    )
-            );
-        }, [
-            articles,
-            selectedCategory,
-        ]);
+        return articles.filter((article) =>
+            article.category.includes(selectedCategory)
+        );
+    }, [articles, selectedCategory]);
 
     /* ========================================================
        Featured
     ======================================================== */
 
-    const filteredFeatured =
-        useMemo(() => {
-            if (!featuredArticle) {
-                return null;
-            }
+    const filteredFeatured = useMemo(() => {
+        if (!featuredArticle) {
+            return null;
+        }
 
-            if (
-                selectedCategory ===
-                "all"
-            ) {
-                return featuredArticle;
-            }
+        if (selectedCategory === "all") {
+            return featuredArticle;
+        }
 
-            return featuredArticle.category.includes(
-                selectedCategory
-            )
-                ? featuredArticle
-                : null;
-        }, [
-            featuredArticle,
-            selectedCategory,
-        ]);
+        return featuredArticle.category.includes(selectedCategory)
+            ? featuredArticle
+            : null;
+    }, [featuredArticle, selectedCategory]);
 
     /* ========================================================
        Latest
     ======================================================== */
 
-    const latestArticles =
-        useMemo(() => {
-            if (!filteredFeatured) {
-                return filteredArticles;
-            }
+    const latestArticles = useMemo(() => {
+        if (!filteredFeatured) {
+            return filteredArticles;
+        }
 
-            return filteredArticles.filter(
-                (article) =>
-                    article.id !==
-                    filteredFeatured.id
-            );
-        }, [
-            filteredArticles,
-            filteredFeatured,
-        ]);
+        return filteredArticles.filter(
+            (article) => article.id !== filteredFeatured.id
+        );
+    }, [filteredArticles, filteredFeatured]);
 
     /* ========================================================
        Pagination
@@ -181,44 +152,32 @@ export default function ArticlesClient({
     const totalPages = Math.max(
         1,
         Math.ceil(
-            latestArticles.length /
-            ARTICLES_PER_PAGE
+            latestArticles.length / ARTICLES_PER_PAGE
         )
     );
 
-    const safeCurrentPage =
-        Math.min(
-            currentPage,
-            totalPages
+    const safeCurrentPage = Math.min(
+        currentPage,
+        totalPages
+    );
+
+    const paginatedArticles = useMemo(() => {
+        const start =
+            (safeCurrentPage - 1) * ARTICLES_PER_PAGE;
+
+        return latestArticles.slice(
+            start,
+            start + ARTICLES_PER_PAGE
         );
-
-    const paginatedArticles =
-        useMemo(() => {
-            const start =
-                (safeCurrentPage - 1) *
-                ARTICLES_PER_PAGE;
-
-            return latestArticles.slice(
-                start,
-                start +
-                ARTICLES_PER_PAGE
-            );
-        }, [
-            latestArticles,
-            safeCurrentPage,
-        ]);
+    }, [latestArticles, safeCurrentPage]);
 
     /* ========================================================
        Category Change
     ======================================================== */
 
-    function handleCategoryChange(
-        value: string
-    ) {
+    function handleCategoryChange(value: string) {
         setSelectedCategory(
-            value as
-            | "all"
-            | ArticleCategory
+            value as "all" | ArticleCategory
         );
 
         setCurrentPage(1);
@@ -228,9 +187,7 @@ export default function ArticlesClient({
        Page Change
     ======================================================== */
 
-    function handlePageChange(
-        page: number
-    ) {
+    function handlePageChange(page: number) {
         setCurrentPage(page);
 
         window.scrollTo({
@@ -240,25 +197,15 @@ export default function ArticlesClient({
     }
 
     return (
-        <div
-            className="
-                mt-8
-                space-y-8
-                sm:mt-10
-            "
-        >
+        <div className="mt-8 space-y-8 sm:mt-10">
             {/* ==================================================
                 Explore Topics
             ================================================== */}
 
             <ContentTopics
                 topics={TOPICS}
-                activeTopic={
-                    selectedCategory
-                }
-                onTopicChange={
-                    handleCategoryChange
-                }
+                activeTopic={selectedCategory}
+                onTopicChange={handleCategoryChange}
             />
 
             {/* ==================================================
@@ -267,31 +214,17 @@ export default function ArticlesClient({
 
             {filteredFeatured && (
                 <FeaturedContent
-                    href={`/articles/${filteredFeatured.id}`}
-                    image={
-                        filteredFeatured.image
-                    }
-                    imageAlt={
-                        filteredFeatured.imageAlt
-                    }
-                    category={
-                        filteredFeatured.category[0]
-                    }
+                    href={`/articles/${filteredFeatured.slug}`}
+                    image={filteredFeatured.image}
+                    imageAlt={filteredFeatured.title}
+                    category={filteredFeatured.category[0]}
                     articleType={
-                        filteredFeatured.articleType
+                        filteredFeatured.articleType ?? undefined
                     }
-                    title={
-                        filteredFeatured.title
-                    }
-                    description={
-                        filteredFeatured.excerpt
-                    }
-                    publishedAt={
-                        filteredFeatured.publishedAt
-                    }
-                    author={
-                        filteredFeatured.authorBy
-                    }
+                    title={filteredFeatured.title}
+                    description={filteredFeatured.excerpt ?? undefined}
+                    publishedAt={filteredFeatured.publishedAt ?? undefined}
+                    author={filteredFeatured.authorBy ?? undefined}
                 />
             )}
 
@@ -304,7 +237,7 @@ export default function ArticlesClient({
                     grid
                     items-start
                     gap-8
-                    lg:grid-cols-[minmax(0,1fr)_280px]
+                    lg:grid-cols-[minmax(0,1fr)_17.5rem]
                 "
             >
                 {/* ==================================================
@@ -315,11 +248,11 @@ export default function ArticlesClient({
                     <div className="mb-5">
                         <p
                             className="
-                                text-[9px]
+                                text-[0.5625rem]
                                 font-black
                                 uppercase
                                 tracking-[0.2em]
-                                text-amber-600
+                                text-accent
                             "
                         >
                             Fresh Perspectives
@@ -331,7 +264,7 @@ export default function ArticlesClient({
                                 text-2xl
                                 font-black
                                 tracking-tight
-                                text-slate-950
+                                text-heading
                             "
                         >
                             Latest Articles
@@ -341,40 +274,29 @@ export default function ArticlesClient({
                     <ContentTimeline
                         items={paginatedArticles.map(
                             (article) => ({
-                                id:
-                                    article.id,
-
-                                href:
-                                    `/articles/${article.id}`,
-
-                                image:
-                                    article.image,
-
-                                imageAlt:
-                                    article.imageAlt,
-
-                                title:
-                                    article.title,
-
+                                id: article.id,
+                                href: `/articles/${article.slug}`,
+                                image: article.image,
+                                imageAlt: article.title,
+                                title: article.title,
                                 category:
                                     article.category[0],
-
                                 articleType:
-                                    article.articleType,
-
+                                    article.articleType ??
+                                    undefined,
                                 excerpt:
-                                    article.excerpt,
-
+                                    article.excerpt ??
+                                    undefined,
                                 publishedAt:
-                                    article.publishedAt,
-
+                                    article.publishedAt ??
+                                    undefined,
                                 author:
-                                    article.authorBy,
+                                    article.authorBy ??
+                                    undefined,
                             })
                         )}
                         emptyMessage={
-                            selectedCategory ===
-                                "all"
+                            selectedCategory === "all"
                                 ? "No articles have been published yet."
                                 : "No articles found for this topic."
                         }
@@ -382,15 +304,9 @@ export default function ArticlesClient({
 
                     {totalPages > 1 && (
                         <Pagination
-                            currentPage={
-                                safeCurrentPage
-                            }
-                            totalPages={
-                                totalPages
-                            }
-                            onPageChange={
-                                handlePageChange
-                            }
+                            currentPage={safeCurrentPage}
+                            totalPages={totalPages}
+                            onPageChange={handlePageChange}
                         />
                     )}
                 </section>
@@ -399,11 +315,7 @@ export default function ArticlesClient({
                     Sidebar
                 ================================================== */}
 
-                <aside
-                    className="
-                        space-y-6
-                    "
-                >
+                <aside className="space-y-6">
                     <ContentQuoteCard
                         quote="Good articles don't just inform, they inspire."
                         author="School Principal"

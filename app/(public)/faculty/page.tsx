@@ -1,15 +1,8 @@
 import {
-    BookOpen,
-    BriefcaseBusiness,
     GraduationCap,
-    Laptop,
-    Mail,
     Medal,
-    School,
     Users,
-    UserRound,
 } from "lucide-react";
-import Image from "next/image";
 
 import { PageLayout } from "@/components/layout/PageLayout";
 import PageHero from "@/components/common/PageHero";
@@ -17,25 +10,22 @@ import PageHero from "@/components/common/PageHero";
 import { FacultyStats } from "@/components/faculty/FacultyStats";
 import { FacultyPrincipal } from "@/components/faculty/FacultyPrincipal";
 import { FacultyDirectory } from "@/components/faculty/FacultyDirectory";
-import { getFaculty } from "@/lib/data/faculty";
+
+import {
+    getPublishedFaculties,
+    getPrincipal,
+} from "@/lib/data/faculty/get";
 
 export const metadata = {
     title: "Faculty",
 };
 
-
-
-
-
-
-
 export default async function FacultyPage() {
+    const [faculty, principal] = await Promise.all([
+        getPublishedFaculties(),
+        getPrincipal(),
+    ]);
 
-    const faculty = await getFaculty();
-
-    const principal = faculty.find(
-        (member) => member.category === "principal"
-    );
     return (
         <PageLayout
             hero={
@@ -53,36 +43,43 @@ export default async function FacultyPage() {
                         {
                             value: "35+",
                             label: "Teaching Staff",
-                            icon: <Users className="size-5" />,
+                            icon: (
+                                <Users className="size-5" />
+                            ),
                         },
                         {
                             value: "10+",
                             label: "Subjects",
-                            icon: <GraduationCap className="size-5" />,
+                            icon: (
+                                <GraduationCap className="size-5" />
+                            ),
                         },
                         {
                             value: "Years",
                             label: "Years of Excellence",
-                            icon: <Medal className="size-5" />,
+                            icon: (
+                                <Medal className="size-5" />
+                            ),
                         },
                     ]}
                 />
             }
         >
             {/* Faculty Stats */}
+
             <FacultyStats />
 
             {/* Principal Message */}
-            <FacultyPrincipal principal={principal} />
 
-            <FacultyDirectory faculty={faculty} />
+            <FacultyPrincipal
+                principal={principal}
+            />
 
+            {/* Faculty Directory */}
 
-
-
-
-
-
+            <FacultyDirectory
+                faculty={faculty}
+            />
         </PageLayout>
     );
 }
