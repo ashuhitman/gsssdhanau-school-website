@@ -1,19 +1,15 @@
 import { redirect } from "next/navigation";
 
-import { getCurrentUser } from "@/lib/data/auth/session";
+import { getCurrentUser } from "@/lib/data/auth/authorization";
+
 import LoginForm from "./LoginForm";
 
-
-export default async function AdminLoginPage() {
+export default async function LoginPage() {
     const user = await getCurrentUser();
 
     if (user) {
-        redirect("/admin");
+        redirect("/dashboard");
     }
 
-    return (
-        <main className="min-h-screen bg-surface">
-            <LoginForm />
-        </main>
-    );
+    return <LoginForm />;
 }

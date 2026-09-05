@@ -43,6 +43,9 @@
   --color-accent-900: #1e3a8a;
   --color-accent-950: #172554;
 
+  --school-error: #dc2626;
+  --school-error-soft: #fef2f2;
+
 
   /* ==========================================================
      SEMANTIC COLORS
@@ -122,6 +125,9 @@
   --shadow-card: var(--school-shadow-card);
   --shadow-card-hover: var(--school-shadow-card-hover);
   --shadow-button: var(--school-shadow-button);
+
+  --color-error: var(--school-error);
+  --color-error-soft: var(--school-error-soft);
 }
 
 

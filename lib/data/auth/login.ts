@@ -1,11 +1,16 @@
 "use server";
 
 import { cookies } from "next/headers";
-import { createAdminAccountClient, SESSION_COOKIE } from "@/lib/appwrite/server";
+
+import {
+    account,
+    SESSION_COOKIE,
+} from "@/lib/appwrite/server";
 
 export interface LoginResult {
     success: boolean;
     error?: string;
+    message?: string;
 }
 
 export async function login(
@@ -13,8 +18,6 @@ export async function login(
     password: string
 ): Promise<LoginResult> {
     try {
-        const account = createAdminAccountClient();
-
         const session = await account.createEmailPasswordSession({
             email,
             password,
@@ -32,9 +35,10 @@ export async function login(
 
         return {
             success: true,
+            message: "Login successful.",
         };
     } catch (error) {
-        console.error("Admin login failed:", error);
+        console.error("Login failed:", error);
 
         return {
             success: false,

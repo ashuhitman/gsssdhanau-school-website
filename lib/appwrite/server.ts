@@ -30,6 +30,8 @@ const client = new Client()
     .setProject(APPWRITE_PROJECT_ID)
     .setKey(APPWRITE_API_KEY);
 
+export const account = new Account(client);
+
 export const tablesDB = new TablesDB(client);
 
 export const storage = new Storage(client);
@@ -58,7 +60,7 @@ export const NEWSLETTERS_TABLE_ID =
 export const NEWSLETTER_MEMBERS_TABLE_ID =
     process.env.APPWRITE_NEWSLETTER_MEMBERS_TABLE_ID!;
 
-export const SESSION_COOKIE = "school-admin-session";
+export const SESSION_COOKIE = "school-session";
 
 if (!DATABASE_ID) {
     throw new Error("Missing APPWRITE_DATABASE_ID");

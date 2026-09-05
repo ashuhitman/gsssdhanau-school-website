@@ -5,9 +5,14 @@ import {
     SESSION_COOKIE,
 } from "@/lib/appwrite/server";
 
-export async function getCurrentUser() {
+export async function getSession(): Promise<string | null> {
     const cookieStore = await cookies();
-    const session = cookieStore.get(SESSION_COOKIE)?.value;
+
+    return cookieStore.get(SESSION_COOKIE)?.value ?? null;
+}
+
+export async function getCurrentAccount() {
+    const session = await getSession();
 
     if (!session) {
         return null;
