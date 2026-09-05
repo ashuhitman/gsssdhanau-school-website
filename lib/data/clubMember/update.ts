@@ -1,32 +1,49 @@
 import {
-    tablesDB,
     DATABASE_ID,
     NEWSLETTER_MEMBERS_TABLE_ID,
+    tablesDB,
 } from "@/lib/appwrite/server";
 
-import type { NewsletterMemberType } from "./constants";
+import type { UpdateNewsletterMemberData } from "./types";
 
-export interface UpdateClubMemberData {
-    name?: string | null;
-    role?: string | null;
-    memberType?: NewsletterMemberType;
-    image?: string | null;
-    sortOrder?: number;
-
-    facultyId?: string | null;
-
-    class?: number | null;
-    section?: string | null;
-}
-
-export async function updateClubMember(
+export async function updateNewsletterMember(
     id: string,
-    data: UpdateClubMemberData,
+    data: UpdateNewsletterMemberData
 ) {
+    const updateData: Record<string, unknown> = {};
+
+    if (data.name !== undefined) {
+        updateData.name = data.name;
+    }
+
+    if (data.role !== undefined) {
+        updateData.role = data.role;
+    }
+
+    if (data.image !== undefined) {
+        updateData.image = data.image;
+    }
+
+    if (data.sortOrder !== undefined) {
+        updateData.sortOrder = data.sortOrder;
+    }
+
+    if (data.class !== undefined) {
+        updateData.class = data.class;
+    }
+
+    if (data.section !== undefined) {
+        updateData.section = data.section;
+    }
+
+    if (data.newsletters !== undefined) {
+        updateData.newsletters = data.newsletters;
+    }
+
     return tablesDB.updateRow({
         databaseId: DATABASE_ID,
         tableId: NEWSLETTER_MEMBERS_TABLE_ID,
         rowId: id,
-        data,
+        data: updateData,
     });
 }

@@ -1,7 +1,7 @@
-export const NEWSLETTER_MEMBER_TYPE = {
-    TEACHER: "teacher",
-    STUDENT: "student",
+export const NEWSLETTER_STATUS = {
+    DRAFT: "draft",
+    PUBLISHED: "published",
 } as const;
 
-export type NewsletterMemberType =
-    (typeof NEWSLETTER_MEMBER_TYPE)[keyof typeof NEWSLETTER_MEMBER_TYPE];
+export type NewsletterStatus =
+    (typeof NEWSLETTER_STATUS)[keyof typeof NEWSLETTER_STATUS];

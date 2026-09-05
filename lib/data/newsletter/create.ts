@@ -1,57 +1,13 @@
 import {
+    tablesDB,
     DATABASE_ID,
     NEWSLETTERS_TABLE_ID,
-    tablesDB,
 } from "@/lib/appwrite/server";
 
 import type {
-    Newsletter,
     CreateNewsletterData,
+    Newsletter,
 } from "./types";
-
-function mapNewsletter(
-    row: Record<string, unknown>
-): Newsletter {
-    return {
-        id: String(row.$id),
-        createdAt: String(row.$createdAt),
-        updatedAt: String(row.$updatedAt),
-
-        title: String(row.title ?? ""),
-        month: Number(row.month ?? 0),
-        year: Number(row.year ?? 0),
-        issue: Number(row.issue ?? 0),
-
-        description:
-            row.description != null
-                ? String(row.description)
-                : null,
-
-        coverImage:
-            row.coverImage != null
-                ? String(row.coverImage)
-                : null,
-
-        pdfUrl:
-            row.pdfUrl != null
-                ? String(row.pdfUrl)
-                : null,
-
-        status: row.status as Newsletter["status"],
-
-        volume:
-            row.volume != null
-                ? String(row.volume)
-                : null,
-
-        publishedAt:
-            row.publishedAt != null
-                ? String(row.publishedAt)
-                : null,
-
-        slug: String(row.slug ?? ""),
-    };
-}
 
 export async function createNewsletter(
     data: CreateNewsletterData
@@ -73,12 +29,54 @@ export async function createNewsletter(
             status: data.status,
             volume: data.volume ?? null,
             publishedAt: data.publishedAt ?? null,
-
             slug: data.slug,
+
+            incharge: data.incharge ?? null,
+            digitalCoordinator: data.digitalCoordinator ?? null,
+
+            newsletterMembers: data.newsletterMembers ?? [],
+            articles: data.articles ?? [],
+            activities: data.activities ?? [],
         },
     });
 
-    return mapNewsletter(
-        row as Record<string, unknown>
-    );
+    return {
+        id: row.$id,
+        createdAt: row.$createdAt,
+        updatedAt: row.$updatedAt,
+
+        title: String(row.title),
+        month: Number(row.month),
+        year: Number(row.year),
+        issue: Number(row.issue),
+
+        description:
+            typeof row.description === "string"
+                ? row.description
+                : null,
+
+        coverImage:
+            typeof row.coverImage === "string"
+                ? row.coverImage
+                : null,
+
+        pdfUrl:
+            typeof row.pdfUrl === "string"
+                ? row.pdfUrl
+                : null,
+
+        status: row.status as Newsletter["status"],
+
+        volume:
+            typeof row.volume === "string"
+                ? row.volume
+                : null,
+
+        publishedAt:
+            typeof row.publishedAt === "string"
+                ? row.publishedAt
+                : null,
+
+        slug: String(row.slug),
+    };
 }

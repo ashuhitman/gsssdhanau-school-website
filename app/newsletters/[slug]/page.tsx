@@ -7,7 +7,7 @@ import {
 } from "lucide-react";
 
 import {
-    getAllNewsletters,
+    getNewsletters,
     getNewsletterBySlug,
 } from "@/lib/data/newsletter/get";
 
@@ -32,7 +32,7 @@ interface NewsletterPageProps {
 ============================================================ */
 
 export async function generateStaticParams() {
-    const newsletters = await getAllNewsletters();
+    const newsletters = await getNewsletters();
 
     return newsletters.map((newsletter) => ({
         slug: newsletter.slug,
@@ -78,17 +78,18 @@ export default async function NewsletterPage({
     /* ========================================================
        NEWSLETTER
 
-       includeItems = true loads:
-       - newsletter.articles
-       - newsletter.activities
+       Includes:
+       - incharge
+       - digitalCoordinator
+       - newsletterMembers
+       - articles
+       - activities
     ======================================================== */
 
     const newsletter = await getNewsletterBySlug(
-        decodedSlug,
-        true
+        decodedSlug
     );
 
-    console.log("NewsletterPage: newsletter", newsletter, slug);
     if (!newsletter) {
         notFound();
     }

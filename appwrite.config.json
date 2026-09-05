@@ -203,7 +203,7 @@
                     "relatedTable": "newsletters",
                     "relationType": "oneToMany",
                     "twoWay": true,
-                    "twoWayKey": "activity",
+                    "twoWayKey": "activities",
                     "onDelete": "setNull",
                     "side": "child"
                 }
@@ -751,18 +751,6 @@
                     "encrypt": false
                 },
                 {
-                    "key": "memberType",
-                    "type": "string",
-                    "required": true,
-                    "array": false,
-                    "default": null,
-                    "format": "enum",
-                    "elements": [
-                        "teacher",
-                        "student"
-                    ]
-                },
-                {
                     "key": "image",
                     "type": "varchar",
                     "required": false,
@@ -781,18 +769,6 @@
                     "max": 20
                 },
                 {
-                    "key": "facultyId",
-                    "type": "relationship",
-                    "required": false,
-                    "array": false,
-                    "relatedTable": "faculties",
-                    "relationType": "oneToOne",
-                    "twoWay": false,
-                    "twoWayKey": "newslettermembers",
-                    "onDelete": "setNull",
-                    "side": "parent"
-                },
-                {
                     "key": "class",
                     "type": "integer",
                     "required": false,
@@ -809,6 +785,18 @@
                     "size": 1,
                     "default": null,
                     "encrypt": false
+                },
+                {
+                    "key": "newsletter",
+                    "type": "relationship",
+                    "required": false,
+                    "array": false,
+                    "relatedTable": "newsletters",
+                    "relationType": "manyToMany",
+                    "twoWay": true,
+                    "twoWayKey": "newsletterMembers",
+                    "onDelete": "setNull",
+                    "side": "child"
                 }
             ],
             "indexes": []
@@ -935,7 +923,7 @@
                     "side": "parent"
                 },
                 {
-                    "key": "activity",
+                    "key": "activities",
                     "type": "relationship",
                     "required": false,
                     "array": false,
@@ -945,58 +933,40 @@
                     "twoWayKey": "newsletter",
                     "onDelete": "setNull",
                     "side": "parent"
-                }
-            ],
-            "indexes": []
-        },
-        {
-            "$id": "newsletteritems",
-            "$permissions": [],
-            "databaseId": "6a820e93003b776355b7",
-            "name": "newsletterItems",
-            "enabled": true,
-            "rowSecurity": false,
-            "columns": [
-                {
-                    "key": "type",
-                    "type": "string",
-                    "required": true,
-                    "array": false,
-                    "default": null,
-                    "format": "enum",
-                    "elements": [
-                        "activity",
-                        "article"
-                    ]
                 },
                 {
-                    "key": "isFeatured",
-                    "type": "boolean",
-                    "required": false,
-                    "array": false,
-                    "default": true
-                },
-                {
-                    "key": "article",
+                    "key": "newsletterMembers",
                     "type": "relationship",
                     "required": false,
                     "array": false,
-                    "relatedTable": "articles",
-                    "relationType": "oneToOne",
-                    "twoWay": false,
-                    "twoWayKey": "newsletteritems",
+                    "relatedTable": "newslettermembers",
+                    "relationType": "manyToMany",
+                    "twoWay": true,
+                    "twoWayKey": "newsletter",
                     "onDelete": "setNull",
                     "side": "parent"
                 },
                 {
-                    "key": "activity",
+                    "key": "digitalCoordinator",
                     "type": "relationship",
                     "required": false,
                     "array": false,
-                    "relatedTable": "newsactivity",
-                    "relationType": "oneToOne",
+                    "relatedTable": "faculties",
+                    "relationType": "manyToOne",
                     "twoWay": false,
-                    "twoWayKey": "newsletteritems",
+                    "twoWayKey": "newsletters",
+                    "onDelete": "setNull",
+                    "side": "parent"
+                },
+                {
+                    "key": "incharge",
+                    "type": "relationship",
+                    "required": false,
+                    "array": false,
+                    "relatedTable": "faculties",
+                    "relationType": "manyToOne",
+                    "twoWay": false,
+                    "twoWayKey": "newsletterofIncharge",
                     "onDelete": "setNull",
                     "side": "parent"
                 }

@@ -1,4 +1,9 @@
-import { Client, Storage, TablesDB } from "node-appwrite";
+import {
+    Account,
+    Client,
+    Storage,
+    TablesDB,
+} from "node-appwrite";
 
 const endpoint = process.env.APPWRITE_ENDPOINT;
 const projectId = process.env.APPWRITE_PROJECT_ID;
@@ -16,10 +21,14 @@ if (!apiKey) {
     throw new Error("Missing APPWRITE_API_KEY");
 }
 
+const APPWRITE_ENDPOINT: string = endpoint;
+const APPWRITE_PROJECT_ID: string = projectId;
+const APPWRITE_API_KEY: string = apiKey;
+
 const client = new Client()
-    .setEndpoint(endpoint)
-    .setProject(projectId)
-    .setKey(apiKey);
+    .setEndpoint(APPWRITE_ENDPOINT)
+    .setProject(APPWRITE_PROJECT_ID)
+    .setKey(APPWRITE_API_KEY);
 
 export const tablesDB = new TablesDB(client);
 
@@ -49,18 +58,19 @@ export const NEWSLETTERS_TABLE_ID =
 export const NEWSLETTER_MEMBERS_TABLE_ID =
     process.env.APPWRITE_NEWSLETTER_MEMBERS_TABLE_ID!;
 
-export const NEWSLETTER_ITEM_TABLE_ID =
-    process.env.APPWRITE_NEWSLETTER_ITEMS_TABLE_ID!;
+export const SESSION_COOKIE = "school-admin-session";
 
 if (!DATABASE_ID) {
-    throw new Error(
-        "Missing APPWRITE_DATABASE_ID"
-    );
+    throw new Error("Missing APPWRITE_DATABASE_ID");
 }
 
 if (!FACULTIES_TABLE_ID) {
+    throw new Error("Missing APPWRITE_FACULTIES_TABLE_ID");
+}
+
+if (!APPWRITE_BUCKET_ID) {
     throw new Error(
-        "Missing APPWRITE_FACULTIES_TABLE_ID"
+        "Missing APPWRITE_FACULTY_IMAGES_BUCKET_ID"
     );
 }
 
@@ -70,9 +80,15 @@ if (!ACTIVITIES_TABLE_ID) {
     );
 }
 
-if (!APPWRITE_BUCKET_ID) {
+if (!ARTICLES_TABLE_ID) {
     throw new Error(
-        "Missing APPWRITE_FACULTY_IMAGES_BUCKET_ID"
+        "Missing APPWRITE_ARTICLES_TABLE_ID"
+    );
+}
+
+if (!NOTICES_TABLE_ID) {
+    throw new Error(
+        "Missing APPWRITE_NOTICES_TABLE_ID"
     );
 }
 
@@ -84,12 +100,19 @@ if (!NEWSLETTERS_TABLE_ID) {
 
 if (!NEWSLETTER_MEMBERS_TABLE_ID) {
     throw new Error(
-        "Missing APPWRITE_NEWSLETTER_MEMBERS_TABLE_ID "
+        "Missing APPWRITE_NEWSLETTER_MEMBERS_TABLE_ID"
     );
 }
 
-if (!NEWSLETTER_ITEM_TABLE_ID) {
-    throw new Error(
-        "Missing APPWRITE_NEWSLETTER_ITEMS_TABLE_ID "
-    );
+export function createAccountClient(session: string) {
+    const sessionClient = new Client()
+        .setEndpoint(APPWRITE_ENDPOINT)
+        .setProject(APPWRITE_PROJECT_ID)
+        .setSession(session);
+
+    return new Account(sessionClient);
+}
+
+export function createAdminAccountClient() {
+    return new Account(client);
 }

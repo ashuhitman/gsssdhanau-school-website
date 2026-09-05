@@ -1,67 +1,41 @@
 import PageHero from "@/components/common/PageHero";
 import { PageLayout } from "@/components/layout/PageLayout";
 import NewsletterLatestIssue from "@/components/newsletters/NewsletterLatestIssue";
-import ClubMembers from "@/components/newsletters/ClubMembers";
+import NewsletterTeam from "@/components/newsletters/NewsletterTeam";
 import PreviousIssues from "@/components/newsletters/PreviousIssues";
 
 import {
     getPublishedNewsletters,
-    getNewsletterById,
+    getLatestPublishedNewsletter,
 } from "@/lib/data/newsletter/get";
-
-import { getAllClubMembers } from "@/lib/data/clubMember/get";
 
 /* ============================================================
    Newsletters Page
 ============================================================ */
 
 export default async function NewslettersPage() {
-    /* ========================================================
-       Newsletters + Club Members
-    ======================================================== */
-
-    const [newsletters, clubMembers] = await Promise.all([
+    const [latestNewsletter, newsletters] = await Promise.all([
+        getLatestPublishedNewsletter(true),
         getPublishedNewsletters(),
-        getAllClubMembers(),
     ]);
 
+    const articleCount = latestNewsletter?.articles.length ?? 0;
+    const activityCount = latestNewsletter?.activities.length ?? 0;
 
-    const currentNewsletter = newsletters[0];
-
-    /* ========================================================
-       Latest Newsletter Content
-    ======================================================== */
-
-    const latestNewsletter = currentNewsletter
-        ? await getNewsletterById(currentNewsletter.id, true)
-        : null;
-
-    const articleCount =
-        latestNewsletter &&
-            "articles" in latestNewsletter
-            ? latestNewsletter.articles.length
-            : 0;
-
-    const activityCount =
-        latestNewsletter &&
-            "activities" in latestNewsletter
-            ? latestNewsletter.activities.length
-            : 0;
-
-    /* ========================================================
-       Previous Issues
-    ======================================================== */
-
-    const previousIssues = newsletters.slice(1).map((newsletter) => ({
-        id: newsletter.id,
-        month: newsletter.month,
-        year: newsletter.year,
-        volume: newsletter.volume ?? "1",
-        issue: newsletter.issue,
-        coverImage: newsletter.coverImage,
-        href: `/newsletters/${newsletter.slug}`,
-        downloadHref: newsletter.pdfUrl,
-    }));
+    const previousIssues = newsletters
+        .filter(
+            (newsletter) => newsletter.id !== latestNewsletter?.id
+        )
+        .map((newsletter) => ({
+            id: newsletter.id,
+            month: newsletter.month,
+            year: newsletter.year,
+            volume: newsletter.volume ?? "1",
+            issue: newsletter.issue,
+            coverImage: newsletter.coverImage,
+            href: `/newsletters/${newsletter.slug}`,
+            downloadHref: newsletter.pdfUrl,
+        }));
 
     return (
         <main>
@@ -77,8 +51,8 @@ export default async function NewslettersPage() {
                         actions={[
                             {
                                 label: "Read Latest Issue",
-                                href: currentNewsletter
-                                    ? `/newsletters/${currentNewsletter.slug}`
+                                href: latestNewsletter
+                                    ? `/newsletters/${latestNewsletter.slug}`
                                     : "/newsletters",
                                 variant: "primary",
                             },
@@ -91,34 +65,32 @@ export default async function NewslettersPage() {
                     />
                 }
             >
-                {/* ==================================================
-                    NEWSLETTER CONTENT
-                ================================================== */}
-
                 <section className="py-10 lg:py-14">
                     <div className="mx-auto w-full space-y-12">
                         {/* ==================================================
                             LATEST NEWSLETTER
                         ================================================== */}
 
-                        {currentNewsletter && (
+                        {latestNewsletter && (
                             <NewsletterLatestIssue
-                                newsletter={currentNewsletter}
+                                newsletter={latestNewsletter}
                                 articleCount={articleCount}
                                 activityCount={activityCount}
                             />
                         )}
 
                         {/* ==================================================
-                            NEWSLETTER CLUB MEMBERS
+                            NEWSLETTER TEAM
                         ================================================== */}
 
-                        {clubMembers.length > 0 && (
-                            <ClubMembers members={clubMembers} />
+                        {latestNewsletter && (
+                            <NewsletterTeam
+                                newsletter={latestNewsletter}
+                            />
                         )}
 
                         {/* ==================================================
-                            NEWSLETTER ARCHIVE / PREVIOUS ISSUES
+                            PREVIOUS ISSUES
                         ================================================== */}
 
                         {previousIssues.length > 0 && (
@@ -128,14 +100,6 @@ export default async function NewslettersPage() {
                                 />
                             </div>
                         )}
-
-                        {/* ==================================================
-                            NEWSLETTER CONTRIBUTE
-                        ================================================== */}
-
-                        {/*
-                        <NewsletterContribute />
-                        */}
                     </div>
                 </section>
             </PageLayout>
