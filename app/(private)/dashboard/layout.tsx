@@ -1,6 +1,7 @@
+import DashboardShell from "@/components/private/DashboardShell";
 import { requireUser } from "@/lib/data/auth/authorization";
 
-import DashboardShell from "./DashboardShell";
+
 
 export default async function DashboardLayout({
     children,

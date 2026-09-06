@@ -1,18 +1,13 @@
 @import "tailwindcss";
 
-@custom-variant dark (&:where(.dark, .dark *));
-
-/* ============================================================
-   PM SHRI GSSS DHANAU
-   GLOBAL DESIGN SYSTEM
-   INDIGO + BLUE + SOFT SLATE
-   ============================================================ */
+/* =========================================================
+   THEME
+   ========================================================= */
 
 @theme {
-
-  /* ==========================================================
-     PRIMARY — EDITORIAL INDIGO
-     ========================================================== */
+  /* -----------------------------------------------------
+       Global Colors
+       ----------------------------------------------------- */
 
   --color-primary-50: #eef2ff;
   --color-primary-100: #e0e7ff;
@@ -26,11 +21,6 @@
   --color-primary-900: #312e81;
   --color-primary-950: #1e1b4b;
 
-
-  /* ==========================================================
-     ACCENT — SOFT BLUE
-     ========================================================== */
-
   --color-accent-50: #eff6ff;
   --color-accent-100: #dbeafe;
   --color-accent-200: #bfdbfe;
@@ -43,33 +33,23 @@
   --color-accent-900: #1e3a8a;
   --color-accent-950: #172554;
 
-  --school-error: #dc2626;
-  --school-error-soft: #fef2f2;
-
-
-  /* ==========================================================
-     SEMANTIC COLORS
-     ========================================================== */
+  /* -----------------------------------------------------
+       Global Semantic Colors
+       ----------------------------------------------------- */
 
   --color-background: var(--school-background);
-  --color-foreground: var(--school-foreground);
-
-  --color-heading: var(--school-heading);
-  --color-body: var(--school-text);
-  --color-muted: var(--school-muted);
-
   --color-surface: var(--school-surface);
   --color-surface-hover: var(--school-surface-hover);
 
   --color-card: var(--school-card);
   --color-card-foreground: var(--school-card-foreground);
 
+  --color-foreground: var(--school-foreground);
+  --color-text: var(--school-text);
+  --color-heading: var(--school-heading);
+  --color-muted: var(--school-muted);
+
   --color-border: var(--school-border);
-
-
-  /* ==========================================================
-     BRAND
-     ========================================================== */
 
   --color-primary: var(--school-primary);
   --color-primary-hover: var(--school-primary-hover);
@@ -79,599 +59,752 @@
   --color-accent-hover: var(--school-accent-hover);
   --color-accent-soft: var(--school-accent-soft);
 
-
-  /* ==========================================================
-     STATUS
-     ========================================================== */
-
-  --color-success: var(--school-success);
-  --color-warning: var(--school-warning);
-  --color-danger: var(--school-danger);
-  --color-info: var(--school-info);
-
-
-  /* ==========================================================
-     ICON COLORS
-     ========================================================== */
-
-  --color-icon-primary: var(--school-icon-primary);
-  --color-icon-accent: var(--school-icon-accent);
-  --color-icon-success: var(--school-icon-success);
-  --color-icon-warning: var(--school-icon-warning);
-  --color-icon-danger: var(--school-icon-danger);
-  --color-icon-info: var(--school-icon-info);
-  --color-icon-teal: var(--school-icon-teal);
-  --color-icon-rose: var(--school-icon-rose);
-
-
-  /* ==========================================================
-     ICON BACKGROUNDS
-     ========================================================== */
-
-  --color-icon-bg-primary: var(--school-icon-bg-primary);
-  --color-icon-bg-accent: var(--school-icon-bg-accent);
-  --color-icon-bg-success: var(--school-icon-bg-success);
-  --color-icon-bg-warning: var(--school-icon-bg-warning);
-  --color-icon-bg-danger: var(--school-icon-bg-danger);
-  --color-icon-bg-info: var(--school-icon-bg-info);
-  --color-icon-bg-teal: var(--school-icon-bg-teal);
-  --color-icon-bg-rose: var(--school-icon-bg-rose);
-
-
-  /* ==========================================================
-     SHADOWS
-     ========================================================== */
-
-  --shadow-card: var(--school-shadow-card);
-  --shadow-card-hover: var(--school-shadow-card-hover);
-  --shadow-button: var(--school-shadow-button);
-
   --color-error: var(--school-error);
   --color-error-soft: var(--school-error-soft);
+
+  /* -----------------------------------------------------
+       Admin Semantic Colors
+       ----------------------------------------------------- */
+
+  --color-admin-page: var(--admin-page);
+  --color-admin-surface: var(--admin-surface);
+  --color-admin-surface-hover: var(--admin-surface-hover);
+
+  --color-admin-card: var(--admin-card);
+  --color-admin-card-hover: var(--admin-card-hover);
+
+  --color-admin-heading: var(--admin-heading);
+  --color-admin: var(--admin-text);
+  --color-admin-muted: var(--admin-muted);
+  --color-admin-subtle: var(--admin-subtle);
+
+  --color-admin-border: var(--admin-border);
+
+  --color-admin-primary: var(--admin-primary);
+  --color-admin-primary-hover: var(--admin-primary-hover);
+  --color-admin-primary-soft: var(--admin-primary-soft);
+
+
+
+  --color-admin-blue: var(--admin-blue);
+  --color-admin-blue-hover: var(--admin-blue-hover);
+  --color-admin-blue-soft: var(--admin-blue-soft);
+
+  /* -----------------------------------------------------
+       Admin Sidebar
+       ----------------------------------------------------- */
+
+  --color-admin-sidebar: var(--admin-sidebar);
+  --color-admin-sidebar-hover: var(--admin-sidebar-hover);
+  --color-admin-sidebar-active: var(--admin-sidebar-active);
+
+  --color-admin-sidebar-text: var(--admin-sidebar-text);
+  --color-admin-sidebar-muted: var(--admin-sidebar-muted);
+  --color-admin-sidebar-border: var(--admin-sidebar-border);
+
+  /* -----------------------------------------------------
+       Admin Stats
+       ----------------------------------------------------- */
+
+  --color-admin-stat-blue: var(--admin-stat-blue);
+  --color-admin-stat-blue-soft: var(--admin-stat-blue-soft);
+
+  --color-admin-stat-green: var(--admin-stat-green);
+  --color-admin-stat-green-soft: var(--admin-stat-green-soft);
+
+  --color-admin-stat-purple: var(--admin-stat-purple);
+  --color-admin-stat-purple-soft: var(--admin-stat-purple-soft);
+
+  --color-admin-stat-rose: var(--admin-stat-rose);
+  --color-admin-stat-rose-soft: var(--admin-stat-rose-soft);
+
+  --color-admin-stat-orange: var(--admin-stat-orange);
+  --color-admin-stat-orange-soft: var(--admin-stat-orange-soft);
+
+  /* -----------------------------------------------------
+       Admin Status
+       ----------------------------------------------------- */
+
+  --color-admin-success: var(--admin-success);
+  --color-admin-warning: var(--admin-warning);
+  --color-admin-danger: var(--admin-danger);
+  --color-admin-info: var(--admin-info);
+
+  /* -----------------------------------------------------
+       Admin Charts
+       ----------------------------------------------------- */
+
+  --color-admin-chart-blue: var(--admin-chart-blue);
+  --color-admin-chart-green: var(--admin-chart-green);
+  --color-admin-chart-purple: var(--admin-chart-purple);
+  --color-admin-chart-grid: var(--admin-chart-grid);
+
+  /* -----------------------------------------------------
+       Admin Tables
+       ----------------------------------------------------- */
+
+  --color-admin-table-header: var(--admin-table-header);
+  --color-admin-table-row-hover: var(--admin-table-row-hover);
+  --color-admin-table-border: var(--admin-table-border);
+
+  /* -----------------------------------------------------
+       Admin Icons
+       ----------------------------------------------------- */
+
+  --color-admin-icon: var(--admin-icon);
+  --color-admin-icon-muted: var(--admin-icon-muted);
+  --color-admin-icon-soft: var(--admin-icon-soft);
+
+  /* existing tokens... */
+
+  --color-admin-stat-blue-surface: var(--admin-stat-blue-surface);
+  --color-admin-stat-blue-soft: var(--admin-stat-blue-soft);
+  --color-admin-stat-blue: var(--admin-stat-blue);
+
+  --color-admin-stat-green-surface: var(--admin-stat-green-surface);
+  --color-admin-stat-green-soft: var(--admin-stat-green-soft);
+  --color-admin-stat-green: var(--admin-stat-green);
+
+  --color-admin-stat-purple-surface: var(--admin-stat-purple-surface);
+  --color-admin-stat-purple-soft: var(--admin-stat-purple-soft);
+  --color-admin-stat-purple: var(--admin-stat-purple);
+
+  --color-admin-stat-rose-surface: var(--admin-stat-rose-surface);
+  --color-admin-stat-rose-soft: var(--admin-stat-rose-soft);
+  --color-admin-stat-rose: var(--admin-stat-rose);
+
+  --color-admin-stat-orange-surface: var(--admin-stat-orange-surface);
+  --color-admin-stat-orange-soft: var(--admin-stat-orange-soft);
+  --color-admin-stat-orange: var(--admin-stat-orange);
+
+
 }
 
 
-/* ============================================================
+/* =========================================================
    LIGHT MODE
-   ============================================================ */
+   ========================================================= */
 
 :root {
-
-  color-scheme: light;
-
-
-  /* ==========================================================
-     BACKGROUND
-     ========================================================== */
+  /* -----------------------------------------------------
+       Global
+       ----------------------------------------------------- */
 
   --school-background: #f8f9ff;
   --school-surface: #f1f3fb;
   --school-surface-hover: #e8ebf8;
+
   --school-card: #ffffff;
+  --school-card-foreground: #2f3150;
 
-
-  /* ==========================================================
-     TEXT
-     ========================================================== */
-
-  --school-heading: #1e1b4b;
   --school-foreground: #2f3150;
   --school-text: #454966;
-  --school-card-foreground: #2f3150;
+  --school-heading: #1e1b4b;
   --school-muted: #737b98;
 
-
-  /* ==========================================================
-     BORDER
-     ========================================================== */
-
   --school-border: #dfe4f2;
-
-
-  /* ==========================================================
-     PRIMARY — EDITORIAL INDIGO
-     ========================================================== */
 
   --school-primary: #4338ca;
   --school-primary-hover: #3730a3;
   --school-primary-soft: #e0e7ff;
 
-
-  /* ==========================================================
-     ACCENT — SOFT BLUE
-     ========================================================== */
-
   --school-accent: #4f46e5;
   --school-accent-hover: #4338ca;
   --school-accent-soft: #eef2ff;
 
+  --school-error: #dc2626;
+  --school-error-soft: #fef2f2;
 
-  /* ==========================================================
-     STATUS
-     ========================================================== */
+  /* -----------------------------------------------------
+       Admin Page
+       ----------------------------------------------------- */
 
-  --school-success: #269b91;
-  --school-warning: #c69b20;
-  --school-danger: #c75b59;
-  --school-info: #3b82f6;
+  --admin-page: #F5F9FF;
+  --admin-surface: #f5f9ff;
+  --admin-surface-hover: #edf4ff;
 
+  --admin-card: #ffffff;
+  --admin-card-hover: #fbfdff;
 
-  /* ==========================================================
-     ICON COLORS
-     ========================================================== */
+  --admin-heading: #10245a;
+  --admin-text: #294474;
+  --admin-muted: #60769a;
+  --admin-subtle: #8a9bb5;
 
-  --school-icon-primary: #4f46e5;
-  --school-icon-accent: #3b82f6;
-  --school-icon-success: #269b91;
-  --school-icon-warning: #c69b20;
-  --school-icon-danger: #c75b59;
-  --school-icon-info: #3b82f6;
-  --school-icon-teal: #4f46e5;
-  --school-icon-rose: #c75b7a;
+  --admin-border: #dce8f7;
 
+  /* -----------------------------------------------------
+       Admin Primary
+       ----------------------------------------------------- */
 
-  /* ==========================================================
-     ICON SOFT BACKGROUNDS
-     ========================================================== */
+  --admin-primary: #1769e8;
+  --admin-primary-hover: #0f5dcc;
+  --admin-primary-soft: #e7f0ff;
 
-  --school-icon-bg-primary: #e0e7ff;
-  --school-icon-bg-accent: #dbeafe;
-  --school-icon-bg-success: #e2f5f2;
-  --school-icon-bg-warning: #faf2d8;
-  --school-icon-bg-danger: #fae9e9;
-  --school-icon-bg-info: #dbeafe;
-  --school-icon-bg-teal: #e0e7ff;
-  --school-icon-bg-rose: #fae8ef;
+  --admin-blue: #2878ea;
+  --admin-blue-hover: #1769e8;
+  --admin-blue-soft: #e8f2ff;
 
+  /* -----------------------------------------------------
+       Admin Sidebar
+       ----------------------------------------------------- */
 
-  /* ==========================================================
-     SHADOWS
-     ========================================================== */
+  --admin-sidebar: #102b50;
+  --admin-sidebar-hover: #183a66;
+  --admin-sidebar-active: #1769e8;
 
-  --school-shadow-card:
-    0 0.4rem 1.5rem rgba(30, 27, 75, 0.07);
+  --admin-sidebar-text: #ffffff;
+  --admin-sidebar-muted: #a9bbd3;
+  --admin-sidebar-border: rgba(255, 255, 255, 0.09);
 
-  --school-shadow-card-hover:
-    0 0.7rem 2rem rgba(30, 27, 75, 0.11);
+  /* -----------------------------------------------------
+       Admin Stats
+       ----------------------------------------------------- */
 
-  --school-shadow-button:
-    0 0.5rem 1.25rem rgba(30, 27, 75, 0.16);
+  --admin-stat-blue: #2878ea;
+  --admin-stat-blue-soft: #e8f2ff;
+
+  --admin-stat-green: #16b67a;
+  --admin-stat-green-soft: #e5f8f0;
+
+  --admin-stat-purple: #9b5de5;
+  --admin-stat-purple-soft: #f1e9ff;
+
+  --admin-stat-rose: #f04f78;
+  --admin-stat-rose-soft: #ffe9ef;
+
+  --admin-stat-orange: #f59e0b;
+  --admin-stat-orange-soft: #fff4dc;
+
+  /* -----------------------------------------------------
+       Admin Status
+       ----------------------------------------------------- */
+
+  --admin-success: #16b67a;
+  --admin-warning: #f59e0b;
+  --admin-danger: #ef476f;
+  --admin-info: #2878ea;
+
+  /* -----------------------------------------------------
+       Admin Charts
+       ----------------------------------------------------- */
+
+  --admin-chart-blue: #55aaf2;
+  --admin-chart-green: #42cfa1;
+  --admin-chart-purple: #9b5de5;
+  --admin-chart-grid: #dfeaf7;
+
+  /* -----------------------------------------------------
+       Admin Tables
+       ----------------------------------------------------- */
+
+  --admin-table-header: #edf4fc;
+  --admin-table-row-hover: #f5f9ff;
+  --admin-table-border: #dfe9f5;
+
+  /* -----------------------------------------------------
+       Admin Icons
+       ----------------------------------------------------- */
+
+  --admin-icon: #1769e8;
+  --admin-icon-muted: #60769a;
+  --admin-icon-soft: #e8f2ff;
+
+  --admin-stat-blue-surface: #eaf3ff;
+  --admin-stat-blue-soft: #d9eaff;
+  --admin-stat-blue: #2878ea;
+
+  --admin-stat-green-surface: #e7f7f0;
+  --admin-stat-green-soft: #d2f0e3;
+  --admin-stat-green: #16b67a;
+
+  --admin-stat-purple-surface: #f3eaff;
+  --admin-stat-purple-soft: #e8d8ff;
+  --admin-stat-purple: #9b5de5;
+
+  --admin-stat-rose-surface: #ffedf2;
+  --admin-stat-rose-soft: #ffdce6;
+  --admin-stat-rose: #f04f78;
+
+  --admin-stat-orange-surface: #fff5df;
+  --admin-stat-orange-soft: #ffe8b5;
+  --admin-stat-orange: #f59e0b;
 }
 
 
-/* ============================================================
+/* =========================================================
    DARK MODE
-   ============================================================ */
+   ========================================================= */
 
 .dark {
-
-  color-scheme: dark;
-
-
-  /* ==========================================================
-     BACKGROUND
-     ========================================================== */
+  /* -----------------------------------------------------
+       Global
+       ----------------------------------------------------- */
 
   --school-background: #111225;
   --school-surface: #181a32;
   --school-surface-hover: #222544;
+
   --school-card: #1d203c;
+  --school-card-foreground: #e0e4f5;
 
-
-  /* ==========================================================
-     TEXT
-     ========================================================== */
-
-  --school-heading: #eef2ff;
   --school-foreground: #e0e4f5;
   --school-text: #cdd2e7;
-  --school-card-foreground: #e0e4f5;
+  --school-heading: #eef2ff;
   --school-muted: #9da5c1;
 
-
-  /* ==========================================================
-     BORDER
-     ========================================================== */
-
   --school-border: #343752;
-
-
-  /* ==========================================================
-     PRIMARY — EDITORIAL INDIGO
-     ========================================================== */
 
   --school-primary: #a5b4fc;
   --school-primary-hover: #c7d2fe;
   --school-primary-soft: #2b2f5a;
 
-
-  /* ==========================================================
-     ACCENT — SOFT BLUE
-     ========================================================== */
-
   --school-accent: #93c5fd;
   --school-accent-hover: #bfdbfe;
   --school-accent-soft: #202f52;
 
+  --school-error: #f87171;
+  --school-error-soft: #451a1a;
 
-  /* ==========================================================
-     STATUS
-     ========================================================== */
+  /* -----------------------------------------------------
+       Admin Page
+       ----------------------------------------------------- */
 
-  --school-success: #5bc4ba;
-  --school-warning: #e0c15b;
-  --school-danger: #ef817f;
-  --school-info: #7db5ff;
+  --admin-page: #0d1728;
+  --admin-surface: #121f33;
+  --admin-surface-hover: #192943;
+
+  --admin-card: #17253a;
+  --admin-card-hover: #1c2c44;
+
+  --admin-heading: #f1f6ff;
+  --admin-text: #c7d4e6;
+  --admin-muted: #91a5c0;
+  --admin-subtle: #6f84a0;
+
+  --admin-border: #293a52;
+
+  /* -----------------------------------------------------
+       Admin Primary
+       ----------------------------------------------------- */
+
+  --admin-primary: #4d91f7;
+  --admin-primary-hover: #67a5ff;
+  --admin-primary-soft: #17375f;
+
+  --admin-blue: #5ba1ff;
+  --admin-blue-hover: #76b2ff;
+  --admin-blue-soft: #18385f;
+
+  /* -----------------------------------------------------
+       Admin Sidebar
+       ----------------------------------------------------- */
+
+  --admin-sidebar: #07182f;
+  --admin-sidebar-hover: #102b4d;
+  --admin-sidebar-active: #1769e8;
+
+  --admin-sidebar-text: #f7fbff;
+  --admin-sidebar-muted: #a9bbd3;
+  --admin-sidebar-border: rgba(255, 255, 255, 0.09);
+
+  /* -----------------------------------------------------
+       Admin Stats
+       ----------------------------------------------------- */
+
+  --admin-stat-blue: #5da4ff;
+  --admin-stat-blue-soft: #17375f;
+
+  --admin-stat-green: #3dce9a;
+  --admin-stat-green-soft: #123d32;
+
+  --admin-stat-purple: #ae76ed;
+  --admin-stat-purple-soft: #34204e;
+
+  --admin-stat-rose: #ff6f94;
+  --admin-stat-rose-soft: #492030;
+
+  --admin-stat-orange: #ffb52e;
+  --admin-stat-orange-soft: #493715;
+
+  /* -----------------------------------------------------
+       Admin Status
+       ----------------------------------------------------- */
+
+  --admin-success: #3dce9a;
+  --admin-warning: #ffb52e;
+  --admin-danger: #ff6f94;
+  --admin-info: #5da4ff;
+
+  /* -----------------------------------------------------
+       Admin Charts
+       ----------------------------------------------------- */
+
+  --admin-chart-blue: #58a9f7;
+  --admin-chart-green: #42d19f;
+  --admin-chart-purple: #ad76ed;
+  --admin-chart-grid: #2a3b54;
+
+  /* -----------------------------------------------------
+       Admin Tables
+       ----------------------------------------------------- */
+
+  --admin-table-header: #1b2b43;
+  --admin-table-row-hover: #1b2d47;
+  --admin-table-border: #2a3b54;
+
+  /* -----------------------------------------------------
+       Admin Icons
+       ----------------------------------------------------- */
+
+  --admin-icon: #5da4ff;
+  --admin-icon-muted: #91a5c0;
+  --admin-icon-soft: #17375f;
 
 
-  /* ==========================================================
-     ICON COLORS
-     ========================================================== */
+  --admin-stat-blue-surface: #172b47;
+  --admin-stat-blue-soft: #1d416d;
+  --admin-stat-blue: #5da4ff;
 
-  --school-icon-primary: #a5b4fc;
-  --school-icon-accent: #93c5fd;
-  --school-icon-success: #5bc4ba;
-  --school-icon-warning: #e0c15b;
-  --school-icon-danger: #ef817f;
-  --school-icon-info: #7db5ff;
-  --school-icon-teal: #8fa5ff;
-  --school-icon-rose: #ef91ac;
+  --admin-stat-green-surface: #143b31;
+  --admin-stat-green-soft: #18503f;
+  --admin-stat-green: #3dce9a;
 
+  --admin-stat-purple-surface: #36234d;
+  --admin-stat-purple-soft: #452b64;
+  --admin-stat-purple: #ae76ed;
 
-  /* ==========================================================
-     ICON SOFT BACKGROUNDS
-     ========================================================== */
+  --admin-stat-rose-surface: #472431;
+  --admin-stat-rose-soft: #5a2b3b;
+  --admin-stat-rose: #ff6f94;
 
-  --school-icon-bg-primary: #2b2f5a;
-  --school-icon-bg-accent: #202f52;
-  --school-icon-bg-success: #193f3c;
-  --school-icon-bg-warning: #403817;
-  --school-icon-bg-danger: #482827;
-  --school-icon-bg-info: #203452;
-  --school-icon-bg-teal: #2b2f5a;
-  --school-icon-bg-rose: #492938;
+  --admin-stat-orange-surface: #493617;
+  --admin-stat-orange-soft: #5b431c;
+  --admin-stat-orange: #ffb52e;
 
-
-  /* ==========================================================
-     SHADOWS
-     ========================================================== */
-
-  --school-shadow-card:
-    0 0.4rem 1.5rem rgba(0, 0, 0, 0.30);
-
-  --school-shadow-card-hover:
-    0 0.7rem 2rem rgba(0, 0, 0, 0.42);
-
-  --school-shadow-button:
-    0 0.5rem 1.25rem rgba(0, 0, 0, 0.34);
 }
 
 
-/* ============================================================
+/* =========================================================
    BASE
-   ============================================================ */
+   ========================================================= */
 
 @layer base {
-
-  *,
-  *::before,
-  *::after {
-    box-sizing: border-box;
+  * {
+    @apply border-border;
   }
 
   html {
     scroll-behavior: smooth;
-    background: var(--school-background);
   }
 
   body {
-    min-height: 100vh;
-    margin: 0;
-    background: var(--school-background);
-    color: var(--school-foreground);
-    font-family: Arial, Helvetica, sans-serif;
-  }
-
-  button,
-  input,
-  textarea,
-  select {
-    font: inherit;
-  }
-
-  button {
-    cursor: pointer;
-  }
-
-  a {
-    color: inherit;
-    text-decoration: none;
-  }
-
-  ::selection {
-    background: var(--school-primary);
-    color: #ffffff;
+    @apply bg-background text-foreground;
   }
 }
 
 
-/* ============================================================
-   REUSABLE COMPONENTS
-   ============================================================ */
+/* =========================================================
+   ADMIN COMPONENTS
+   ========================================================= */
 
 @layer components {
+  /* -----------------------------------------------------
+       Cards
+       ----------------------------------------------------- */
 
-  .card-horizontal {
-    @apply flex items-center gap-4 rounded-xl border bg-card p-5 shadow-sm;
-
-    border-color: var(--school-border);
-    color: var(--school-card-foreground);
+  .admin-card {
+    @apply rounded-2xl border border-admin-border bg-admin-card;
   }
 
+  /* -----------------------------------------------------
+       Sidebar
+       ----------------------------------------------------- */
 
-  .card-vertical {
-    @apply flex flex-col items-center gap-4 rounded-xl border bg-card p-5 text-center shadow-sm;
-
-    border-color: var(--school-border);
-    color: var(--school-card-foreground);
+  .admin-sidebar {
+    @apply bg-admin-sidebar text-admin-sidebar-text;
   }
 
-
-  .card-media {
-    @apply flex size-16 shrink-0 items-center justify-center overflow-hidden;
+  .admin-sidebar-item {
+    @apply flex items-center gap-3 rounded-xl text-admin-sidebar-muted transition-colors;
   }
 
-
-  .card-media-circle {
-    @apply rounded-full;
-
-    background-color: var(--school-icon-bg-primary);
-    color: var(--school-icon-primary);
+  .admin-sidebar-item:hover {
+    @apply bg-admin-sidebar-hover text-admin-sidebar-text;
   }
 
-
-  .card-media-box {
-    @apply rounded-xl;
-
-    background-color: var(--school-icon-bg-primary);
-    color: var(--school-icon-primary);
+  .admin-sidebar-item-active {
+    @apply bg-admin-sidebar-active text-white;
   }
 
-
-  .card-media-none {
-    @apply rounded-none bg-transparent;
+  .admin-sidebar-divider {
+    @apply border-t border-admin-sidebar-border;
   }
 
+  /* -----------------------------------------------------
+       Buttons
+       ----------------------------------------------------- */
 
-  .card-content {
-    @apply flex-1;
+  .admin-button {
+    @apply inline-flex items-center justify-center rounded-xl bg-admin-primary text-white transition-colors hover:bg-admin-primary-hover;
   }
 
-
-  .card-category {
-    @apply text-xs font-semibold uppercase tracking-wider;
-
-    color: var(--school-primary);
+  .admin-button-soft {
+    @apply inline-flex items-center justify-center rounded-xl bg-admin-primary-soft text-admin-primary transition-colors hover:bg-admin-blue-soft;
   }
 
+  /* -----------------------------------------------------
+       Tables
+       ----------------------------------------------------- */
 
-  .card-title {
-    @apply mt-1 text-lg font-semibold;
-
-    color: var(--school-heading);
+  .admin-table {
+    @apply w-full border-collapse;
   }
 
-
-  .card-description {
-    @apply mt-1 text-sm leading-6;
-
-    color: var(--school-muted);
+  .admin-table thead {
+    @apply bg-admin-table-header;
   }
 
-
-  .home-grid-card {
-    @apply flex min-h-[20rem] flex-col rounded-xl border p-5;
-
-    border-color: var(--school-border);
-    background-color: var(--school-card);
-    color: var(--school-card-foreground);
-    box-shadow: var(--school-shadow-card);
+  .admin-table tbody tr {
+    @apply border-b border-admin-table-border transition-colors;
   }
 
-
-  .home-grid-card:hover {
-    box-shadow: var(--school-shadow-card-hover);
+  .admin-table tbody tr:hover {
+    @apply bg-admin-table-row-hover;
   }
-
 }
 
 
-/* ============================================================
-   SEMANTIC UTILITIES
-   ============================================================ */
+/* =========================================================
+   ADMIN UTILITIES
+   ========================================================= */
 
 @layer utilities {
+  /* -----------------------------------------------------
+       Backgrounds
+       ----------------------------------------------------- */
 
-  /* ==========================================================
-     TEXT
-     ========================================================== */
-
-  .text-heading {
-    color: var(--school-heading);
+  .bg-admin-page {
+    background-color: var(--admin-page);
   }
 
-  .text-body {
-    color: var(--school-text);
+  .bg-admin-surface {
+    background-color: var(--admin-surface);
   }
 
-  .text-muted {
-    color: var(--school-muted);
+  .bg-admin-surface-hover {
+    background-color: var(--admin-surface-hover);
   }
 
-
-  /* ==========================================================
-     BACKGROUNDS
-     ========================================================== */
-
-  .bg-page {
-    background-color: var(--school-background);
+  .bg-admin-card {
+    background-color: var(--admin-card);
   }
 
-  .bg-surface {
-    background-color: var(--school-surface);
+  .bg-admin-card-hover {
+    background-color: var(--admin-card-hover);
   }
 
-  .bg-card {
-    background-color: var(--school-card);
+  /* -----------------------------------------------------
+       Text
+       ----------------------------------------------------- */
+
+  .text-admin-heading {
+    color: var(--admin-heading);
   }
 
-
-  /* ==========================================================
-     BORDERS
-     ========================================================== */
-
-  .border-default {
-    border-color: var(--school-border);
+  .text-admin {
+    color: var(--admin-text);
   }
 
-
-  /* ==========================================================
-     SHADOWS
-     ========================================================== */
-
-  .shadow-school-card {
-    box-shadow: var(--school-shadow-card);
+  .text-admin-muted {
+    color: var(--admin-muted);
   }
 
-  .shadow-school-card-hover {
-    box-shadow: var(--school-shadow-card-hover);
+  .text-admin-subtle {
+    color: var(--admin-subtle);
   }
 
-  .shadow-school-button {
-    box-shadow: var(--school-shadow-button);
+  .text-admin-primary {
+    color: var(--admin-primary);
   }
 
-
-  /* ==========================================================
-     ICON — PRIMARY
-     ========================================================== */
-
-  .icon-primary {
-    color: var(--school-icon-primary);
+  .text-admin-blue {
+    color: var(--admin-blue);
   }
 
-  .icon-bg-primary {
-    background-color: var(--school-icon-bg-primary);
+  /* -----------------------------------------------------
+       Borders
+       ----------------------------------------------------- */
+
+  .border-admin {
+    border-color: var(--admin-border);
   }
 
+  /* -----------------------------------------------------
+       Primary
+       ----------------------------------------------------- */
 
-  /* ==========================================================
-     ICON — ACCENT
-     ========================================================== */
-
-  .icon-accent {
-    color: var(--school-icon-accent);
+  .bg-admin-primary {
+    background-color: var(--admin-primary);
   }
 
-  .icon-bg-accent {
-    background-color: var(--school-icon-bg-accent);
+  .bg-admin-primary-soft {
+    background-color: var(--admin-primary-soft);
   }
 
-
-  /* ==========================================================
-     ICON — SUCCESS
-     ========================================================== */
-
-  .icon-success {
-    color: var(--school-icon-success);
+  .bg-admin-blue-soft {
+    background-color: var(--admin-blue-soft);
   }
 
-  .icon-bg-success {
-    background-color: var(--school-icon-bg-success);
+  /* -----------------------------------------------------
+       Sidebar
+       ----------------------------------------------------- */
+
+  .bg-admin-sidebar {
+    background-color: var(--admin-sidebar);
   }
 
-
-  /* ==========================================================
-     ICON — WARNING
-     ========================================================== */
-
-  .icon-warning {
-    color: var(--school-icon-warning);
+  .bg-admin-sidebar-hover {
+    background-color: var(--admin-sidebar-hover);
   }
 
-  .icon-bg-warning {
-    background-color: var(--school-icon-bg-warning);
+  .bg-admin-sidebar-active {
+    background-color: var(--admin-sidebar-active);
   }
 
-
-  /* ==========================================================
-     ICON — DANGER
-     ========================================================== */
-
-  .icon-danger {
-    color: var(--school-icon-danger);
+  .text-admin-sidebar {
+    color: var(--admin-sidebar-text);
   }
 
-  .icon-bg-danger {
-    background-color: var(--school-icon-bg-danger);
+  .text-admin-sidebar-muted {
+    color: var(--admin-sidebar-muted);
   }
 
-
-  /* ==========================================================
-     ICON — INFO
-     ========================================================== */
-
-  .icon-info {
-    color: var(--school-icon-info);
+  .border-admin-sidebar {
+    border-color: var(--admin-sidebar-border);
   }
 
-  .icon-bg-info {
-    background-color: var(--school-icon-bg-info);
+  /* -----------------------------------------------------
+       Stats
+       ----------------------------------------------------- */
+
+  .bg-admin-stat-blue {
+    background-color: var(--admin-stat-blue);
   }
 
-
-  /* ==========================================================
-     ICON — TEAL
-     ========================================================== */
-
-  .icon-teal {
-    color: var(--school-icon-teal);
+  .bg-admin-stat-blue-soft {
+    background-color: var(--admin-stat-blue-soft);
   }
 
-  .icon-bg-teal {
-    background-color: var(--school-icon-bg-teal);
+  .bg-admin-stat-green {
+    background-color: var(--admin-stat-green);
   }
 
-
-  /* ==========================================================
-     ICON — ROSE
-     ========================================================== */
-
-  .icon-rose {
-    color: var(--school-icon-rose);
+  .bg-admin-stat-green-soft {
+    background-color: var(--admin-stat-green-soft);
   }
 
-  .icon-bg-rose {
-    background-color: var(--school-icon-bg-rose);
+  .bg-admin-stat-purple {
+    background-color: var(--admin-stat-purple);
   }
 
-}
-
-
-/* ============================================================
-   VIEW TRANSITIONS
-   ============================================================ */
-
-@supports (view-transition-name: none) {
-
-  ::view-transition-group(principal-photo) {
-    animation-duration: 700ms;
-    animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+  .bg-admin-stat-purple-soft {
+    background-color: var(--admin-stat-purple-soft);
   }
 
-  ::view-transition-old(principal-photo),
-  ::view-transition-new(principal-photo) {
-    animation-duration: 700ms;
-    animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+  .bg-admin-stat-rose {
+    background-color: var(--admin-stat-rose);
+  }
+
+  .bg-admin-stat-rose-soft {
+    background-color: var(--admin-stat-rose-soft);
+  }
+
+  .bg-admin-stat-orange {
+    background-color: var(--admin-stat-orange);
+  }
+
+  .bg-admin-stat-orange-soft {
+    background-color: var(--admin-stat-orange-soft);
+  }
+
+  /* -----------------------------------------------------
+       Status
+       ----------------------------------------------------- */
+
+  .text-admin-success {
+    color: var(--admin-success);
+  }
+
+  .text-admin-warning {
+    color: var(--admin-warning);
+  }
+
+  .text-admin-danger {
+    color: var(--admin-danger);
+  }
+
+  .text-admin-info {
+    color: var(--admin-info);
+  }
+
+  /* -----------------------------------------------------
+       Charts
+       ----------------------------------------------------- */
+
+  .text-admin-chart-blue {
+    color: var(--admin-chart-blue);
+  }
+
+  .text-admin-chart-green {
+    color: var(--admin-chart-green);
+  }
+
+  .text-admin-chart-purple {
+    color: var(--admin-chart-purple);
+  }
+
+  .bg-admin-chart-blue {
+    background-color: var(--admin-chart-blue);
+  }
+
+  .bg-admin-chart-green {
+    background-color: var(--admin-chart-green);
+  }
+
+  .bg-admin-chart-purple {
+    background-color: var(--admin-chart-purple);
+  }
+
+  .border-admin-chart-grid {
+    border-color: var(--admin-chart-grid);
+  }
+
+  /* -----------------------------------------------------
+       Icons
+       ----------------------------------------------------- */
+
+  .text-admin-icon {
+    color: var(--admin-icon);
+  }
+
+  .text-admin-icon-muted {
+    color: var(--admin-icon-muted);
+  }
+
+  .bg-admin-icon-soft {
+    background-color: var(--admin-icon-soft);
+  }
+
+  /* -----------------------------------------------------
+       Shadows
+       ----------------------------------------------------- */
+
+  .shadow-admin-card {
+    box-shadow: 0 0.5rem 1.5rem rgba(16, 43, 80, 0.06);
+  }
+
+  .shadow-admin-sidebar {
+    box-shadow: 0.5rem 0 1.5rem rgba(7, 24, 47, 0.12);
   }
 }
