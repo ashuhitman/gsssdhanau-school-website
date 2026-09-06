@@ -513,6 +513,88 @@
        Cards
        ----------------------------------------------------- */
 
+  .card-horizontal {
+    @apply flex items-center gap-4 rounded-xl border bg-card p-5 shadow-sm;
+
+    border-color: var(--school-border);
+    color: var(--school-card-foreground);
+  }
+
+
+  .card-vertical {
+    @apply flex flex-col items-center gap-4 rounded-xl border bg-card p-5 text-center shadow-sm;
+
+    border-color: var(--school-border);
+    color: var(--school-card-foreground);
+  }
+
+
+  .card-media {
+    @apply flex size-16 shrink-0 items-center justify-center overflow-hidden;
+  }
+
+
+  .card-media-circle {
+    @apply rounded-full;
+
+    background-color: var(--school-icon-bg-primary);
+    color: var(--school-icon-primary);
+  }
+
+
+  .card-media-box {
+    @apply rounded-xl;
+
+    background-color: var(--school-icon-bg-primary);
+    color: var(--school-icon-primary);
+  }
+
+
+  .card-media-none {
+    @apply rounded-none bg-transparent;
+  }
+
+
+  .card-content {
+    @apply flex-1;
+  }
+
+
+  .card-category {
+    @apply text-xs font-semibold uppercase tracking-wider;
+
+    color: var(--school-primary);
+  }
+
+
+  .card-title {
+    @apply mt-1 text-lg font-semibold;
+
+    color: var(--school-heading);
+  }
+
+
+  .card-description {
+    @apply mt-1 text-sm leading-6;
+
+    color: var(--school-muted);
+  }
+
+
+  .home-grid-card {
+    @apply flex min-h-[20rem] flex-col rounded-xl border p-5;
+
+    border-color: var(--school-border);
+    background-color: var(--school-card);
+    color: var(--school-card-foreground);
+    box-shadow: var(--school-shadow-card);
+  }
+
+
+  .home-grid-card:hover {
+    box-shadow: var(--school-shadow-card-hover);
+  }
+
   .admin-card {
     @apply rounded-2xl border border-admin-border bg-admin-card;
   }
