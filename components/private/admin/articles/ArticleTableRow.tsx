@@ -72,7 +72,7 @@ export default function ArticleTableRow({
                 >
                     {article.image ? (
                         <img
-                            src={article.image}
+                            src={article.image.value}
                             alt=""
                             className="
                                 h-full
@@ -92,7 +92,7 @@ export default function ArticleTableRow({
             </div>
 
             {/* Title */}
-            <div className="min-w-0 flex-[2]">
+            <div className="min-w-0 flex-[2] md:flex-[3]">
                 <Link
                     href={`/articles/${article.slug}`}
                     target="_blank"
@@ -101,7 +101,7 @@ export default function ArticleTableRow({
                     className="
                         block
                         min-w-0
-                        break-words
+                        wrap-break-word
                         text-[0.75rem]
                         font-semibold
                         leading-snug
@@ -121,11 +121,12 @@ export default function ArticleTableRow({
                             mt-1
                             hidden
                             min-w-0
-                            truncate
                             text-xs
                             leading-relaxed
                             text-admin-muted
+                            truncate
                             sm:block
+                            md:wrap-break-word
                         "
                         title={article.excerpt}
                     >
@@ -144,29 +145,21 @@ export default function ArticleTableRow({
             </div>
 
             {/* Category */}
-            <div className="hidden min-w-0 flex-[1] lg:block">
-                <div className="flex min-w-0 flex-wrap gap-1">
-                    {article.category.length > 0 ? (
-                        article.category
-                            .slice(0, 2)
-                            .map((category) => (
-                                <ArticleCategoryBadge
-                                    key={category}
-                                    category={category}
-                                />
-                            ))
-                    ) : (
-                        <span className="text-xs text-admin-subtle">
-                            —
-                        </span>
-                    )}
-                </div>
+            <div className="hidden min-w-0 flex-1 lg:block  text-center">
+
+                {article.category ? (
+                    <ArticleCategoryBadge
+                        key={article.category}
+                        category={article.category}
+                    />
+                ) : "-"}
+
             </div>
 
             {/* Author */}
-            <div className="hidden min-w-0 flex-[1] xl:block justify-center">
+            <div className="hidden min-w-0 flex-1 xl:block text-center">
                 <span
-                    className="break-words text-sm text-admin"
+                    className="wrap-break-word text-sm text-admin"
                     title={article.authorBy ?? undefined}
                 >
                     {article.authorBy || "Admin"}
@@ -174,7 +167,7 @@ export default function ArticleTableRow({
             </div>
 
             {/* Date */}
-            <div className="hidden min-w-0 flex-[1] xl:block text-center">
+            <div className="hidden min-w-0 flex-1 xl:block text-center">
                 <p className="whitespace-nowrap text-xs font-medium text-admin">
                     {formatDate(date)}
                 </p>

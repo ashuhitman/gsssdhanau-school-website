@@ -1,3 +1,4 @@
+import { SnackbarProvider } from "@/components/private/ui/Snackbar/SnackbarProvider";
 import { requireUser } from "@/lib/data/auth/authorization";
 
 export default async function PrivateLayout({
@@ -7,5 +8,7 @@ export default async function PrivateLayout({
 }>) {
     await requireUser();
 
-    return <>{children}</>;
+    return <SnackbarProvider>
+        {children}
+    </SnackbarProvider>
 }

@@ -1,5 +1,3 @@
-import Image from "next/image";
-
 import Link from "next/link";
 
 import {
@@ -26,7 +24,7 @@ interface FeaturedContentProps {
 
     category?: string;
 
-    articleType?: string;
+    contentTags?: string[];
 
     title: string;
 
@@ -48,7 +46,7 @@ export default function FeaturedContent({
     image,
     imageAlt,
     category,
-    articleType,
+    contentTags = [],
     title,
     description,
     publishedAt,
@@ -98,18 +96,14 @@ export default function FeaturedContent({
                         lg:min-h-[390px]
                     "
                 >
-                    <Image
+                    <img
                         src={imageSrc}
-                        alt={
-                            imageAlt ??
-                            title
-                        }
-                        fill
-                        sizes="
-                            (max-width: 1023px) 100vw,
-                            45vw
-                        "
+                        alt={imageAlt ?? title}
+                        loading="eager"
                         className="
+                            absolute
+                            inset-0
+                            size-full
                             object-cover
                             transition-transform
                             duration-700
@@ -171,19 +165,18 @@ export default function FeaturedContent({
                         Type / Category
                     ================================================== */}
 
-                    {(articleType ||
-                        category) && (
-                            <div
-                                className="
+                    {(category || contentTags.length > 0) && (
+                        <div
+                            className="
                                 flex
                                 flex-wrap
                                 items-center
                                 gap-2
                             "
-                            >
-                                {articleType && (
-                                    <span
-                                        className="
+                        >
+                            {category && (
+                                <span
+                                    className="
                                         rounded-full
                                         bg-blue-50
                                         px-2.5
@@ -194,30 +187,31 @@ export default function FeaturedContent({
                                         tracking-[0.12em]
                                         text-blue-950
                                     "
-                                    >
-                                        {formatLabel(
-                                            articleType
-                                        )}
-                                    </span>
-                                )}
+                                >
+                                    {formatLabel(category)}
+                                </span>
+                            )}
 
-                                {category && (
+                            {contentTags.length > 0 &&
+                                contentTags.map((tag) => (
                                     <span
+                                        key={tag}
                                         className="
-                                        text-[9px]
-                                        font-bold
-                                        uppercase
-                                        tracking-[0.12em]
-                                        text-amber-600
-                                    "
+                                            before:mr-1
+                                            before:text-sm
+                                            before:content-['•']
+                                            text-[9px]
+                                            font-bold
+                                            uppercase
+                                            tracking-[0.12em]
+                                            text-amber-600
+                                        "
                                     >
-                                        {formatLabel(
-                                            category
-                                        )}
+                                        {formatLabel(tag)}
                                     </span>
-                                )}
-                            </div>
-                        )}
+                                ))}
+                        </div>
+                    )}
 
                     {/* ==================================================
                         Title
@@ -225,9 +219,7 @@ export default function FeaturedContent({
 
                     <Link
                         href={href}
-                        className="
-                            group/title
-                        "
+                        className="group/title"
                     >
                         <h2
                             className="
@@ -271,10 +263,9 @@ export default function FeaturedContent({
                         Metadata
                     ================================================== */}
 
-                    {(publishedAt ||
-                        author) && (
-                            <div
-                                className="
+                    {(publishedAt || author) && (
+                        <div
+                            className="
                                 mt-5
                                 flex
                                 flex-wrap
@@ -284,72 +275,62 @@ export default function FeaturedContent({
                                 text-xs
                                 text-slate-400
                             "
-                            >
-                                {publishedAt && (
-                                    <span
-                                        className="
-                                        inline-flex
-                                        items-center
-                                        gap-1.5
-                                    "
-                                    >
-                                        <CalendarDays
-                                            className="
-                                            size-3.5
-                                        "
-                                        />
-
-                                        <time
-                                            dateTime={
-                                                publishedAt
-                                            }
-                                        >
-                                            {formatDate(
-                                                publishedAt
-                                            )}
-                                        </time>
-                                    </span>
-                                )}
-
-                                {author && (
-                                    <span
-                                        className="
-                                        inline-flex
-                                        items-center
-                                        gap-1.5
-                                    "
-                                    >
-                                        <UserRound
-                                            className="
-                                            size-3.5
-                                        "
-                                        />
-
-                                        <span>
-                                            {author}
-                                        </span>
-                                    </span>
-                                )}
-
+                        >
+                            {publishedAt && (
                                 <span
                                     className="
+                                        inline-flex
+                                        items-center
+                                        gap-1.5
+                                    "
+                                >
+                                    <CalendarDays
+                                        className="size-3.5"
+                                    />
+
+                                    <time
+                                        dateTime={publishedAt}
+                                    >
+                                        {formatDate(publishedAt)}
+                                    </time>
+                                </span>
+                            )}
+
+                            {author && (
+                                <span
+                                    className="
+                                        inline-flex
+                                        items-center
+                                        gap-1.5
+                                    "
+                                >
+                                    <UserRound
+                                        className="size-3.5"
+                                    />
+
+                                    <span>
+                                        {author}
+                                    </span>
+                                </span>
+                            )}
+
+                            <span
+                                className="
                                     inline-flex
                                     items-center
                                     gap-1.5
                                 "
-                                >
-                                    <Clock3
-                                        className="
-                                        size-3.5
-                                    "
-                                    />
+                            >
+                                <Clock3
+                                    className="size-3.5"
+                                />
 
-                                    <span>
-                                        Read
-                                    </span>
+                                <span>
+                                    Read
                                 </span>
-                            </div>
-                        )}
+                            </span>
+                        </div>
+                    )}
 
                     {/* ==================================================
                         Read More
@@ -415,7 +396,6 @@ function formatLabel(
         .replace(/-/g, " ")
         .replace(
             /\b\w/g,
-            (char) =>
-                char.toUpperCase()
+            (char) => char.toUpperCase()
         );
 }

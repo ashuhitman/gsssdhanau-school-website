@@ -6,23 +6,32 @@ import {
 
 import type {
     ArticleCategory,
+    ArticleImageType,
     ArticleStatus,
-    ArticleType,
+    ArticleTag,
 } from "./constants";
 
 export interface UpdateArticleData {
     title?: string;
     slug?: string;
+
     excerpt?: string | null;
     content?: string | null;
+
     authorBy?: string | null;
+
     image?: string | null;
+    imageType?: ArticleImageType | null;
+
     featured?: boolean;
+
     status?: ArticleStatus;
+
     publishedAt?: string | null;
     publishedBy?: string | null;
-    category?: ArticleCategory[];
-    articleType?: ArticleType | null;
+
+    category?: ArticleCategory | null;
+    articleTags?: ArticleTag[] | null;
 }
 
 export async function updateArticle(
@@ -40,7 +49,8 @@ export async function updateArticle(
     }
 
     if (data.excerpt !== undefined) {
-        updateData.excerpt = data.excerpt;
+        updateData.excerpt =
+            data.excerpt?.trim() || null;
     }
 
     if (data.content !== undefined) {
@@ -48,35 +58,48 @@ export async function updateArticle(
     }
 
     if (data.authorBy !== undefined) {
-        updateData.authorBy = data.authorBy;
+        updateData.authorBy =
+            data.authorBy?.trim() || null;
     }
 
     if (data.image !== undefined) {
-        updateData.image = data.image;
+        updateData.image =
+            data.image?.trim() || null;
+    }
+
+    if (data.imageType !== undefined) {
+        updateData.imageType =
+            data.imageType;
     }
 
     if (data.featured !== undefined) {
-        updateData.featured = data.featured;
+        updateData.featured =
+            data.featured;
     }
 
     if (data.status !== undefined) {
-        updateData.status = data.status;
+        updateData.status =
+            data.status;
     }
 
     if (data.publishedAt !== undefined) {
-        updateData.publishedAt = data.publishedAt;
+        updateData.publishedAt =
+            data.publishedAt;
     }
 
     if (data.publishedBy !== undefined) {
-        updateData.publishedBy = data.publishedBy;
+        updateData.publishedBy =
+            data.publishedBy?.trim() || null;
     }
 
     if (data.category !== undefined) {
-        updateData.category = data.category;
+        updateData.category =
+            data.category;
     }
 
-    if (data.articleType !== undefined) {
-        updateData.articleType = data.articleType;
+    if (data.articleTags !== undefined) {
+        updateData.articleTags =
+            data.articleTags;
     }
 
     return tablesDB.updateRow({

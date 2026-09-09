@@ -8,7 +8,7 @@ import {
 
 /* ============================================================
    Props
-============================================================ */
+   ============================================================ */
 
 export interface ContentDetailsProps {
     title: string;
@@ -16,9 +16,9 @@ export interface ContentDetailsProps {
     image?: string | null;
     imageAlt?: string;
 
-    contentType?: string;
+    category?: string;
 
-    category?: string[];
+    contentTags?: string[];
 
     excerpt?: string;
 
@@ -37,14 +37,14 @@ export interface ContentDetailsProps {
 
 /* ============================================================
    Content Details
-============================================================ */
+   ============================================================ */
 
 export default function ContentDetails({
     title,
     image,
     imageAlt,
-    contentType,
-    category = [],
+    contentTags = [],
+    category,
     excerpt,
     content,
     publishedAt,
@@ -53,20 +53,20 @@ export default function ContentDetails({
     footerLabel = "School Content",
     fallbackImage = "/images/articles/default-card.jpeg",
 }: ContentDetailsProps) {
-    const imageSrc =
-        image?.trim()
-            ? image
-            : fallbackImage;
+    const imageSrc = image?.trim()
+        ? image
+        : fallbackImage;
 
     return (
         <article
             className="
+                @container
                 relative
                 h-full
                 w-full
+                min-w-0
                 overflow-hidden
                 bg-[#eaf4ff]
-                
             "
         >
             {/* ═════════════════════════════
@@ -109,24 +109,28 @@ export default function ContentDetails({
                     z-10
                     flex
                     h-full
+                    min-w-0
                     flex-col
                     overflow-hidden
-                    px-6
-                    py-8
-                    sm:px-10
-                    sm:py-10
-                    lg:px-14
-                    lg:py-12
+                    px-4
+                    py-5
+                    @[30rem]:px-6
+                    @[30rem]:py-7
+                    @[40rem]:px-10
+                    @[40rem]:py-10
+                    @[52rem]:px-14
+                    @[52rem]:py-12
                 "
             >
                 {/* ═════════════════════════
                     CONTENT TYPE
                 ═════════════════════════ */}
 
-                {contentType && (
+                {category && (
                     <div
                         className="
                             flex
+                            min-w-0
                             shrink-0
                             items-center
                             justify-between
@@ -135,6 +139,7 @@ export default function ContentDetails({
                         <div
                             className="
                                 flex
+                                min-w-0
                                 items-center
                                 gap-2
                             "
@@ -142,41 +147,48 @@ export default function ContentDetails({
                             <div
                                 className="
                                     flex
-                                    size-8
+                                    size-7
+                                    shrink-0
                                     items-center
                                     justify-center
                                     rounded-full
                                     bg-blue-950
                                     text-white
                                     shadow-sm
+                                    @[30rem]:size-8
                                 "
                             >
                                 <FileText
                                     className="
-                                        size-4
+                                        size-3.5
+                                        @[30rem]:size-4
                                     "
                                 />
                             </div>
 
                             <p
                                 className="
-                                    text-[9px]
+                                    min-w-0
+                                    truncate
+                                    text-[8px]
                                     font-black
                                     uppercase
-                                    tracking-[0.2em]
+                                    tracking-[0.16em]
                                     text-amber-600
+                                    @[30rem]:text-[9px]
+                                    @[30rem]:tracking-[0.2em]
                                 "
                             >
-                                {formatLabel(
-                                    contentType
-                                )}
+                                {formatLabel(category)}
                             </p>
                         </div>
 
                         <Sparkles
                             className="
-                                size-5
+                                size-4
+                                shrink-0
                                 text-amber-400
+                                @[30rem]:size-5
                             "
                         />
                     </div>
@@ -188,14 +200,18 @@ export default function ContentDetails({
 
                 <h1
                     className="
-                        mt-4
+                        mt-3
+                        min-w-0
                         shrink-0
-                        text-3xl
+                        break-words
+                        text-2xl
                         font-black
                         leading-[1.05]
                         tracking-tight
                         text-slate-950
-                        sm:text-4xl
+                        @[30rem]:mt-4
+                        @[30rem]:text-3xl
+                        @[40rem]:text-4xl
                     "
                 >
                     {title}
@@ -208,22 +224,22 @@ export default function ContentDetails({
                 <div
                     className="
                         relative
-                        mt-6
+                        mt-4
                         aspect-[16/9]
                         w-full
                         shrink-0
                         overflow-hidden
-                        rounded-xl
+                        rounded-lg
                         bg-slate-200
                         shadow-md
+                        @[30rem]:mt-5
+                        @[30rem]:rounded-xl
+                        @[40rem]:mt-6
                     "
                 >
                     <img
                         src={imageSrc}
-                        alt={
-                            imageAlt ??
-                            title
-                        }
+                        alt={imageAlt ?? title}
                         className="
                             h-full
                             w-full
@@ -233,8 +249,6 @@ export default function ContentDetails({
                             hover:scale-105
                         "
                     />
-
-                    {/* IMAGE OVERLAY */}
 
                     <div
                         className="
@@ -248,51 +262,57 @@ export default function ContentDetails({
                         "
                     />
 
-                    {/* IMAGE LABEL */}
-
-                    {category.length > 0 && (
+                    {contentTags.length > 0 && (
                         <div
                             className="
                                 absolute
-                                bottom-3
-                                left-3
+                                bottom-2
+                                left-2
                                 flex
+                                min-w-0
+                                max-w-[calc(100%-1rem)]
                                 items-center
-                                gap-1.5
+                                gap-1
                                 rounded-full
                                 bg-white/90
-                                px-2.5
-                                py-1
+                                px-2
+                                py-0.5
                                 shadow-sm
                                 backdrop-blur-sm
+                                @[30rem]:bottom-3
+                                @[30rem]:left-3
+                                @[30rem]:gap-1.5
+                                @[30rem]:px-2.5
+                                @[30rem]:py-1
                             "
                         >
                             <FileText
                                 className="
-                                    size-3
+                                    size-2.5
+                                    shrink-0
                                     text-blue-950
+                                    @[30rem]:size-3
                                 "
                             />
 
                             <span
                                 className="
-                                    text-[7px]
+                                    min-w-0
+                                    truncate
+                                    text-[6px]
                                     font-bold
                                     uppercase
-                                    tracking-wider
+                                    tracking-wide
                                     text-blue-950
+                                    @[30rem]:text-[7px]
+                                    @[30rem]:tracking-wider
                                 "
                             >
-                                {category
-                                    .map(
-                                        (item) =>
-                                            formatLabel(
-                                                item
-                                            )
+                                {contentTags
+                                    .map((item) =>
+                                        formatLabel(item)
                                     )
-                                    .join(
-                                        " • "
-                                    )}
+                                    .join(" • ")}
                             </span>
                         </div>
                     )}
@@ -302,104 +322,99 @@ export default function ContentDetails({
                     CONTENT META
                 ═════════════════════════ */}
 
-                {(date ||
-                    publishedAt ||
-                    publishedBy) && (
-                        <div
-                            className="
-                            mt-4
+                {(date || publishedAt || publishedBy) && (
+                    <div
+                        className="
+                            mt-3
                             flex
+                            min-w-0
                             shrink-0
                             flex-wrap
                             items-center
-                            gap-x-4
-                            gap-y-2
-                            text-xs
+                            gap-x-3
+                            gap-y-1.5
+                            text-[10px]
                             text-slate-400
+                            @[30rem]:mt-4
+                            @[30rem]:gap-x-4
+                            @[30rem]:gap-y-2
+                            @[30rem]:text-xs
                         "
-                        >
-                            {/* Content Date */}
-
-                            {date && (
-                                <span
-                                    className="
+                    >
+                        {date && (
+                            <span
+                                className="
                                     flex
+                                    min-w-0
                                     items-center
-                                    gap-1.5
+                                    gap-1
                                 "
-                                >
-                                    <CalendarDays
-                                        className="
-                                        size-3.5
+                            >
+                                <CalendarDays
+                                    className="
+                                        size-3
+                                        shrink-0
+                                        @[30rem]:size-3.5
                                     "
-                                    />
+                                />
 
-                                    <span>
-                                        {formatDate(
-                                            date
-                                        )}
+                                <span className="truncate">
+                                    {formatDate(date)}
+                                </span>
+                            </span>
+                        )}
+
+                        {publishedAt && (
+                            <span
+                                className="
+                                    flex
+                                    min-w-0
+                                    items-center
+                                    gap-1
+                                "
+                            >
+                                <CalendarCheck
+                                    className="
+                                        size-3
+                                        shrink-0
+                                        @[30rem]:size-3.5
+                                    "
+                                />
+
+                                <span className="truncate">
+                                    Published{" "}
+                                    {formatDate(publishedAt)}
+                                </span>
+                            </span>
+                        )}
+
+                        {publishedBy && (
+                            <span
+                                className="
+                                    flex
+                                    min-w-0
+                                    items-center
+                                    gap-1
+                                "
+                            >
+                                <UserCheck
+                                    className="
+                                        size-3
+                                        shrink-0
+                                        @[30rem]:size-3.5
+                                    "
+                                />
+
+                                <span className="truncate">
+                                    By{" "}
+                                    <span className="font-semibold text-slate-600">
+                                        {publishedBy}
                                     </span>
                                 </span>
-                            )}
-
-                            {/* Published At */}
-
-                            {publishedAt && (
-                                <span
-                                    className="
-                                    flex
-                                    items-center
-                                    gap-1.5
-                                "
-                                >
-                                    <CalendarCheck
-                                        className="
-                                        size-3.5
-                                    "
-                                    />
-
-                                    <span>
-                                        Published{" "}
-                                        {formatDate(
-                                            publishedAt
-                                        )}
-                                    </span>
-                                </span>
-                            )}
-
-                            {/* Published By */}
-
-                            {publishedBy && (
-                                <span
-                                    className="
-                                    flex
-                                    items-center
-                                    gap-1.5
-                                "
-                                >
-                                    <UserCheck
-                                        className="
-                                        size-3.5
-                                    "
-                                    />
-
-                                    <span>
-                                        By{" "}
-                                        <span
-                                            className="
-                                            font-semibold
-                                            text-slate-600
-                                        "
-                                        >
-                                            {
-                                                publishedBy
-                                            }
-                                        </span>
-                                    </span>
-                                </span>
-                            )}
-                        </div>
-                    )}
+                            </span>
+                        )}
+                    </div>
+                )}
 
                 {/* ═════════════════════════
                     DESCRIPTION / EXCERPT
@@ -409,31 +424,34 @@ export default function ContentDetails({
                     <div
                         className="
                             relative
-                            mt-5
+                            mt-4
                             shrink-0
+                            @[30rem]:mt-5
                         "
                     >
-                        {/* Accent line */}
-
                         <div
                             className="
                                 absolute
                                 left-0
                                 top-0
                                 h-full
-                                w-1
+                                w-0.5
                                 rounded-full
                                 bg-amber-400
+                                @[30rem]:w-1
                             "
                         />
 
                         <p
                             className="
-                                pl-4
-                                text-sm
-                                leading-6
+                                pl-3
+                                text-xs
+                                leading-5
                                 text-slate-600
                                 text-justify
+                                @[30rem]:pl-4
+                                @[30rem]:text-sm
+                                @[30rem]:leading-6
                             "
                         >
                             {excerpt}
@@ -448,17 +466,21 @@ export default function ContentDetails({
                 {content && (
                     <div
                         className="
-                            mt-6
+                            mt-5
                             min-h-0
+                            @[30rem]:mt-6
                         "
                     >
                         <div
                             className="
                                 whitespace-pre-line
-                                text-sm
-                                leading-7
+                                break-words
+                                text-xs
+                                leading-6
                                 text-slate-700
                                 text-justify
+                                @[30rem]:text-sm
+                                @[30rem]:leading-7
                             "
                         >
                             {content}
@@ -472,23 +494,31 @@ export default function ContentDetails({
 
                 <div
                     className="
-                        mt-6
+                        mt-5
                         flex
+                        min-w-0
                         shrink-0
                         items-center
                         justify-between
+                        gap-3
                         border-t
                         border-blue-200
-                        pt-3
+                        pt-2.5
+                        @[30rem]:mt-6
+                        @[30rem]:pt-3
                     "
                 >
                     <span
                         className="
-                            text-[8px]
+                            min-w-0
+                            truncate
+                            text-[7px]
                             font-bold
                             uppercase
-                            tracking-[0.18em]
+                            tracking-[0.14em]
                             text-slate-400
+                            @[30rem]:text-[8px]
+                            @[30rem]:tracking-[0.18em]
                         "
                     >
                         PM SHRI GSSS DHANAU
@@ -496,16 +526,18 @@ export default function ContentDetails({
 
                     <span
                         className="
-                            text-[8px]
+                            shrink-0
+                            text-[7px]
                             font-semibold
                             text-amber-600
+                            @[30rem]:text-[8px]
                         "
                     >
                         {footerLabel}
                     </span>
                 </div>
             </div>
-        </article >
+        </article>
     );
 }
 
@@ -513,46 +545,30 @@ export default function ContentDetails({
    Label
 ============================================================ */
 
-function formatLabel(
-    value: string
-): string {
+function formatLabel(value: string): string {
     return value
         .replace(/[-_]/g, " ")
-        .replace(
-            /\b\w/g,
-            (char) =>
-                char.toUpperCase()
-        );
+        .replace(/\b\w/g, (char) => char.toUpperCase());
 }
 
 /* ============================================================
    Date
 ============================================================ */
 
-function formatDate(
-    date: string
-): string {
+function formatDate(date: string): string {
     if (!date) {
         return "";
     }
 
-    const parsedDate =
-        new Date(date);
+    const parsedDate = new Date(date);
 
-    if (
-        Number.isNaN(
-            parsedDate.getTime()
-        )
-    ) {
+    if (Number.isNaN(parsedDate.getTime())) {
         return "";
     }
 
-    return new Intl.DateTimeFormat(
-        "en-IN",
-        {
-            day: "numeric",
-            month: "long",
-            year: "numeric",
-        }
-    ).format(parsedDate);
+    return new Intl.DateTimeFormat("en-IN", {
+        day: "numeric",
+        month: "long",
+        year: "numeric",
+    }).format(parsedDate);
 }

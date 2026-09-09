@@ -7,7 +7,10 @@ import DeleteDialog from "@/components/private/ui/DeleteDialog";
 import RowActions from "@/components/private/ui/RowActions";
 
 import { deleteArticleAction } from "@/app/(private)/dashboard/admin/articles/actions";
+
 import type { Article } from "@/lib/data/article/types";
+
+import { useSnackbar } from "../../ui/Snackbar/SnackbarProvider";
 
 interface ArticleActionsProps {
     article: Article;
@@ -16,19 +19,55 @@ interface ArticleActionsProps {
 export default function ArticleActions({
     article,
 }: ArticleActionsProps) {
-    const [deleteOpen, setDeleteOpen] = useState(false);
-    const [isPending, startTransition] = useTransition();
+    const [deleteOpen, setDeleteOpen] =
+        useState(false);
+
+    const [isPending, startTransition] =
+        useTransition();
+
+    const { showSnackbar } =
+        useSnackbar();
 
     function handleDelete() {
         startTransition(async () => {
             try {
-                await deleteArticleAction(article.id);
-                setDeleteOpen(false);
+                const result =
+                    await deleteArticleAction(
+                        article.id,
+                        article.image,
+                        article.slug
+                    );
+
+                if (result.success) {
+                    showSnackbar({
+                        message:
+                            result.message ||
+                            "Article deleted successfully.",
+                        type: "success",
+                    });
+
+                    setDeleteOpen(false);
+
+                    return;
+                }
+
+                showSnackbar({
+                    message:
+                        result.message ||
+                        "Failed to delete article.",
+                    type: "error",
+                });
             } catch (error) {
                 console.error(
                     "Failed to delete article:",
                     error
                 );
+
+                showSnackbar({
+                    message:
+                        "Something went wrong while deleting the article.",
+                    type: "error",
+                });
             }
         });
     }

@@ -1,29 +1,30 @@
 "use client";
 
 import {
+    ARTICLE_CATEGORY,
+    ARTICLE_STATUS,
+    ARTICLE_TAGS,
+} from "@/lib/data/article/constants";
+
+import {
     ChevronDown,
     Filter,
     RefreshCcw,
     Search,
     X,
 } from "lucide-react";
-import { useState } from "react";
 
-import {
-    ARTICLE_CATEGORY,
-    ARTICLE_STATUS,
-    ARTICLE_TYPE,
-} from "@/lib/data/article/constants";
+import { useState } from "react";
 
 interface ArticleFiltersProps {
     search: string;
+    articleTag: string;
     category: string;
     status: string;
-    articleType: string;
     onSearchChange: (value: string) => void;
+    onArticleTagChange: (value: string) => void;
     onCategoryChange: (value: string) => void;
     onStatusChange: (value: string) => void;
-    onArticleTypeChange: (value: string) => void;
     onReset: () => void;
 }
 
@@ -34,17 +35,28 @@ interface FilterOption {
 
 export default function ArticleFilters({
     search,
+    articleTag,
     category,
     status,
-    articleType,
     onSearchChange,
+    onArticleTagChange,
     onCategoryChange,
     onStatusChange,
-    onArticleTypeChange,
     onReset,
 }: ArticleFiltersProps) {
     const [mobileFiltersOpen, setMobileFiltersOpen] =
         useState(false);
+
+    const articleTagsOptions: FilterOption[] = [
+        {
+            value: "all",
+            label: "All Tags",
+        },
+        ...Object.values(ARTICLE_TAGS).map((value) => ({
+            value,
+            label: formatValue(value),
+        })),
+    ];
 
     const categoryOptions: FilterOption[] = [
         {
@@ -72,21 +84,10 @@ export default function ArticleFilters({
         },
     ];
 
-    const articleTypeOptions: FilterOption[] = [
-        {
-            value: "all",
-            label: "All Types",
-        },
-        ...Object.values(ARTICLE_TYPE).map((value) => ({
-            value,
-            label: formatValue(value),
-        })),
-    ];
-
     const hasActiveFilters =
+        articleTag !== "all" ||
         category !== "all" ||
-        status !== "all" ||
-        articleType !== "all";
+        status !== "all";
 
     return (
         <div className="border-b border-admin">
@@ -149,9 +150,10 @@ export default function ArticleFilters({
                         <Filter className="h-4 w-4" />
                     )}
 
-                    {hasActiveFilters && !mobileFiltersOpen && (
-                        <span className="absolute right-1 top-1 h-1.5 w-1.5 rounded-full bg-admin-primary" />
-                    )}
+                    {hasActiveFilters &&
+                        !mobileFiltersOpen && (
+                            <span className="absolute right-1 top-1 h-1.5 w-1.5 rounded-full bg-admin-primary" />
+                        )}
                 </button>
             </div>
 
@@ -159,21 +161,21 @@ export default function ArticleFilters({
             {mobileFiltersOpen && (
                 <div className="flex flex-col gap-2.5 border-t border-admin bg-admin-surface p-3 sm:hidden">
                     <FilterSelect
+                        value={articleTag}
+                        options={articleTagsOptions}
+                        onValueChange={onArticleTagChange}
+                    />
+
+                    <FilterSelect
                         value={category}
                         options={categoryOptions}
-                        onChange={onCategoryChange}
+                        onValueChange={onCategoryChange}
                     />
 
                     <FilterSelect
                         value={status}
                         options={statusOptions}
-                        onChange={onStatusChange}
-                    />
-
-                    <FilterSelect
-                        value={articleType}
-                        options={articleTypeOptions}
-                        onChange={onArticleTypeChange}
+                        onValueChange={onStatusChange}
                     />
 
                     <button
@@ -249,25 +251,25 @@ export default function ArticleFilters({
                     />
                 </div>
 
+                {/* Article Tags */}
+                <FilterSelect
+                    value={articleTag}
+                    options={articleTagsOptions}
+                    onValueChange={onArticleTagChange}
+                />
+
                 {/* Category */}
                 <FilterSelect
                     value={category}
                     options={categoryOptions}
-                    onChange={onCategoryChange}
+                    onValueChange={onCategoryChange}
                 />
 
                 {/* Status */}
                 <FilterSelect
                     value={status}
                     options={statusOptions}
-                    onChange={onStatusChange}
-                />
-
-                {/* Type */}
-                <FilterSelect
-                    value={articleType}
-                    options={articleTypeOptions}
-                    onChange={onArticleTypeChange}
+                    onValueChange={onStatusChange}
                 />
 
                 {/* Reset */}
@@ -300,18 +302,18 @@ export default function ArticleFilters({
 function FilterSelect({
     value,
     options,
-    onChange,
+    onValueChange,
 }: {
     value: string;
     options: FilterOption[];
-    onChange: (value: string) => void;
+    onValueChange: (value: string) => void;
 }) {
     return (
         <div className="relative min-w-0 flex-1 basis-[9rem] sm:max-w-[13rem]">
             <select
                 value={value}
                 onChange={(event) =>
-                    onChange(event.target.value)
+                    onValueChange(event.target.value)
                 }
                 className="
                     h-10

@@ -63,7 +63,7 @@ export default async function ArticlePage({
 
     const relatedArticles =
         await getRelatedArticles(
-            article.category,
+            article.articleTags,
             article.id,
             3
         );
@@ -154,13 +154,13 @@ export default async function ArticlePage({
                     >
                         <ContentDetails
                             title={article.title}
-                            image={article.image}
+                            image={article.image?.value}
                             imageAlt={article.title}
-                            contentType={
-                                article.articleType ??
-                                undefined
+                            contentTags={
+                                article.articleTags ??
+                                []
                             }
-                            category={article.category}
+                            category={article.category ?? undefined}
                             excerpt={article.excerpt ?? undefined}
                             content={article.content}
                             publishedAt={

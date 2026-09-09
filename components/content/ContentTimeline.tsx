@@ -11,7 +11,7 @@ export interface ContentTimelineItem {
     imageAlt?: string;
     title: string;
     category?: string;
-    articleType?: string;
+    contentTags?: string[];
     excerpt?: string;
     publishedAt?: string;
     author?: string;
@@ -50,6 +50,8 @@ export default function ContentTimeline({
             </div>
         );
     }
+
+
 
     return (
         <div className="relative">
@@ -217,8 +219,8 @@ export default function ContentTimeline({
                                 category={
                                     item.category
                                 }
-                                articleType={
-                                    item.articleType
+                                contentTags={
+                                    item.contentTags
                                 }
                                 excerpt={
                                     item.excerpt

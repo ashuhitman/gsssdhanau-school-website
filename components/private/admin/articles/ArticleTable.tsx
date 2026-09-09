@@ -86,6 +86,7 @@ export default function ArticleTable({
                         font-semibold
                         text-admin-heading
                         sm:text-xs
+                        md:flex-[3]
                     "
                 >
                     Title

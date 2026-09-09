@@ -1,3 +1,6 @@
+
+//* capitalise first character of each word 
+
 export function titleCase(text: string): string {
     return text
         .trim()
@@ -8,6 +11,7 @@ export function titleCase(text: string): string {
 }
 
 
+// converts appwrite id to viewable url
 export function getImageUrl(
     fileId: string | null | undefined,
     bucketId: string

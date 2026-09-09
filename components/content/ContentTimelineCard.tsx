@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Link from "next/link";
 
 import {
@@ -16,7 +15,7 @@ interface ContentTimelineCardProps {
     imageAlt?: string;
     title: string;
     category?: string;
-    articleType?: string;
+    contentTags?: string[];
     excerpt?: string;
     author?: string;
 }
@@ -31,7 +30,7 @@ export default function ContentTimelineCard({
     imageAlt,
     title,
     category,
-    articleType,
+    contentTags = [],
     excerpt,
     author,
 }: ContentTimelineCardProps) {
@@ -64,7 +63,6 @@ export default function ContentTimelineCard({
                 "
             >
                 {/* Image */}
-
                 <div
                     className="
                         relative
@@ -76,18 +74,12 @@ export default function ContentTimelineCard({
                         sm:size-24
                     "
                 >
-                    <Image
+                    <img
                         src={imageSrc}
-                        alt={
-                            imageAlt ??
-                            title
-                        }
-                        fill
-                        sizes="
-                            (max-width: 640px) 80px,
-                            96px
-                        "
+                        alt={imageAlt ?? title}
+                        loading="lazy"
                         className="
+                            size-full
                             object-cover
                             transition-transform
                             duration-500
@@ -97,58 +89,50 @@ export default function ContentTimelineCard({
                 </div>
 
                 {/* Content */}
-
                 <div className="min-w-0 flex-1 py-0.5">
-                    {(articleType ||
-                        category) && (
-                            <div
-                                className="
+                    {(category || contentTags.length > 0) && (
+                        <div
+                            className="
                                 flex
                                 flex-wrap
                                 items-center
                                 gap-1.5
                             "
-                            >
-                                {articleType && (
-                                    <span
-                                        className="
+                        >
+                            {category && (
+                                <span
+                                    className="
                                         text-[8px]
                                         font-black
                                         uppercase
                                         tracking-[0.14em]
                                         text-blue-950
                                     "
-                                    >
-                                        {formatLabel(
-                                            articleType
-                                        )}
-                                    </span>
-                                )}
+                                >
+                                    {formatLabel(category)}
+                                </span>
+                            )}
 
-                                {articleType &&
-                                    category && (
+                            {contentTags.length > 0 &&
+                                contentTags.map((tag) => (
+                                    <span
+                                        key={tag}
+                                        className="
+                                            text-[8px]
+                                            font-bold
+                                            uppercase
+                                            tracking-[0.12em]
+                                            text-amber-600
+                                        "
+                                    >
                                         <span className="text-slate-300">
                                             •
-                                        </span>
-                                    )}
-
-                                {category && (
-                                    <span
-                                        className="
-                                        text-[8px]
-                                        font-bold
-                                        uppercase
-                                        tracking-[0.12em]
-                                        text-amber-600
-                                    "
-                                    >
-                                        {formatLabel(
-                                            category
-                                        )}
+                                        </span>{" "}
+                                        {formatLabel(tag)}
                                     </span>
-                                )}
-                            </div>
-                        )}
+                                ))}
+                        </div>
+                    )}
 
                     <h3
                         className="
@@ -193,15 +177,12 @@ export default function ContentTimelineCard({
                         >
                             <UserRound className="size-3" />
 
-                            <span>
-                                {author}
-                            </span>
+                            <span>{author}</span>
                         </div>
                     )}
                 </div>
 
                 {/* Arrow */}
-
                 <ArrowUpRight
                     className="
                         mt-1
@@ -223,9 +204,7 @@ export default function ContentTimelineCard({
    Label
 ============================================================ */
 
-function formatLabel(
-    value: string
-) {
+function formatLabel(value: string) {
     return value
         .replace(/-/g, " ")
         .replace(/\b\w/g, (char) =>

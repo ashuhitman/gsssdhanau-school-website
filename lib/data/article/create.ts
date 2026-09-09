@@ -3,12 +3,10 @@ import {
     DATABASE_ID,
     tablesDB,
 } from "@/lib/appwrite/server";
+import { ArticleImage } from "./types";
+import { ArticleCategory, ArticleStatus, ArticleTag } from "./constants";
 
-import type {
-    ArticleCategory,
-    ArticleStatus,
-    ArticleType,
-} from "./constants";
+
 
 export interface CreateArticleData {
     title: string;
@@ -16,13 +14,13 @@ export interface CreateArticleData {
     excerpt?: string | null;
     content?: string | null;
     authorBy?: string | null;
-    image?: string | null;
+    image?: ArticleImage | null;
     featured?: boolean;
     status: ArticleStatus;
     publishedAt?: string | null;
     publishedBy?: string | null;
-    category?: ArticleCategory[];
-    articleType?: ArticleType | null;
+    category?: ArticleCategory | null;
+    articleTags?: ArticleTag[] | null;
 }
 
 export async function createArticle(
@@ -34,17 +32,45 @@ export async function createArticle(
         rowId: "unique()",
         data: {
             title: data.title.trim(),
+
             slug: data.slug.trim(),
-            excerpt: data.excerpt ?? null,
-            content: data.content ?? null,
-            authorBy: data.authorBy ?? null,
-            image: data.image ?? null,
-            featured: data.featured ?? false,
-            status: data.status,
-            publishedAt: data.publishedAt ?? null,
-            publishedBy: data.publishedBy ?? null,
-            category: data.category ?? [],
-            articleType: data.articleType ?? null,
+
+            excerpt:
+                data.excerpt?.trim() || null,
+
+            content:
+                data.content ?? null,
+
+            authorBy:
+                data.authorBy?.trim() || null,
+
+            // Appwrite still stores these as
+            // separate fields.
+            image:
+                data.image?.type === "appwrite"
+                    ? data.image.fileId
+                    : data.image?.value || null,
+
+            imageType:
+                data.image?.type ?? null,
+
+            featured:
+                data.featured ?? false,
+
+            status:
+                data.status,
+
+            publishedAt:
+                data.publishedAt ?? null,
+
+            publishedBy:
+                data.publishedBy?.trim() || null,
+
+            category:
+                data.category ?? null,
+
+            articleTags:
+                data.articleTags ?? [],
         },
     });
 }

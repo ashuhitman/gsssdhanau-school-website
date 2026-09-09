@@ -4,9 +4,10 @@ import { useMemo, useState } from "react";
 
 import type { Article } from "@/lib/data/article/types";
 
-import ArticleFilters from "./ArticleFilters";
+
 import ArticleTable from "./ArticleTable";
 import ArticlesPagination from "./ArticlesPagination";
+import ArticleFilters from "./ArticleFilters";
 
 const ARTICLES_PER_PAGE = 5;
 
@@ -20,8 +21,9 @@ export default function ArticleTableSection({
     const [search, setSearch] = useState("");
     const [category, setCategory] = useState("all");
     const [status, setStatus] = useState("all");
-    const [articleType, setArticleType] = useState("all");
     const [currentPage, setCurrentPage] = useState(1);
+    const [articleTag, setArticleTag] = useState("all");
+
 
     const filteredArticles = useMemo(() => {
         const searchValue = search.trim().toLowerCase();
@@ -41,23 +43,20 @@ export default function ArticleTableSection({
 
             const matchesCategory =
                 category === "all" ||
-                article.category.includes(
-                    category as Article["category"][number]
-                );
+                article.category === category;
+            const matchesArticleTag =
+                articleTag === "all" ||
+                article.articleTags.includes(articleTag as Article["articleTags"][number]);
 
             const matchesStatus =
                 status === "all" ||
                 article.status === status;
 
-            const matchesArticleType =
-                articleType === "all" ||
-                article.articleType === articleType;
-
             return (
                 matchesSearch &&
                 matchesCategory &&
-                matchesStatus &&
-                matchesArticleType
+                matchesArticleTag &&
+                matchesStatus
             );
         });
     }, [
@@ -65,7 +64,7 @@ export default function ArticleTableSection({
         search,
         category,
         status,
-        articleType,
+        articleTag
     ]);
 
     const totalPages = Math.max(
@@ -94,8 +93,8 @@ export default function ArticleTableSection({
         setSearch("");
         setCategory("all");
         setStatus("all");
-        setArticleType("all");
         setCurrentPage(1);
+        setArticleTag("all");
     }
 
     function handleSearchChange(value: string) {
@@ -113,9 +112,11 @@ export default function ArticleTableSection({
         setCurrentPage(1);
     }
 
-    function handleArticleTypeChange(value: string) {
-        setArticleType(value);
+    function handleArticleTagChange(value: string) {
+        setArticleTag(value);
         setCurrentPage(1);
+
+
     }
 
     return (
@@ -124,25 +125,25 @@ export default function ArticleTableSection({
                 search={search}
                 category={category}
                 status={status}
-                articleType={articleType}
+                articleTag={articleTag}
                 onSearchChange={handleSearchChange}
                 onCategoryChange={handleCategoryChange}
                 onStatusChange={handleStatusChange}
-                onArticleTypeChange={
-                    handleArticleTypeChange
-                }
+                onArticleTagChange={handleArticleTagChange}
                 onReset={resetFilters}
             />
 
             <ArticleTable articles={paginatedArticles} />
 
-            {totalPages > ARTICLES_PER_PAGE && (<ArticlesPagination
-                currentPage={safeCurrentPage}
-                totalPages={totalPages}
-                totalArticles={filteredArticles.length}
-                articlesPerPage={ARTICLES_PER_PAGE}
-                onPageChange={setCurrentPage}
-            />)}
+            {totalPages > 1 && (
+                <ArticlesPagination
+                    currentPage={safeCurrentPage}
+                    totalPages={totalPages}
+                    totalArticles={filteredArticles.length}
+                    articlesPerPage={ARTICLES_PER_PAGE}
+                    onPageChange={setCurrentPage}
+                />
+            )}
         </section>
     );
 }

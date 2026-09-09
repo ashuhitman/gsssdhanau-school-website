@@ -96,7 +96,7 @@ export default function RelatedContentSidebar({
                             key={article.id}
                             href={`/articles/${article.slug}`}
                             image={
-                                article.image ??
+                                article.image?.value ??
                                 "/images/articles/default-card.jpeg"
                             }
                             imageAlt={article.title}

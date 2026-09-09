@@ -595,6 +595,7 @@
     box-shadow: var(--school-shadow-card-hover);
   }
 
+
   .admin-card {
     @apply rounded-2xl border border-admin-border bg-admin-card;
   }

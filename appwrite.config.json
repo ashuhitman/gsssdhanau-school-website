@@ -521,15 +521,6 @@
                     "format": ""
                 },
                 {
-                    "key": "image",
-                    "type": "varchar",
-                    "required": false,
-                    "array": false,
-                    "size": 255,
-                    "default": null,
-                    "encrypt": false
-                },
-                {
                     "key": "featured",
                     "type": "boolean",
                     "required": false,
@@ -566,7 +557,7 @@
                     "encrypt": false
                 },
                 {
-                    "key": "category",
+                    "key": "articleTags",
                     "type": "string",
                     "required": false,
                     "array": true,
@@ -585,7 +576,7 @@
                     ]
                 },
                 {
-                    "key": "articleType",
+                    "key": "category",
                     "type": "string",
                     "required": false,
                     "array": false,
@@ -621,6 +612,26 @@
                     "twoWayKey": "articles",
                     "onDelete": "setNull",
                     "side": "child"
+                },
+                {
+                    "key": "imageType",
+                    "type": "string",
+                    "required": false,
+                    "array": false,
+                    "default": null,
+                    "format": "enum",
+                    "elements": [
+                        "url",
+                        "appwrite"
+                    ]
+                },
+                {
+                    "key": "image",
+                    "type": "text",
+                    "required": false,
+                    "array": false,
+                    "default": null,
+                    "encrypt": false
                 }
             ],
             "indexes": []
