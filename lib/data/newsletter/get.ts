@@ -14,6 +14,14 @@ import type { Activity } from "@/lib/data/activity/types";
 import type { Faculty } from "@/lib/data/faculty/types";
 import type { NewsletterMember } from "../clubMember/types";
 
+import {
+    ARTICLE_IMAGE_TYPE,
+} from "@/lib/data/article/constants";
+
+import {
+    ACTIVITY_IMAGE_TYPE,
+} from "@/lib/data/activity/constants";
+
 import type {
     Newsletter,
     NewsletterWithContent,
@@ -33,7 +41,7 @@ const NEWSLETTER_RELATIONS = [
 
 /* ============================================================
    Faculty Mapper
-   ------------------------------------------------------------
+
    Relationship rows returned by Appwrite still contain:
 
    $id
@@ -124,20 +132,17 @@ function mapFaculty(
                 : null,
 
         firstJoiningDate:
-            typeof row.firstJoiningDate ===
-                "string"
+            typeof row.firstJoiningDate === "string"
                 ? row.firstJoiningDate
                 : null,
 
         currentPostJoiningDate:
-            typeof row.currentPostJoiningDate ===
-                "string"
+            typeof row.currentPostJoiningDate === "string"
                 ? row.currentPostJoiningDate
                 : null,
 
         currentSchoolJoiningDate:
-            typeof row.currentSchoolJoiningDate ===
-                "string"
+            typeof row.currentSchoolJoiningDate === "string"
                 ? row.currentSchoolJoiningDate
                 : null,
 
@@ -160,6 +165,55 @@ function mapFaculty(
 }
 
 /* ============================================================
+   Article Image Mapper
+============================================================ */
+
+function mapArticleImage(
+    image: unknown,
+    imageType: unknown
+): Article["image"] {
+    const cleanImage =
+        typeof image === "string"
+            ? image.trim()
+            : "";
+
+    if (!cleanImage) {
+        return null;
+    }
+
+    if (
+        imageType === ARTICLE_IMAGE_TYPE.APPWRITE
+    ) {
+        return {
+            value:
+                getImageUrl(
+                    cleanImage,
+                    APPWRITE_BUCKET_ID
+                ) ??
+                "/images/articles/default-card.jpeg",
+
+            type: ARTICLE_IMAGE_TYPE.APPWRITE,
+
+            fileId: cleanImage,
+        };
+    }
+
+    if (
+        imageType === ARTICLE_IMAGE_TYPE.URL
+    ) {
+        return {
+            value: cleanImage,
+
+            type: ARTICLE_IMAGE_TYPE.URL,
+
+            fileId: null,
+        };
+    }
+
+    return null;
+}
+
+/* ============================================================
    Article Mapper
 ============================================================ */
 
@@ -176,11 +230,20 @@ function mapArticle(
     const row =
         value as Record<string, unknown>;
 
-    const categories = Array.isArray(
-        row.category
-    )
-        ? row.category
-        : [];
+    const articleTags =
+        Array.isArray(row.articleTags)
+            ? row.articleTags.filter(
+                (
+                    item
+                ): item is Article["articleTags"][number] =>
+                    typeof item === "string"
+            )
+            : [];
+
+    const category =
+        typeof row.category === "string"
+            ? (row.category as Article["category"])
+            : null;
 
     return {
         id: String(row.$id),
@@ -208,14 +271,10 @@ function mapArticle(
                 ? row.authorBy
                 : null,
 
-        image:
-            typeof row.image === "string" &&
-                row.image.trim()
-                ? getImageUrl(
-                    row.image,
-                    APPWRITE_BUCKET_ID
-                )
-                : "/images/articles/default-card.jpeg",
+        image: mapArticleImage(
+            row.image,
+            row.imageType
+        ),
 
         featured:
             Boolean(row.featured),
@@ -233,14 +292,59 @@ function mapArticle(
                 ? row.publishedBy
                 : null,
 
-        category:
-            categories as Article["category"],
+        category,
 
-        articleType:
-            typeof row.articleType === "string"
-                ? (row.articleType as Article["articleType"])
-                : null,
+        articleTags,
     };
+}
+
+/* ============================================================
+   Activity Image Mapper
+============================================================ */
+
+function mapActivityImage(
+    image: unknown,
+    imageType: unknown
+): Activity["image"] {
+    const cleanImage =
+        typeof image === "string"
+            ? image.trim()
+            : "";
+
+    if (!cleanImage) {
+        return null;
+    }
+
+    if (
+        imageType === ACTIVITY_IMAGE_TYPE.APPWRITE
+    ) {
+        return {
+            value:
+                getImageUrl(
+                    cleanImage,
+                    APPWRITE_BUCKET_ID
+                ) ??
+                "/images/activity/default-card.jpeg",
+
+            type: ACTIVITY_IMAGE_TYPE.APPWRITE,
+
+            fileId: cleanImage,
+        };
+    }
+
+    if (
+        imageType === ACTIVITY_IMAGE_TYPE.URL
+    ) {
+        return {
+            value: cleanImage,
+
+            type: ACTIVITY_IMAGE_TYPE.URL,
+
+            fileId: null,
+        };
+    }
+
+    return null;
 }
 
 /* ============================================================
@@ -260,18 +364,24 @@ function mapActivity(
     const row =
         value as Record<string, unknown>;
 
-    const activityType =
-        row.activityType as Activity["activityType"];
-
     const status =
         row.status as Activity["status"];
 
     const participantType =
         row.participantType as Activity["participantType"];
 
-    const category = Array.isArray(row.category)
-        ? (row.category as Activity["category"])
-        : [];
+    const activityTags =
+        Array.isArray(row.activityTags)
+            ? row.activityTags.filter(
+                (
+                    item
+                ): item is Activity["activityTags"][number] =>
+                    typeof item === "string"
+            )
+            : [];
+
+    const category =
+        row.category as Activity["category"];
 
     return {
         id: String(row.$id),
@@ -317,18 +427,14 @@ function mapActivity(
                 ? row.excerpt
                 : null,
 
-        image:
-            typeof row.image === "string" &&
-                row.image.trim()
-                ? getImageUrl(
-                    row.image,
-                    APPWRITE_BUCKET_ID
-                )
-                : null,
-
-        activityType,
+        image: mapActivityImage(
+            row.image,
+            row.imageType
+        ),
 
         category,
+
+        activityTags,
     };
 }
 
@@ -525,7 +631,9 @@ function mapNewsletterWithContent(
    Get All Newsletters
 ============================================================ */
 
-export async function getNewsletters(): Promise<Newsletter[]> {
+export async function getNewsletters(): Promise<
+    Newsletter[]
+> {
     const response =
         await tablesDB.listRows({
             databaseId: DATABASE_ID,
@@ -556,7 +664,9 @@ export async function getNewsletters(): Promise<Newsletter[]> {
    - Used for archive
 ============================================================ */
 
-export async function getPublishedNewsletters(): Promise<Newsletter[]> {
+export async function getPublishedNewsletters(): Promise<
+    Newsletter[]
+> {
     const response =
         await tablesDB.listRows({
             databaseId: DATABASE_ID,

@@ -9,7 +9,7 @@ import {
 
 import type { Activity } from "@/lib/data/activity/types";
 import {
-    ACTIVITY_TYPE,
+    ACTIVITY_CATEGORY,
 } from "@/lib/data/activity/constants";
 
 /* ============================================================
@@ -20,43 +20,43 @@ const DEFAULT_CARD_IMAGE =
     "/images/activity/default-card.jpeg";
 
 /* ============================================================
-   Activity Type Labels
+   Activity Category Labels
 ============================================================ */
 
-const activityTypeLabels: Record<
-    Activity["activityType"],
+const activityCategoryLabels: Record<
+    Activity["category"],
     string
 > = {
-    [ACTIVITY_TYPE.EVENT]: "Event",
-    [ACTIVITY_TYPE.ACTIVITY]: "Activity",
-    [ACTIVITY_TYPE.ACHIEVEMENT]: "Achievement",
-    [ACTIVITY_TYPE.COMPETITION]: "Competition",
+    [ACTIVITY_CATEGORY.EVENT]: "Event",
+    [ACTIVITY_CATEGORY.ACTIVITY]: "Activity",
+    [ACTIVITY_CATEGORY.ACHIEVEMENT]: "Achievement",
+    [ACTIVITY_CATEGORY.COMPETITION]: "Competition",
 };
 
 /* ============================================================
-   Activity Type Styles
+   Activity Category Styles
 ============================================================ */
 
-const activityTypeStyles: Record<
-    Activity["activityType"],
+const activityCategoryStyles: Record<
+    Activity["category"],
     string
 > = {
-    [ACTIVITY_TYPE.EVENT]: `
+    [ACTIVITY_CATEGORY.EVENT]: `
         bg-primary-soft
         text-primary
     `,
 
-    [ACTIVITY_TYPE.ACTIVITY]: `
+    [ACTIVITY_CATEGORY.ACTIVITY]: `
         bg-accent-soft
         text-accent
     `,
 
-    [ACTIVITY_TYPE.ACHIEVEMENT]: `
+    [ACTIVITY_CATEGORY.ACHIEVEMENT]: `
         bg-primary-soft
         text-primary
     `,
 
-    [ACTIVITY_TYPE.COMPETITION]: `
+    [ACTIVITY_CATEGORY.COMPETITION]: `
         bg-accent-soft
         text-accent
     `,
@@ -72,8 +72,8 @@ export default function ActivityCard({
     activity: Activity;
 }) {
     const imageSrc =
-        activity.image?.trim()
-            ? activity.image
+        activity.image?.value?.trim()
+            ? activity.image.value
             : DEFAULT_CARD_IMAGE;
 
     const activityHref =
@@ -198,7 +198,9 @@ export default function ActivityCard({
                     />
 
                     <time dateTime={activity.activityDate}>
-                        {formatDate(activity.activityDate)}
+                        {formatDate(
+                            activity.activityDate
+                        )}
                     </time>
                 </div>
             </Link>
@@ -216,7 +218,7 @@ export default function ActivityCard({
                 "
             >
                 {/* ==================================================
-                    Type
+                    Category
                 ================================================== */}
 
                 <span
@@ -229,14 +231,15 @@ export default function ActivityCard({
                         font-bold
                         uppercase
                         tracking-wider
-                        ${activityTypeStyles[
-                        activity.activityType
-                        ]}
+                        ${activityCategoryStyles[
+                        activity.category
+                        ]
+                        }
                     `}
                 >
                     {
-                        activityTypeLabels[
-                        activity.activityType
+                        activityCategoryLabels[
+                        activity.category
                         ]
                     }
                 </span>
@@ -293,7 +296,7 @@ export default function ActivityCard({
                         pt-4
                     "
                 >
-                    {/* Categories */}
+                    {/* Activity Tags */}
 
                     <div
                         className="
@@ -319,31 +322,32 @@ export default function ActivityCard({
                                 items-center
                             "
                         >
-                            {activity.category
+                            {activity.activityTags
                                 .slice(0, 2)
                                 .map(
                                     (
-                                        category,
+                                        tag,
                                         index
                                     ) => (
                                         <span
-                                            key={category}
+                                            key={tag}
                                             className="
                                                 inline-flex
                                                 items-center
                                             "
                                         >
-                                            {index > 0 && (
-                                                <span
-                                                    aria-hidden="true"
-                                                    className="
+                                            {index >
+                                                0 && (
+                                                    <span
+                                                        aria-hidden="true"
+                                                        className="
                                                         mx-2
                                                         h-3
                                                         w-px
                                                         bg-border
                                                     "
-                                                />
-                                            )}
+                                                    />
+                                                )}
 
                                             <span
                                                 className="
@@ -354,7 +358,7 @@ export default function ActivityCard({
                                                     text-muted
                                                 "
                                             >
-                                                {category}
+                                                {tag}
                                             </span>
                                         </span>
                                     )
@@ -418,7 +422,11 @@ function formatDate(date: string): string {
 
     const parsedDate = new Date(date);
 
-    if (Number.isNaN(parsedDate.getTime())) {
+    if (
+        Number.isNaN(
+            parsedDate.getTime()
+        )
+    ) {
         return date;
     }
 

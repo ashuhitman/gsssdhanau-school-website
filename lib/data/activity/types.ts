@@ -1,9 +1,16 @@
 import type {
     ActivityCategory,
+    ActivityImageType,
     ActivityStatus,
-    ActivityType,
+    ActivityTags,
     ParticipantType,
 } from "./constants";
+
+export interface ActivityImage {
+    value: string;
+    type: ActivityImageType;
+    fileId: string | null;
+}
 
 export interface Activity {
     id: string;
@@ -12,8 +19,8 @@ export interface Activity {
 
     title: string;
     slug: string;
-
     description: string | null;
+
     activityDate: string;
 
     status: ActivityStatus;
@@ -24,8 +31,9 @@ export interface Activity {
     participantType: ParticipantType | null;
 
     excerpt: string | null;
-    image: string | null;
 
-    activityType: ActivityType;
-    category: ActivityCategory[];
+    image: ActivityImage | null;
+
+    category: ActivityCategory;
+    activityTags: ActivityTags[];
 }

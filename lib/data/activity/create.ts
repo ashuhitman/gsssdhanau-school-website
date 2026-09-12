@@ -8,8 +8,9 @@ import {
 
 import type {
     ActivityCategory,
+    ActivityImageType,
     ActivityStatus,
-    ActivityType,
+    ActivityTags,
     ParticipantType,
 } from "./constants";
 
@@ -27,7 +28,7 @@ function slugify(value: string): string {
 }
 
 async function createUniqueSlug(
-    title: string,
+    title: string
 ): Promise<string> {
     const baseSlug =
         slugify(title) || "activity";
@@ -61,22 +62,30 @@ async function createUniqueSlug(
 
 export interface CreateActivityData {
     title: string;
+
     description?: string | null;
+
     activityDate: string;
 
     status?: ActivityStatus;
 
     publishedAt?: string | null;
+
     publishedBy?: string | null;
 
     participantName?: string | null;
+
     participantType?: ParticipantType | null;
 
     excerpt?: string | null;
+
     image?: string | null;
 
-    activityType: ActivityType;
-    category?: ActivityCategory[];
+    imageType?: ActivityImageType | null;
+
+    category: ActivityCategory;
+
+    activityTags?: ActivityTags[];
 }
 
 /* ============================================================
@@ -84,14 +93,14 @@ export interface CreateActivityData {
 ============================================================ */
 
 export async function createActivity(
-    data: CreateActivityData,
+    data: CreateActivityData
 ) {
     const status =
         data.status ?? "draft";
 
     const slug =
         await createUniqueSlug(
-            data.title,
+            data.title
         );
 
     return tablesDB.createRow({
@@ -101,6 +110,7 @@ export async function createActivity(
 
         data: {
             title: data.title,
+
             slug,
 
             description:
@@ -134,11 +144,14 @@ export async function createActivity(
             image:
                 data.image ?? null,
 
-            activityType:
-                data.activityType,
+            imageType:
+                data.imageType ?? null,
 
             category:
-                data.category ?? [],
+                data.category,
+
+            activityTags:
+                data.activityTags ?? [],
         },
     });
 }

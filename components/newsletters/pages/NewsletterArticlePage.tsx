@@ -33,10 +33,10 @@ export function NewsletterArticlePage({
             <div className="flex-1">
                 <ContentDetails
                     title={article.title}
-                    image={article.image}
+                    image={article.image?.value}
                     imageAlt={article.title}
-                    contentType={article.articleType ?? undefined}
-                    category={article.category}
+                    contentTags={article.articleTags ?? undefined}
+                    category={article.category ?? undefined}
                     excerpt={article.excerpt ?? undefined}
                     content={article.content}
                     publishedAt={

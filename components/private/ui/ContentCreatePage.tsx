@@ -19,10 +19,17 @@ import FormActions from "../forms/FormActions";
 
 import ContentDetails from "@/components/content/ContentDetails";
 
-import { Save, Send } from "lucide-react";
+import {
+    Edit2,
+    Save,
+    Send,
+} from "lucide-react";
 
 import { useSnackbar } from "./Snackbar/SnackbarProvider";
-import { titleCase } from "@/lib/utils/utils";
+import {
+    slugify,
+    titleCase,
+} from "@/lib/utils/utils";
 
 import type {
     ArticleImage,
@@ -72,6 +79,7 @@ interface ContentCreatePageProps {
 
 export interface ContentCreateValues {
     title: string;
+    slug: string;
     excerpt: string;
     content: string;
     category: ArticleCategory | "";
@@ -114,6 +122,7 @@ export default function ContentCreatePage({
     const [values, setValues] =
         useState<ContentCreateValues>({
             title: "",
+            slug: "",
             excerpt: "",
             content: "",
             category: "",
@@ -130,6 +139,9 @@ export default function ContentCreatePage({
         useState(false);
 
     const [publishing, setPublishing] =
+        useState(false);
+
+    const [slugEditing, setSlugEditing] =
         useState(false);
 
     function updateValue<
@@ -245,10 +257,7 @@ export default function ContentCreatePage({
         return {
             title: values.title,
 
-            slug: values.title
-                .trim()
-                .toLowerCase()
-                .replace(/\s+/g, "-"),
+            slug: values.slug,
 
             excerpt:
                 values.excerpt,
@@ -661,17 +670,96 @@ export default function ContentCreatePage({
                                         }
                                         onChange={(
                                             event
-                                        ) =>
-                                            updateValue(
-                                                "title",
+                                        ) => {
+                                            const newTitle =
                                                 event
                                                     .target
-                                                    .value
-                                            )
-                                        }
+                                                    .value;
+
+                                            setValues(
+                                                (
+                                                    current
+                                                ) => ({
+                                                    ...current,
+                                                    title: newTitle,
+                                                    slug:
+                                                        slugEditing
+                                                            ? current.slug
+                                                            : slugify(
+                                                                newTitle
+                                                            ),
+                                                })
+                                            );
+                                        }}
                                         placeholder="Enter title"
                                         required
                                     />
+                                </FormField>
+
+                                {/* Slug */}
+
+                                <FormField
+                                    label="Slug"
+                                    htmlFor="content-slug"
+                                    description="The URL-friendly version of the title."
+                                    className="md:col-span-2"
+                                >
+                                    <div className="relative">
+                                        <FormInput
+                                            id="content-slug"
+                                            value={
+                                                values.slug
+                                            }
+                                            disabled={
+                                                !slugEditing
+                                            }
+                                            onChange={(
+                                                event
+                                            ) =>
+                                                updateValue(
+                                                    "slug",
+                                                    slugify(
+                                                        event
+                                                            .target
+                                                            .value
+                                                    )
+                                                )
+                                            }
+                                            placeholder="enter-url-slug"
+                                            className="pr-11"
+                                        />
+
+                                        {!slugEditing && (
+                                            <button
+                                                type="button"
+                                                onClick={() =>
+                                                    setSlugEditing(
+                                                        true
+                                                    )
+                                                }
+                                                aria-label="Edit slug"
+                                                title="Edit slug"
+                                                className="
+                                                    absolute
+                                                    right-2
+                                                    top-1/2
+                                                    flex
+                                                    size-8
+                                                    -translate-y-1/2
+                                                    cursor-pointer
+                                                    items-center
+                                                    justify-center
+                                                    rounded-md
+                                                    text-admin-muted
+                                                    transition-colors
+                                                    hover:bg-admin-surface
+                                                    hover:text-admin-heading
+                                                "
+                                            >
+                                                <Edit2 className="size-4" />
+                                            </button>
+                                        )}
+                                    </div>
                                 </FormField>
 
                                 {/* Short Description */}

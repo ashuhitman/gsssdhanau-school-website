@@ -30,9 +30,9 @@ export function NewsletterActivityPage({
         >
             <ContentDetails
                 title={activity.title}
-                image={activity.image}
+                image={activity.image?.value}
                 imageAlt={activity.title}
-                contentType={activity.activityType}
+                contentTags={activity.activityTags}
                 category={activity.category}
                 excerpt={activity.excerpt ?? undefined}
                 content={activity.description}

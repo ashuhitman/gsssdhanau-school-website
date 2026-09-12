@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation";
+
 import Link from "next/link";
 
 import { ArrowLeft } from "lucide-react";
@@ -29,19 +30,9 @@ interface ActivityPageProps {
 export async function generateStaticParams() {
     const activities = await getPublishedActivities();
 
-    const params = activities.map((activity) => ({
+    return activities.map((activity) => ({
         slug: activity.slug,
     }));
-
-    console.log("=== STATIC ACTIVITY PATHS ===");
-
-    params.forEach(({ slug }) => {
-        console.log(`/activities/${slug}`);
-    });
-
-    console.log("=== TOTAL:", params.length, "===");
-
-    return params;
 }
 
 /* ============================================================
@@ -54,8 +45,6 @@ export default async function ActivityPage({
     const { slug } = await params;
 
     const decodedSlug = decodeURIComponent(slug);
-
-    console.log("ACTIVITY SLUG:", decodedSlug);
 
     /* ========================================================
        Activity
@@ -74,7 +63,7 @@ export default async function ActivityPage({
 
     const relatedActivities =
         await getRelatedActivities(
-            activity.activityType,
+            activity.activityTags,
             activity.id
         );
 
@@ -142,22 +131,14 @@ export default async function ActivityPage({
                 ================================================== */}
 
                 <div
-                    className={`
+                    className="
                         mt-5
                         grid
                         items-start
                         gap-6
-                        ${hasRelatedActivities
-                            ? `
-                                    lg:grid-cols-[minmax(0,1fr)_18.75rem]
-                                    xl:grid-cols-[minmax(0,1fr)_20rem]
-                                `
-                            : `
-                                    lg:grid-cols-[minmax(0,1fr)_18.75rem]
-                                    xl:grid-cols-[minmax(0,1fr)_20rem]
-                                `
-                        }
-                    `}
+                        lg:grid-cols-[minmax(0,1fr)_18.75rem]
+                        xl:grid-cols-[minmax(0,1fr)_20rem]
+                    "
                 >
                     {/* ==================================================
                         Activity Details
@@ -179,12 +160,10 @@ export default async function ActivityPage({
                     >
                         <ContentDetails
                             title={activity.title}
-                            image={activity.image}
+                            image={activity.image?.value ?? ""}
                             imageAlt={activity.title}
-                            contentType={
-                                activity.activityType
-                            }
                             category={activity.category}
+                            contentTags={activity.activityTags}
                             excerpt={
                                 activity.excerpt ??
                                 undefined

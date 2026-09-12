@@ -5,7 +5,12 @@ import { useMemo, useState } from "react";
 import type { Activity } from "@/lib/data/activity/types";
 import {
     ACTIVITY_CATEGORY,
-    ACTIVITY_TYPE,
+    ACTIVITY_TAGS,
+} from "@/lib/data/activity/constants";
+
+import type {
+    ActivityCategory,
+    ActivityTags,
 } from "@/lib/data/activity/constants";
 
 import FeaturedActivityCard from "./FeaturedActivityCard";
@@ -17,11 +22,8 @@ import ActivityCard from "./ActivityCard";
 
 type ActivityFilter =
     | "all"
-    | "event"
-    | "activity"
-    | "sports"
-    | "achievement"
-    | "academic";
+    | ActivityCategory
+    | ActivityTags;
 
 /* ============================================================
    Filters
@@ -36,23 +38,23 @@ const filters: {
             label: "All",
         },
         {
-            value: ACTIVITY_TYPE.EVENT,
+            value: ACTIVITY_CATEGORY.EVENT,
             label: "Events",
         },
         {
-            value: ACTIVITY_TYPE.ACTIVITY,
+            value: ACTIVITY_CATEGORY.ACTIVITY,
             label: "Activities",
         },
         {
-            value: ACTIVITY_CATEGORY.SPORTS,
+            value: ACTIVITY_TAGS.SPORTS,
             label: "Sports",
         },
         {
-            value: ACTIVITY_TYPE.ACHIEVEMENT,
+            value: ACTIVITY_CATEGORY.ACHIEVEMENT,
             label: "Achievements",
         },
         {
-            value: ACTIVITY_CATEGORY.ACADEMIC,
+            value: ACTIVITY_TAGS.ACADEMIC,
             label: "Academic",
         },
     ];
@@ -78,42 +80,59 @@ export default function ActivitiesClient({
             return activities;
         }
 
-        return activities.filter((activity) => {
-            /*
-             * Activity type filters
-             */
+        /*
+         * Check whether the selected filter is a category.
+         *
+         * category:
+         * - event
+         * - activity
+         * - achievement
+         * - competition
+         */
+        const isCategory = Object.values(
+            ACTIVITY_CATEGORY
+        ).includes(
+            activeFilter as ActivityCategory
+        );
 
-            if (
-                activeFilter === ACTIVITY_TYPE.EVENT ||
-                activeFilter === ACTIVITY_TYPE.ACTIVITY ||
-                activeFilter === ACTIVITY_TYPE.ACHIEVEMENT
-            ) {
-                return activity.activityType === activeFilter;
-            }
+        if (isCategory) {
+            return activities.filter(
+                (activity) =>
+                    activity.category ===
+                    activeFilter
+            );
+        }
 
-            /*
-             * Category filters
-             *
-             * category is an array,
-             * so an activity can belong
-             * to multiple categories.
-             */
-
-            return activity.category.includes(activeFilter);
-        });
+        /*
+         * Otherwise the filter is an activity tag.
+         *
+         * activityTags:
+         * - sports
+         * - academic
+         * - cultural
+         * - social
+         */
+        return activities.filter(
+            (activity) =>
+                activity.activityTags.includes(
+                    activeFilter as ActivityTags
+                )
+        );
     }, [activities, activeFilter]);
 
     /* ========================================================
        Featured Activity
     ======================================================== */
 
-    const featuredActivity = filteredActivities[0];
+    const featuredActivity =
+        filteredActivities[0];
 
     /* ========================================================
        Latest Activities
     ======================================================== */
 
-    const latestActivities = filteredActivities.slice(1);
+    const latestActivities =
+        filteredActivities.slice(1);
 
     return (
         <div className="mt-8">
@@ -132,14 +151,17 @@ export default function ActivitiesClient({
             >
                 {filters.map((filter) => {
                     const isActive =
-                        activeFilter === filter.value;
+                        activeFilter ===
+                        filter.value;
 
                     return (
                         <button
                             key={filter.value}
                             type="button"
                             onClick={() =>
-                                setActiveFilter(filter.value)
+                                setActiveFilter(
+                                    filter.value
+                                )
                             }
                             className={`
                                 rounded-full
@@ -184,39 +206,42 @@ export default function ActivitiesClient({
                     ================================================== */}
 
                     <FeaturedActivityCard
-                        activity={featuredActivity}
+                        activity={
+                            featuredActivity
+                        }
                     />
 
                     {/* ==================================================
                         Latest Updates
                     ================================================== */}
 
-                    {latestActivities.length > 0 && (
-                        <section className="mt-10">
-                            <div
-                                className="
+                    {latestActivities.length >
+                        0 && (
+                            <section className="mt-10">
+                                <div
+                                    className="
                                     mb-5
                                     flex
                                     items-center
                                     justify-between
                                     gap-4
                                 "
-                            >
-                                <h2
-                                    className="
+                                >
+                                    <h2
+                                        className="
                                         text-xl
                                         font-bold
                                         tracking-tight
                                         text-heading
                                         sm:text-2xl
                                     "
-                                >
-                                    Latest Updates
-                                </h2>
-                            </div>
+                                    >
+                                        Latest Updates
+                                    </h2>
+                                </div>
 
-                            <div
-                                className="
+                                <div
+                                    className="
                                     grid
                                     grid-cols-1
                                     gap-4
@@ -224,18 +249,22 @@ export default function ActivitiesClient({
                                     lg:grid-cols-3
                                     xl:grid-cols-4
                                 "
-                            >
-                                {latestActivities.map(
-                                    (activity) => (
-                                        <ActivityCard
-                                            key={activity.id}
-                                            activity={activity}
-                                        />
-                                    )
-                                )}
-                            </div>
-                        </section>
-                    )}
+                                >
+                                    {latestActivities.map(
+                                        (activity) => (
+                                            <ActivityCard
+                                                key={
+                                                    activity.id
+                                                }
+                                                activity={
+                                                    activity
+                                                }
+                                            />
+                                        )
+                                    )}
+                                </div>
+                            </section>
+                        )}
                 </>
             ) : (
                 /* ==================================================
@@ -272,27 +301,31 @@ export default function ActivitiesClient({
                             text-muted
                         "
                     >
-                        There are no published activities
-                        in this category.
+                        There are no published
+                        activities in this
+                        category.
                     </p>
 
-                    {activeFilter !== "all" && (
-                        <button
-                            type="button"
-                            onClick={() =>
-                                setActiveFilter("all")
-                            }
-                            className="
+                    {activeFilter !==
+                        "all" && (
+                            <button
+                                type="button"
+                                onClick={() =>
+                                    setActiveFilter(
+                                        "all"
+                                    )
+                                }
+                                className="
                                 mt-4
                                 text-sm
                                 font-semibold
                                 text-primary
                                 hover:underline
                             "
-                        >
-                            View all activities
-                        </button>
-                    )}
+                            >
+                                View all activities
+                            </button>
+                        )}
                 </div>
             )}
         </div>

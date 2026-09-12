@@ -150,15 +150,6 @@
                     "encrypt": false
                 },
                 {
-                    "key": "image",
-                    "type": "varchar",
-                    "required": false,
-                    "array": false,
-                    "size": 255,
-                    "default": null,
-                    "encrypt": false
-                },
-                {
                     "key": "activityType",
                     "type": "string",
                     "required": true,
@@ -206,6 +197,26 @@
                     "twoWayKey": "activities",
                     "onDelete": "setNull",
                     "side": "child"
+                },
+                {
+                    "key": "imageType",
+                    "type": "string",
+                    "required": false,
+                    "array": false,
+                    "default": null,
+                    "format": "enum",
+                    "elements": [
+                        "url",
+                        "appwrite"
+                    ]
+                },
+                {
+                    "key": "image",
+                    "type": "text",
+                    "required": false,
+                    "array": false,
+                    "default": null,
+                    "encrypt": false
                 }
             ],
             "indexes": []

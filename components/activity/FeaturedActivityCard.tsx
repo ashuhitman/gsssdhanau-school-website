@@ -7,10 +7,7 @@ import {
 } from "lucide-react";
 
 import type { Activity } from "@/lib/data/activity/types";
-import {
-    ACTIVITY_CATEGORY,
-    ACTIVITY_TYPE,
-} from "@/lib/data/activity/constants";
+import { ACTIVITY_CATEGORY } from "@/lib/data/activity/constants";
 
 /* ============================================================
    Default Image
@@ -20,31 +17,31 @@ const DEFAULT_FEATURED_IMAGE =
     "/images/activity/default-featured.jpeg";
 
 /* ============================================================
-   Activity Type Labels
+   Activity Category Labels
 ============================================================ */
 
-const activityTypeLabels: Record<
-    Activity["activityType"],
+const activityCategoryLabels: Record<
+    Activity["category"],
     string
 > = {
-    [ACTIVITY_TYPE.EVENT]: "Event",
-    [ACTIVITY_TYPE.ACTIVITY]: "Activity",
-    [ACTIVITY_TYPE.ACHIEVEMENT]: "Achievement",
-    [ACTIVITY_TYPE.COMPETITION]: "Competition",
+    [ACTIVITY_CATEGORY.EVENT]: "Event",
+    [ACTIVITY_CATEGORY.ACTIVITY]: "Activity",
+    [ACTIVITY_CATEGORY.ACHIEVEMENT]: "Achievement",
+    [ACTIVITY_CATEGORY.COMPETITION]: "Competition",
 };
 
 /* ============================================================
-   Category Labels
+   Activity Tag Labels
 ============================================================ */
 
-const categoryLabels: Record<
-    Activity["category"][number],
+const activityTagLabels: Record<
+    Activity["activityTags"][number],
     string
 > = {
-    [ACTIVITY_CATEGORY.SPORTS]: "Sports",
-    [ACTIVITY_CATEGORY.ACADEMIC]: "Academic",
-    [ACTIVITY_CATEGORY.CULTURAL]: "Cultural",
-    [ACTIVITY_CATEGORY.SOCIAL]: "Social",
+    sports: "Sports",
+    academic: "Academic",
+    cultural: "Cultural",
+    social: "Social",
 };
 
 /* ============================================================
@@ -57,13 +54,12 @@ export default function FeaturedActivityCard({
     activity: Activity;
 }) {
     const imageSrc =
-        activity.image?.trim()
-            ? activity.image
+        activity.image?.value?.trim()
+            ? activity.image.value
             : DEFAULT_FEATURED_IMAGE;
 
     const activityHref =
         `/activities/${activity.slug}`;
-    console.log("Activity Href:", activityHref, activity); // Debugging line
 
     return (
         <article
@@ -118,7 +114,7 @@ export default function FeaturedActivityCard({
                         "
                     />
 
-                    {/* Activity Type Badge */}
+                    {/* Activity Category Badge */}
 
                     <span
                         className="
@@ -137,11 +133,7 @@ export default function FeaturedActivityCard({
                             shadow-sm
                         "
                     >
-                        {
-                            activityTypeLabels[
-                            activity.activityType
-                            ]
-                        }
+                        {activityCategoryLabels[activity.category]}
                     </span>
                 </Link>
 
@@ -160,10 +152,10 @@ export default function FeaturedActivityCard({
                     "
                 >
                     {/* ==================================================
-                        Categories
+                        Activity Tags
                     ================================================== */}
 
-                    {activity.category.length > 0 && (
+                    {activity.activityTags.length > 0 && (
                         <div
                             className="
                                 flex
@@ -172,29 +164,23 @@ export default function FeaturedActivityCard({
                                 gap-1.5
                             "
                         >
-                            {activity.category.map(
-                                (category) => (
-                                    <span
-                                        key={category}
-                                        className="
-                                            rounded-md
-                                            bg-primary-soft
-                                            px-2
-                                            py-0.5
-                                            text-[0.6875rem]
-                                            font-medium
-                                            capitalize
-                                            text-primary
-                                        "
-                                    >
-                                        {
-                                            categoryLabels[
-                                            category
-                                            ]
-                                        }
-                                    </span>
-                                )
-                            )}
+                            {activity.activityTags.map((tag) => (
+                                <span
+                                    key={tag}
+                                    className="
+                                        rounded-md
+                                        bg-primary-soft
+                                        px-2
+                                        py-0.5
+                                        text-[0.6875rem]
+                                        font-medium
+                                        capitalize
+                                        text-primary
+                                    "
+                                >
+                                    {activityTagLabels[tag]}
+                                </span>
+                            ))}
                         </div>
                     )}
 

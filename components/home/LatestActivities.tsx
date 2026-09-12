@@ -68,7 +68,7 @@ export function LatestActivities({
                         >
                             {activity.image ? (
                                 <Image
-                                    src={activity.image}
+                                    src={activity.image.value}
                                     alt={activity.title}
                                     fill
                                     sizes="3.5rem"

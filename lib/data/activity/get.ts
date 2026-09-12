@@ -3,93 +3,174 @@ import "server-only";
 import { Query } from "node-appwrite";
 
 import {
-    tablesDB,
     DATABASE_ID,
     ACTIVITIES_TABLE_ID,
     APPWRITE_BUCKET_ID,
+    tablesDB,
 } from "@/lib/appwrite/server";
 
 import { getImageUrl } from "@/lib/utils/utils";
 
 import {
     ACTIVITY_CATEGORY,
+    ACTIVITY_IMAGE_TYPE,
     ACTIVITY_STATUS,
-    ACTIVITY_TYPE,
+    ACTIVITY_TAGS,
     PARTICIPANT_TYPE,
 } from "./constants";
 
-import type { Activity } from "./types";
+import type {
+    Activity,
+    ActivityImage,
+} from "./types";
 
-/* ============================================================
-   Mapper
-============================================================ */
+/**
+ * Maps the Appwrite activity image fields to the
+ * application's combined ActivityImage object.
+ *
+ * Appwrite database schema:
+ *
+ * image:
+ * - Appwrite image => file ID
+ * - External URL   => complete image URL
+ *
+ * imageType:
+ * - "appwrite"
+ * - "url"
+ *
+ * Application model:
+ *
+ * Appwrite:
+ * {
+ *     value: "usable Appwrite image URL",
+ *     type: "appwrite",
+ *     fileId: "Appwrite file ID"
+ * }
+ *
+ * External URL:
+ * {
+ *     value: "https://example.com/image.jpg",
+ *     type: "url",
+ *     fileId: null
+ * }
+ */
+function mapActivityImage(
+    image: unknown,
+    imageType: unknown
+): ActivityImage | null {
+    const cleanImage =
+        typeof image === "string"
+            ? image.trim()
+            : "";
 
-function mapActivity(row: Record<string, unknown>): Activity {
-    const activityType = row.activityType as Activity["activityType"];
-    const status = row.status as Activity["status"];
-    const participantType =
-        row.participantType as Activity["participantType"];
+    /*
+     * No image.
+     */
+    if (!cleanImage) {
+        return null;
+    }
 
-    const category = Array.isArray(row.category)
-        ? (row.category as Activity["category"])
+    /*
+     * Appwrite image.
+     *
+     * In Appwrite:
+     * image = file ID
+     * imageType = "appwrite"
+     *
+     * Convert the file ID into the actual usable
+     * Appwrite image URL.
+     */
+    if (
+        imageType === ACTIVITY_IMAGE_TYPE.APPWRITE
+    ) {
+        return {
+            value:
+                getImageUrl(
+                    cleanImage,
+                    APPWRITE_BUCKET_ID
+                ) ?? "/images/activities/default-card.jpeg",
+
+            type: ACTIVITY_IMAGE_TYPE.APPWRITE,
+
+            fileId: cleanImage,
+        };
+    }
+
+    /*
+     * External image URL.
+     *
+     * In Appwrite:
+     * image = complete URL
+     * imageType = "url"
+     *
+     * The value is already a usable image URL,
+     * so do not pass it through getImageUrl().
+     */
+    if (
+        imageType === ACTIVITY_IMAGE_TYPE.URL
+    ) {
+        return {
+            value: cleanImage,
+
+            type: ACTIVITY_IMAGE_TYPE.URL,
+
+            fileId: null,
+        };
+    }
+
+    /*
+     * Unknown image type.
+     */
+    return null;
+}
+
+/**
+ * Maps an Appwrite activity row to the
+ * application's Activity model.
+ */
+function mapActivity(
+    row: Record<string, unknown>
+): Activity {
+    const activityTags = Array.isArray(
+        row.activityTags
+    )
+        ? row.activityTags.filter(
+            (tag): tag is string =>
+                typeof tag === "string"
+        )
         : [];
-
-    if (
-        !Object.values(ACTIVITY_TYPE).includes(
-            activityType
-        )
-    ) {
-        throw new Error(
-            `Invalid activity type: ${String(
-                activityType
-            )}`
-        );
-    }
-
-    if (
-        !Object.values(ACTIVITY_STATUS).includes(status)
-    ) {
-        throw new Error(
-            `Invalid activity status: ${String(status)}`
-        );
-    }
-
-    if (
-        participantType !== null &&
-        participantType !== undefined &&
-        !Object.values(PARTICIPANT_TYPE).includes(
-            participantType
-        )
-    ) {
-        throw new Error(
-            `Invalid participant type: ${String(
-                participantType
-            )}`
-        );
-    }
-
-    const validCategories = category.filter((item) =>
-        Object.values(ACTIVITY_CATEGORY).includes(item)
-    );
 
     return {
         id: String(row.$id),
-        createdAt: String(row.$createdAt),
-        updatedAt: String(row.$updatedAt),
 
-        title: String(row.title ?? ""),
-        slug: String(row.slug ?? ""),
+        createdAt: String(
+            row.$createdAt
+        ),
+
+        updatedAt: String(
+            row.$updatedAt
+        ),
+
+        title: String(
+            row.title ?? ""
+        ),
+
+        slug: String(
+            row.slug ?? ""
+        ),
 
         description:
             typeof row.description === "string"
                 ? row.description
                 : null,
 
-        activityDate: String(
-            row.activityDate ?? ""
-        ),
+        activityDate:
+            typeof row.activityDate === "string"
+                ? row.activityDate
+                : "",
 
-        status,
+        status:
+            row.status as Activity["status"],
 
         publishedAt:
             typeof row.publishedAt === "string"
@@ -107,126 +188,175 @@ function mapActivity(row: Record<string, unknown>): Activity {
                 : null,
 
         participantType:
-            participantType ?? null,
+            typeof row.participantType === "string"
+                ? (row.participantType as Activity["participantType"])
+                : null,
 
         excerpt:
             typeof row.excerpt === "string"
                 ? row.excerpt
                 : null,
 
-        image: getImageUrl(
-            typeof row.image === "string"
-                ? row.image
-                : null,
-            APPWRITE_BUCKET_ID
+        /*
+         * Appwrite stores image and imageType
+         * separately, but the application receives
+         * one combined image object.
+         */
+        image: mapActivityImage(
+            row.image,
+            row.imageType
         ),
 
-        activityType,
+        category:
+            typeof row.category === "string"
+                ? (row.category as Activity["category"])
+                : ACTIVITY_CATEGORY.ACTIVITY,
 
-        category: validCategories,
+        activityTags:
+            activityTags as Activity["activityTags"],
     };
 }
 
-/* ============================================================
-   Get All Activities
-============================================================ */
-
-export async function getAllActivities(): Promise<Activity[]> {
-    const response = await tablesDB.listRows({
-        databaseId: DATABASE_ID,
-        tableId: ACTIVITIES_TABLE_ID,
-        queries: [
-            Query.orderDesc("activityDate"),
-        ],
-    });
+/**
+ * Get all activities.
+ */
+export async function getAllActivities(): Promise<
+    Activity[]
+> {
+    const response =
+        await tablesDB.listRows({
+            databaseId: DATABASE_ID,
+            tableId: ACTIVITIES_TABLE_ID,
+            queries: [
+                Query.orderDesc(
+                    "activityDate"
+                ),
+            ],
+        });
 
     return response.rows.map((row) =>
-        mapActivity(row as unknown as Record<string, unknown>)
+        mapActivity(
+            row as unknown as Record<
+                string,
+                unknown
+            >
+        )
     );
 }
 
-/* ============================================================
-   Get Published Activities
-============================================================ */
+/**
+ * Get all published activities.
+ */
+export async function getPublishedActivities(): Promise<
+    Activity[]
+> {
+    const response =
+        await tablesDB.listRows({
+            databaseId: DATABASE_ID,
+            tableId: ACTIVITIES_TABLE_ID,
+            queries: [
+                Query.equal("status", [
+                    ACTIVITY_STATUS.PUBLISHED,
+                ]),
 
-export async function getPublishedActivities(): Promise<Activity[]> {
-    const response = await tablesDB.listRows({
-        databaseId: DATABASE_ID,
-        tableId: ACTIVITIES_TABLE_ID,
-        queries: [
-            Query.equal("status", [
-                ACTIVITY_STATUS.PUBLISHED,
-            ]),
-            Query.orderDesc("activityDate"),
-        ],
-    });
+                Query.orderDesc(
+                    "activityDate"
+                ),
+            ],
+        });
 
     return response.rows.map((row) =>
-        mapActivity(row as unknown as Record<string, unknown>)
+        mapActivity(
+            row as unknown as Record<
+                string,
+                unknown
+            >
+        )
     );
 }
 
-/* ============================================================
-   Get Latest Activities
-============================================================ */
-
+/**
+ * Get latest published activities.
+ */
 export async function getLatestActivities(
     limit = 4
 ): Promise<Activity[]> {
-    const response = await tablesDB.listRows({
-        databaseId: DATABASE_ID,
-        tableId: ACTIVITIES_TABLE_ID,
-        queries: [
-            Query.equal("status", [
-                ACTIVITY_STATUS.PUBLISHED,
-            ]),
-            Query.orderDesc("activityDate"),
-            Query.limit(limit),
-        ],
-    });
+    const response =
+        await tablesDB.listRows({
+            databaseId: DATABASE_ID,
+            tableId: ACTIVITIES_TABLE_ID,
+            queries: [
+                Query.equal("status", [
+                    ACTIVITY_STATUS.PUBLISHED,
+                ]),
+
+                Query.orderDesc(
+                    "activityDate"
+                ),
+
+                Query.limit(limit),
+            ],
+        });
 
     return response.rows.map((row) =>
-        mapActivity(row as unknown as Record<string, unknown>)
+        mapActivity(
+            row as unknown as Record<
+                string,
+                unknown
+            >
+        )
     );
 }
 
-/* ============================================================
-   Get Activity By ID
-============================================================ */
-
+/**
+ * Get activity by ID.
+ */
 export async function getActivityById(
     id: string
 ): Promise<Activity | null> {
     try {
-        const response = await tablesDB.getRow({
-            databaseId: DATABASE_ID,
-            tableId: ACTIVITIES_TABLE_ID,
-            rowId: id,
-        });
+        const response =
+            await tablesDB.getRow({
+                databaseId: DATABASE_ID,
+                tableId: ACTIVITIES_TABLE_ID,
+                rowId: id,
+            });
 
         return mapActivity(
-            response as unknown as Record<string, unknown>
+            response as unknown as Record<
+                string,
+                unknown
+            >
         );
     } catch {
         return null;
     }
 }
 
-/* ============================================================
-   Get Activity By Slug
-============================================================ */
-
+/**
+ * Get activity by slug.
+ */
 export async function getActivityBySlug(
     slug: string
 ): Promise<Activity | null> {
-    const response = await tablesDB.listRows({
-        databaseId: DATABASE_ID,
-        tableId: ACTIVITIES_TABLE_ID,
-        queries: [
-            Query.equal("slug", [slug]),
-            Query.limit(1),
-        ],
-    });
+    const cleanSlug = slug.trim();
+
+    if (!cleanSlug) {
+        return null;
+    }
+
+    const response =
+        await tablesDB.listRows({
+            databaseId: DATABASE_ID,
+            tableId: ACTIVITIES_TABLE_ID,
+            queries: [
+                Query.equal("slug", [
+                    cleanSlug,
+                ]),
+
+                Query.limit(1),
+            ],
+        });
 
     const row = response.rows[0];
 
@@ -235,38 +365,140 @@ export async function getActivityBySlug(
     }
 
     return mapActivity(
-        row as unknown as Record<string, unknown>
+        row as unknown as Record<
+            string,
+            unknown
+        >
     );
 }
 
-/* ============================================================
-   Get Related Activities
-============================================================ */
-
-export async function getRelatedActivities(
-    activityType: Activity["activityType"],
-    excludeId: string,
-    limit = 4
+/**
+ * Get published activities by category.
+ */
+export async function getActivitiesByCategory(
+    category: Activity["category"],
+    limit = 20
 ): Promise<Activity[]> {
-    const response = await tablesDB.listRows({
-        databaseId: DATABASE_ID,
-        tableId: ACTIVITIES_TABLE_ID,
-        queries: [
-            Query.equal("status", [
-                ACTIVITY_STATUS.PUBLISHED,
-            ]),
-            Query.equal("activityType", [
-                activityType,
-            ]),
-            Query.notEqual("$id", excludeId),
-            Query.orderDesc("activityDate"),
-            Query.limit(limit),
-        ],
-    });
+    const response =
+        await tablesDB.listRows({
+            databaseId: DATABASE_ID,
+            tableId: ACTIVITIES_TABLE_ID,
+            queries: [
+                Query.equal("status", [
+                    ACTIVITY_STATUS.PUBLISHED,
+                ]),
+
+                Query.equal("category", [
+                    category,
+                ]),
+
+                Query.orderDesc(
+                    "activityDate"
+                ),
+
+                Query.limit(limit),
+            ],
+        });
 
     return response.rows.map((row) =>
         mapActivity(
-            row as unknown as Record<string, unknown>
+            row as unknown as Record<
+                string,
+                unknown
+            >
+        )
+    );
+}
+
+/**
+ * Get published activities by tag.
+ */
+export async function getActivitiesByTag(
+    tag: Activity["activityTags"][number],
+    limit = 20
+): Promise<Activity[]> {
+    console.log("response", tag)
+    const response =
+        await tablesDB.listRows({
+            databaseId: DATABASE_ID,
+            tableId: ACTIVITIES_TABLE_ID,
+            queries: [
+                Query.equal("status", [
+                    ACTIVITY_STATUS.PUBLISHED,
+                ]),
+
+                Query.contains(
+                    "activityTags",
+                    [tag]
+                ),
+
+                Query.orderDesc(
+                    "activityDate"
+                ),
+
+                Query.limit(limit),
+            ],
+        });
+
+
+    return response.rows.map((row) =>
+        mapActivity(
+            row as unknown as Record<
+                string,
+                unknown
+            >
+        )
+    );
+}
+
+/**
+ * Get related published activities.
+ *
+ * Related activities are matched using
+ * activity tags.
+ */
+export async function getRelatedActivities(
+    activityTags: Activity["activityTags"],
+    excludeId: string,
+    limit = 4
+): Promise<Activity[]> {
+    if (activityTags.length === 0) {
+        return [];
+    }
+
+    const response =
+        await tablesDB.listRows({
+            databaseId: DATABASE_ID,
+            tableId: ACTIVITIES_TABLE_ID,
+            queries: [
+                Query.equal("status", [
+                    ACTIVITY_STATUS.PUBLISHED,
+                ]),
+
+                Query.notEqual(
+                    "$id",
+                    excludeId
+                ),
+
+                Query.contains(
+                    "activityTags",
+                    activityTags
+                ),
+
+                Query.orderDesc(
+                    "activityDate"
+                ),
+
+                Query.limit(limit),
+            ],
+        });
+
+    return response.rows.map((row) =>
+        mapActivity(
+            row as unknown as Record<
+                string,
+                unknown
+            >
         )
     );
 }

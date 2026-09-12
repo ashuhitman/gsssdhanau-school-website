@@ -8,11 +8,11 @@ import {
     UsersRound,
 } from "lucide-react";
 
-import type {
-    Activity,
+import type { Activity } from "@/lib/data/activity/types";
 
-} from "@/lib/data/activity/types";
-import { ActivityCategory, ActivityType } from "@/lib/data/activity/constants";
+import {
+    ACTIVITY_CATEGORY,
+} from "@/lib/data/activity/constants";
 
 /* ============================================================
    Props
@@ -26,24 +26,14 @@ interface ActivityDetailsProps {
    Labels
 ============================================================ */
 
-const activityTypeLabels: Record<
-    ActivityType,
+const activityCategoryLabels: Record<
+    Activity["category"],
     string
 > = {
-    event: "Event",
-    activity: "Activity",
-    achievement: "Achievement",
-    competition: "Competition",
-};
-
-const categoryLabels: Record<
-    ActivityCategory,
-    string
-> = {
-    sports: "Sports",
-    academic: "Academic",
-    cultural: "Cultural",
-    social: "Social",
+    [ACTIVITY_CATEGORY.EVENT]: "Event",
+    [ACTIVITY_CATEGORY.ACTIVITY]: "Activity",
+    [ACTIVITY_CATEGORY.ACHIEVEMENT]: "Achievement",
+    [ACTIVITY_CATEGORY.COMPETITION]: "Competition",
 };
 
 /* ============================================================
@@ -54,8 +44,8 @@ export default function ActivityDetails({
     activity,
 }: ActivityDetailsProps) {
     const imageSrc =
-        activity.image?.trim()
-            ? activity.image
+        activity.image?.value?.trim()
+            ? activity.image.value
             : "/images/activity/default-featured.jpeg";
 
     return (
@@ -117,7 +107,7 @@ export default function ActivityDetails({
                 "
             >
                 {/* ═════════════════════════
-                    ACTIVITY TYPE
+                    ACTIVITY CATEGORY
                 ═════════════════════════ */}
 
                 <div
@@ -148,8 +138,8 @@ export default function ActivityDetails({
                             "
                         >
                             <ActivityIcon
-                                type={
-                                    activity.activityType
+                                category={
+                                    activity.category
                                 }
                             />
                         </div>
@@ -164,8 +154,8 @@ export default function ActivityDetails({
                             "
                         >
                             {
-                                activityTypeLabels[
-                                activity.activityType
+                                activityCategoryLabels[
+                                activity.category
                                 ]
                             }
                         </p>
@@ -261,8 +251,8 @@ export default function ActivityDetails({
                         "
                     >
                         <ActivityIcon
-                            type={
-                                activity.activityType
+                            category={
+                                activity.category
                             }
                             className="
                                 size-3
@@ -279,14 +269,11 @@ export default function ActivityDetails({
                                 text-blue-950
                             "
                         >
-                            {activity.category
-                                .map(
-                                    (category) =>
-                                        categoryLabels[
-                                        category
-                                        ]
-                                )
-                                .join(" • ")}
+                            {
+                                activityCategoryLabels[
+                                activity.category
+                                ]
+                            }
                         </span>
                     </div>
                 </div>
@@ -436,6 +423,45 @@ export default function ActivityDetails({
                 </div>
 
                 {/* ═════════════════════════
+                    ACTIVITY TAGS
+                ═════════════════════════ */}
+
+                {activity.activityTags.length > 0 && (
+                    <div
+                        className="
+                            mt-4
+                            flex
+                            shrink-0
+                            flex-wrap
+                            items-center
+                            gap-2
+                        "
+                    >
+                        {activity.activityTags.map(
+                            (tag) => (
+                                <span
+                                    key={tag}
+                                    className="
+                                        rounded-full
+                                        bg-white/70
+                                        px-2.5
+                                        py-1
+                                        text-[8px]
+                                        font-bold
+                                        uppercase
+                                        tracking-wider
+                                        text-blue-950
+                                        shadow-sm
+                                    "
+                                >
+                                    {tag}
+                                </span>
+                            )
+                        )}
+                    </div>
+                )}
+
+                {/* ═════════════════════════
                     DESCRIPTION / EXCERPT
                 ═════════════════════════ */}
 
@@ -550,15 +576,17 @@ export default function ActivityDetails({
 ============================================================ */
 
 function ActivityIcon({
-    type,
+    category,
     className = "size-4",
 }: {
-    type: ActivityType;
+    category: Activity["category"];
     className?: string;
 }) {
     if (
-        type === "achievement" ||
-        type === "competition"
+        category ===
+        ACTIVITY_CATEGORY.ACHIEVEMENT ||
+        category ===
+        ACTIVITY_CATEGORY.COMPETITION
     ) {
         return (
             <Trophy

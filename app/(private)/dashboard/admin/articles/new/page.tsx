@@ -28,11 +28,7 @@ const statusOptions = [
 ];
 
 export default function NewArticlePage() {
-    async function handleSubmit(data: ContentCreateValues) {
-        "use server";
 
-        // await createArticleAction(data);
-    }
 
     return (
         <ContentCreatePage
@@ -50,7 +46,7 @@ export default function NewArticlePage() {
             showFeatured
             showAuthor
             showPublishedDate
-            onSubmit={handleSubmit}
+
         />
     );
 }

@@ -6,7 +6,7 @@ import {
 } from "lucide-react";
 
 import type { Activity } from "@/lib/data/activity/types";
-import { ACTIVITY_TYPE } from "@/lib/data/activity/constants";
+import { ACTIVITY_CATEGORY } from "@/lib/data/activity/constants";
 
 import ImageInfoCard from "@/components/common/ImageInfoCard";
 
@@ -19,17 +19,17 @@ interface RelatedActivitiesSidebarProps {
 }
 
 /* ============================================================
-   Activity Type Labels
+   Activity Category Labels
 ============================================================ */
 
-const activityTypeLabels: Record<
-    Activity["activityType"],
+const activityCategoryLabels: Record<
+    Activity["category"],
     string
 > = {
-    [ACTIVITY_TYPE.EVENT]: "Events",
-    [ACTIVITY_TYPE.ACTIVITY]: "Activities",
-    [ACTIVITY_TYPE.ACHIEVEMENT]: "Achievements",
-    [ACTIVITY_TYPE.COMPETITION]: "Competitions",
+    [ACTIVITY_CATEGORY.EVENT]: "Events",
+    [ACTIVITY_CATEGORY.ACTIVITY]: "Activities",
+    [ACTIVITY_CATEGORY.ACHIEVEMENT]: "Achievements",
+    [ACTIVITY_CATEGORY.COMPETITION]: "Competitions",
 };
 
 /* ============================================================
@@ -159,12 +159,12 @@ export default function RelatedActivitiesSidebar({
                     <ImageInfoCard
                         key={activity.id}
                         href={`/activities/${activity.slug}`}
-                        image={activity.image ?? ""}
+                        image={activity.image?.value ?? ""}
                         imageAlt={activity.title}
                         title={activity.title}
                         label={
-                            activityTypeLabels[
-                            activity.activityType
+                            activityCategoryLabels[
+                            activity.category
                             ]
                         }
                         description={

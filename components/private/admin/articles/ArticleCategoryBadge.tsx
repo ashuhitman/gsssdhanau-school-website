@@ -1,11 +1,12 @@
-import { articleCategory } from "@/lib/data/article/constants";
+import { ArticleCategory } from "@/lib/data/article/constants";
+
 
 interface ArticleCategoryBadgeProps {
-    category: articleCategory;
+    category: ArticleCategory;
 }
 
 const categoryStyles: Record<
-    articleCategory,
+    ArticleCategory,
     {
         background: string;
         text: string;

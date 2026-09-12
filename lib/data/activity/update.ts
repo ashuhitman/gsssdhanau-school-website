@@ -7,7 +7,8 @@ import {
 import type {
     ActivityCategory,
     ActivityStatus,
-    ActivityType,
+    ActivityTags,
+
     ParticipantType,
 } from "./constants";
 
@@ -33,7 +34,7 @@ export interface UpdateActivityData {
     excerpt?: string | null;
     image?: string | null;
 
-    activityType?: ActivityType;
+    activityTags?: ActivityTags;
     category?: ActivityCategory[];
 }
 
