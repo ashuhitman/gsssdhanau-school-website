@@ -1,8 +1,11 @@
+import type { ReactNode } from "react";
+
 interface FormSectionProps {
     title: string;
     description?: string;
-    children: React.ReactNode;
+    children: ReactNode;
     className?: string;
+    action?: ReactNode;
 }
 
 export default function FormSection({
@@ -10,6 +13,7 @@ export default function FormSection({
     description,
     children,
     className = "",
+    action,
 }: FormSectionProps) {
     return (
         <section
@@ -21,9 +25,13 @@ export default function FormSection({
             ].join(" ")}
         >
             <div className="mb-4 min-w-0 sm:mb-5">
-                <h2 className="text-base font-semibold leading-tight text-admin-heading sm:text-lg">
-                    {title}
-                </h2>
+                <div className="flex min-w-0 items-center justify-between gap-3">
+                    <h2 className="min-w-0 text-base font-semibold leading-tight text-admin-heading sm:text-lg">
+                        {title}
+                    </h2>
+
+                    {action}
+                </div>
 
                 {description && (
                     <p className="mt-1 max-w-3xl text-xs leading-relaxed text-admin-muted sm:text-sm">

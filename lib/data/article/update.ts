@@ -38,14 +38,19 @@ export async function updateArticle(
     id: string,
     data: UpdateArticleData
 ) {
-    const updateData: Record<string, unknown> = {};
+    const updateData: Record<
+        string,
+        unknown
+    > = {};
 
     if (data.title !== undefined) {
-        updateData.title = data.title.trim();
+        updateData.title =
+            data.title.trim();
     }
 
     if (data.slug !== undefined) {
-        updateData.slug = data.slug.trim();
+        updateData.slug =
+            data.slug.trim();
     }
 
     if (data.excerpt !== undefined) {
@@ -54,7 +59,8 @@ export async function updateArticle(
     }
 
     if (data.content !== undefined) {
-        updateData.content = data.content;
+        updateData.content =
+            data.content;
     }
 
     if (data.authorBy !== undefined) {
@@ -89,7 +95,8 @@ export async function updateArticle(
 
     if (data.publishedBy !== undefined) {
         updateData.publishedBy =
-            data.publishedBy?.trim() || null;
+            data.publishedBy?.trim() ||
+            null;
     }
 
     if (data.category !== undefined) {
@@ -103,9 +110,14 @@ export async function updateArticle(
     }
 
     return tablesDB.updateRow({
-        databaseId: DATABASE_ID,
-        tableId: ARTICLES_TABLE_ID,
+        databaseId:
+            DATABASE_ID,
+
+        tableId:
+            ARTICLES_TABLE_ID,
+
         rowId: id,
+
         data: updateData,
     });
 }
