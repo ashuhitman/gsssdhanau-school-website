@@ -126,6 +126,72 @@ export default function DashboardShell({
     };
 
     /* ---------------------------------------------------------------------- */
+    /* Nested admin page detection                                            */
+    /* ---------------------------------------------------------------------- */
+
+    /*
+     * These are the root pages of each admin section.
+     *
+     * Example:
+     *
+     * /dashboard/admin/articles
+     * /dashboard/admin/activities
+     * /dashboard/admin/classes
+     *
+     * The sidebar remains visible on these pages.
+     */
+    const adminSections = [
+        "/dashboard/admin/administration",
+        "/dashboard/admin/classes",
+        "/dashboard/admin/faculty",
+        "/dashboard/admin/timetable",
+        "/dashboard/admin/activities",
+        "/dashboard/admin/articles",
+        "/dashboard/admin/newsletter",
+        "/dashboard/admin/notices",
+        "/dashboard/admin/events",
+        "/dashboard/admin/reports",
+    ];
+
+    /*
+     * Find which admin section the current pathname belongs to.
+     *
+     * For example:
+     *
+     * pathname:
+     * /dashboard/admin/articles/123/edit
+     *
+     * currentAdminSection:
+     * /dashboard/admin/articles
+     */
+    const currentAdminSection = adminSections.find(
+        (section) =>
+            pathname === section ||
+            pathname.startsWith(`${section}/`),
+    );
+
+    /*
+     * A page is considered nested when:
+     *
+     * 1. It belongs to one of the admin sections.
+     * 2. It is NOT the root page of that section.
+     *
+     * Examples:
+     *
+     * /dashboard/admin/articles
+     * → false
+     *
+     * /dashboard/admin/articles/new
+     * → true
+     *
+     * /dashboard/admin/articles/123/edit
+     * → true
+     */
+    const isNestedAdminPage =
+        !!currentAdminSection &&
+        pathname !== currentAdminSection;
+
+    /* ---------------------------------------------------------------------- */
     /* Active navigation states                                               */
     /* ---------------------------------------------------------------------- */
 
@@ -194,7 +260,7 @@ export default function DashboardShell({
             {/* Mobile / tablet overlay                                          */}
             {/* ---------------------------------------------------------------- */}
 
-            {sidebarOpen && (
+            {sidebarOpen && !isNestedAdminPage && (
                 <button
                     type="button"
                     aria-label="Close navigation"
@@ -223,23 +289,35 @@ export default function DashboardShell({
 
                         /*
                          * Desktop:
-                         * Sidebar stays in the layout and collapses
-                         * by animating its width.
+                         *
+                         * Nested admin page:
+                         * completely hide sidebar.
+                         *
+                         * Root admin page:
+                         * use normal open/collapsed state.
                          */
                         "lg:transition-[width] lg:duration-300 lg:ease-out",
-                        desktopSidebarOpen
-                            ? "lg:w-64"
-                            : "lg:w-0",
+                        isNestedAdminPage
+                            ? "lg:w-0"
+                            : desktopSidebarOpen
+                                ? "lg:w-64"
+                                : "lg:w-0",
 
                         /*
                          * Mobile / tablet:
-                         * Sidebar becomes a fixed drawer.
+                         *
+                         * Nested admin page:
+                         * keep drawer hidden.
+                         *
+                         * Root admin page:
+                         * use normal drawer state.
                          */
                         "max-lg:fixed max-lg:inset-y-0 max-lg:left-0 max-lg:w-64",
-                        "max-lg:transition-transform max-lg:duration-300 max-lg:ease-out",
-                        sidebarOpen
-                            ? "max-lg:translate-x-0"
-                            : "max-lg:-translate-x-full",
+                        isNestedAdminPage
+                            ? "max-lg:-translate-x-full"
+                            : sidebarOpen
+                                ? "max-lg:translate-x-0"
+                                : "max-lg:-translate-x-full",
                     ].join(" ")}
                 >
                     {/* -------------------------------------------------------- */}
@@ -261,21 +339,23 @@ export default function DashboardShell({
                                 p-1.5
                             "
                         >
-                            <div className="
-                                flex
-                                h-10
-                                w-10
-                                shrink-0
-                                items-center
-                                justify-center
-                                rounded-[0.5rem]
-                                bg-admin-primary
-                                text-admin-sidebar
-                                shadow-sm
-                                transition-transform
-                                duration-200
-                                group-hover:scale-[1.03]
-                            ">
+                            <div
+                                className="
+                                    flex
+                                    h-10
+                                    w-10
+                                    shrink-0
+                                    items-center
+                                    justify-center
+                                    rounded-[0.5rem]
+                                    bg-admin-primary
+                                    text-admin-sidebar
+                                    shadow-sm
+                                    transition-transform
+                                    duration-200
+                                    group-hover:scale-[1.03]
+                                "
+                            >
                                 <School
                                     className="h-5 w-5"
                                     aria-hidden="true"
@@ -569,24 +649,24 @@ export default function DashboardShell({
                             "
                         >
                             <div className="flex items-center gap-3">
-                                <div className="
-                                    flex
-                                    h-9
-                                    w-9
-                                    shrink-0
-                                    items-center
-                                    justify-center
-                                    rounded-full
-                                    bg-admin-card
-                                    text-xs
-                                    font-bold
-                                    text-admin-primary
-                                ">
+                                <div
+                                    className="
+                                        flex
+                                        h-9
+                                        w-9
+                                        shrink-0
+                                        items-center
+                                        justify-center
+                                        rounded-full
+                                        bg-admin-card
+                                        text-xs
+                                        font-bold
+                                        text-admin-primary
+                                    "
+                                >
                                     {user.name
                                         ? user.name
-                                            .charAt(
-                                                0,
-                                            )
+                                            .charAt(0)
                                             .toUpperCase()
                                         : "U"}
                                 </div>
@@ -695,19 +775,19 @@ export default function DashboardShell({
                             shadow-sm
                         "
                     >
-                        {/* ====================================================
-                            MOBILE / TABLET MENU
-                        ==================================================== */}
+                        {/* ==================================================== */}
+                        {/* MOBILE / TABLET NAVIGATION                           */}
+                        {/* ==================================================== */}
 
                         <div className="lg:hidden">
-                            {!sidebarOpen && (
-                                <button
-                                    type="button"
-                                    onClick={
-                                        openMobileSidebar
+                            {isNestedAdminPage ? (
+                                <Link
+                                    href={
+                                        currentAdminSection ??
+                                        "/dashboard/admin"
                                     }
-                                    aria-label="Open navigation"
-                                    title="Open navigation"
+                                    aria-label="Go back"
+                                    title="Go back"
                                     className="
                                         flex
                                         h-9
@@ -722,27 +802,56 @@ export default function DashboardShell({
                                         hover:text-admin-primary
                                     "
                                 >
-                                    <Menu
+                                    <ChevronLeft
                                         className="h-5 w-5"
                                         aria-hidden="true"
                                     />
-                                </button>
+                                </Link>
+                            ) : (
+                                !sidebarOpen && (
+                                    <button
+                                        type="button"
+                                        onClick={
+                                            openMobileSidebar
+                                        }
+                                        aria-label="Open navigation"
+                                        title="Open navigation"
+                                        className="
+                                            flex
+                                            h-9
+                                            w-9
+                                            shrink-0
+                                            items-center
+                                            justify-center
+                                            rounded-[0.5rem]
+                                            text-admin-heading
+                                            transition-colors
+                                            hover:bg-admin-blue-soft
+                                            hover:text-admin-primary
+                                        "
+                                    >
+                                        <Menu
+                                            className="h-5 w-5"
+                                            aria-hidden="true"
+                                        />
+                                    </button>
+                                )
                             )}
                         </div>
 
-                        {/* ====================================================
-                            DESKTOP MENU
-                        ==================================================== */}
+                        {/* ==================================================== */}
+                        {/* DESKTOP NAVIGATION                                   */}
+                        {/* ==================================================== */}
 
                         <div className="hidden lg:block">
-                            {!desktopSidebarOpen && (
-                                <button
-                                    type="button"
-                                    onClick={
-                                        openDesktopSidebar
+                            {isNestedAdminPage ? (
+                                <Link
+                                    href={
+                                        currentAdminSection ??
+                                        "/dashboard/admin"
                                     }
-                                    aria-label="Open sidebar"
-                                    title="Open sidebar"
+                                    aria-label="Go back"
+                                    title="Go back"
                                     className="
                                         flex
                                         h-9
@@ -757,17 +866,46 @@ export default function DashboardShell({
                                         hover:text-admin-primary
                                     "
                                 >
-                                    <Menu
+                                    <ChevronLeft
                                         className="h-5 w-5"
                                         aria-hidden="true"
                                     />
-                                </button>
+                                </Link>
+                            ) : (
+                                !desktopSidebarOpen && (
+                                    <button
+                                        type="button"
+                                        onClick={
+                                            openDesktopSidebar
+                                        }
+                                        aria-label="Open sidebar"
+                                        title="Open sidebar"
+                                        className="
+                                            flex
+                                            h-9
+                                            w-9
+                                            shrink-0
+                                            items-center
+                                            justify-center
+                                            rounded-[0.5rem]
+                                            text-admin-heading
+                                            transition-colors
+                                            hover:bg-admin-blue-soft
+                                            hover:text-admin-primary
+                                        "
+                                    >
+                                        <Menu
+                                            className="h-5 w-5"
+                                            aria-hidden="true"
+                                        />
+                                    </button>
+                                )
                             )}
                         </div>
 
-                        {/* ====================================================
-                            SCHOOL BRANDING
-                        ==================================================== */}
+                        {/* ==================================================== */}
+                        {/* SCHOOL BRANDING                                      */}
+                        {/* ==================================================== */}
 
                         <Link
                             href="/dashboard"
@@ -781,17 +919,19 @@ export default function DashboardShell({
                                 lg:ml-3
                             "
                         >
-                            <div className="
-                                flex
-                                h-8
-                                w-8
-                                shrink-0
-                                items-center
-                                justify-center
-                                rounded-[0.5rem]
-                                bg-admin-primary
-                                text-admin-sidebar
-                            ">
+                            <div
+                                className="
+                                    flex
+                                    h-8
+                                    w-8
+                                    shrink-0
+                                    items-center
+                                    justify-center
+                                    rounded-[0.5rem]
+                                    bg-admin-primary
+                                    text-admin-sidebar
+                                "
+                            >
                                 <School
                                     className="h-4 w-4"
                                     aria-hidden="true"
@@ -809,18 +949,20 @@ export default function DashboardShell({
                             </div>
                         </Link>
 
-                        {/* ====================================================
-                            RIGHT SIDE
-                        ==================================================== */}
+                        {/* ==================================================== */}
+                        {/* RIGHT SIDE                                            */}
+                        {/* ==================================================== */}
 
-                        <div className="
-                            ml-auto
-                            flex
-                            shrink-0
-                            items-center
-                            gap-2
-                            sm:gap-3
-                        ">
+                        <div
+                            className="
+                                ml-auto
+                                flex
+                                shrink-0
+                                items-center
+                                gap-2
+                                sm:gap-3
+                            "
+                        >
                             {/* Notifications */}
 
                             <button
@@ -845,22 +987,24 @@ export default function DashboardShell({
                                     aria-hidden="true"
                                 />
 
-                                <span className="
-                                    absolute
-                                    right-0.5
-                                    top-0.5
-                                    flex
-                                    h-4
-                                    min-w-4
-                                    items-center
-                                    justify-center
-                                    rounded-full
-                                    bg-admin-danger
-                                    px-1
-                                    text-[0.5625rem]
-                                    font-bold
-                                    text-white
-                                ">
+                                <span
+                                    className="
+                                        absolute
+                                        right-0.5
+                                        top-0.5
+                                        flex
+                                        h-4
+                                        min-w-4
+                                        items-center
+                                        justify-center
+                                        rounded-full
+                                        bg-admin-danger
+                                        px-1
+                                        text-[0.5625rem]
+                                        font-bold
+                                        text-white
+                                    "
+                                >
                                     3
                                 </span>
                             </button>
@@ -881,48 +1025,52 @@ export default function DashboardShell({
                                     hover:bg-admin-surface-hover
                                 "
                             >
-                                <span className="
-                                    flex
-                                    h-9
-                                    w-9
-                                    shrink-0
-                                    items-center
-                                    justify-center
-                                    rounded-full
-                                    bg-admin-sidebar
-                                    text-xs
-                                    font-semibold
-                                    text-admin-sidebar
-                                ">
+                                <span
+                                    className="
+                                        flex
+                                        h-9
+                                        w-9
+                                        shrink-0
+                                        items-center
+                                        justify-center
+                                        rounded-full
+                                        bg-admin-sidebar
+                                        text-xs
+                                        font-semibold
+                                        text-admin-sidebar
+                                    "
+                                >
                                     {user.name
                                         ? user.name
-                                            .charAt(
-                                                0,
-                                            )
+                                            .charAt(0)
                                             .toUpperCase()
                                         : "U"}
                                 </span>
 
                                 <span className="hidden text-left sm:block">
-                                    <span className="
-                                        block
-                                        max-w-36
-                                        truncate
-                                        text-xs
-                                        font-semibold
-                                        text-admin-heading
-                                    ">
+                                    <span
+                                        className="
+                                            block
+                                            max-w-36
+                                            truncate
+                                            text-xs
+                                            font-semibold
+                                            text-admin-heading
+                                        "
+                                    >
                                         {user.name}
                                     </span>
 
-                                    <span className="
-                                        block
-                                        max-w-36
-                                        truncate
-                                        text-[0.5625rem]
-                                        capitalize
-                                        text-admin-muted
-                                    ">
+                                    <span
+                                        className="
+                                            block
+                                            max-w-36
+                                            truncate
+                                            text-[0.5625rem]
+                                            capitalize
+                                            text-admin-muted
+                                        "
+                                    >
                                         {user.role.replace(
                                             "_",
                                             " ",
@@ -943,13 +1091,15 @@ export default function DashboardShell({
                     {/* -------------------------------------------------------- */}
 
                     <main className="w-full flex-1">
-                        <div className="
-                            mx-auto
-                            w-full
-                            max-w-[100rem]
-                            p-4
-                            lg:p-6
-                        ">
+                        <div
+                            className="
+                                mx-auto
+                                w-full
+                                max-w-[100rem]
+                                p-4
+                                lg:p-6
+                            "
+                        >
                             {children}
                         </div>
                     </main>

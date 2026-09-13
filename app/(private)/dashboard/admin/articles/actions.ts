@@ -103,6 +103,7 @@ export async function createArticleAction(
 
         revalidatePath("/dashboard/admin/articles");
 
+
         if (article.slug) {
             revalidatePath(`/articles/${article.slug}`);
         }
